@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{cea258e1-09cb-4859-b775-7728837cf4c0}</ProjectGuid>
+    <RootNamespace>OdinV3</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\marmasm.props" />
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>test</TargetName>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;ODINV3_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;ODINV3_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;ODINV3_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level1</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableUAC>true</EnableUAC>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="config\ini.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="process_event.h" />
+    <ClInclude Include="rendering\render.h" />
+    <ClInclude Include="rendering\ZeroGUI.h" />
+    <ClInclude Include="rendering\ZeroInput.h" />
+    <ClInclude Include="SDK.hpp" />
+    <ClInclude Include="SDK\PL_AkAudio_classes.hpp" />
+    <ClInclude Include="SDK\PL_AkAudio_parameters.hpp" />
+    <ClInclude Include="SDK\PL_AkAudio_structs.hpp" />
+    <ClInclude Include="SDK\PL_Basic.hpp" />
+    <ClInclude Include="SDK\PL_BattleClient_classes.hpp" />
+    <ClInclude Include="SDK\PL_BattleClient_parameters.hpp" />
+    <ClInclude Include="SDK\PL_BattleClient_structs.hpp" />
+    <ClInclude Include="SDK\PL_BattleGame_classes.hpp" />
+    <ClInclude Include="SDK\PL_BattleGame_parameters.hpp" />
+    <ClInclude Include="SDK\PL_BattleGame_structs.hpp" />
+    <ClInclude Include="SDK\PL_Core_classes.hpp" />
+    <ClInclude Include="SDK\PL_Core_parameters.hpp" />
+    <ClInclude Include="SDK\PL_Core_structs.hpp" />
+    <ClInclude Include="SDK\PL_Engine_classes.hpp" />
+    <ClInclude Include="SDK\PL_Engine_parameters.hpp" />
+    <ClInclude Include="SDK\PL_Engine_structs.hpp" />
+    <ClInclude Include="SDK\PL_GameFramework_classes.hpp" />
+    <ClInclude Include="SDK\PL_GameFramework_parameters.hpp" />
+    <ClInclude Include="SDK\PL_GameFramework_structs.hpp" />
+    <ClInclude Include="SDK\PL_GFxUI_classes.hpp" />
+    <ClInclude Include="SDK\PL_GFxUI_parameters.hpp" />
+    <ClInclude Include="SDK\PL_GFxUI_structs.hpp" />
+    <ClInclude Include="SDK\PL_IpDrv_classes.hpp" />
+    <ClInclude Include="SDK\PL_IpDrv_parameters.hpp" />
+    <ClInclude Include="SDK\PL_IpDrv_structs.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_classes.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_parameters.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_structs.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_classes.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_parameters.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_structs.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemPC_classes.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemPC_parameters.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemPC_structs.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_classes.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_parameters.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_structs.hpp" />
+    <ClInclude Include="SDK\PL_PlatformCommon_classes.hpp" />
+    <ClInclude Include="SDK\PL_PlatformCommon_parameters.hpp" />
+    <ClInclude Include="SDK\PL_PlatformCommon_structs.hpp" />
+    <ClInclude Include="SDK\PL_TgClient_classes.hpp" />
+    <ClInclude Include="SDK\PL_TgClient_parameters.hpp" />
+    <ClInclude Include="SDK\PL_TgClient_structs.hpp" />
+    <ClInclude Include="SDK\PL_TgGameContent_classes.hpp" />
+    <ClInclude Include="SDK\PL_TgGameContent_parameters.hpp" />
+    <ClInclude Include="SDK\PL_TgGameContent_structs.hpp" />
+    <ClInclude Include="SDK\PL_TgGame_classes.hpp" />
+    <ClInclude Include="SDK\PL_TgGame_parameters.hpp" />
+    <ClInclude Include="SDK\PL_TgGame_structs.hpp" />
+    <ClInclude Include="SDK\PL_Vivox_classes.hpp" />
+    <ClInclude Include="SDK\PL_Vivox_parameters.hpp" />
+    <ClInclude Include="SDK\PL_Vivox_structs.hpp" />
+    <ClInclude Include="SDK\PL_WinDrv_classes.hpp" />
+    <ClInclude Include="SDK\PL_WinDrv_parameters.hpp" />
+    <ClInclude Include="SDK\PL_WinDrv_structs.hpp" />
+    <ClInclude Include="SDK\PL_XAudio2_classes.hpp" />
+    <ClInclude Include="SDK\PL_XAudio2_parameters.hpp" />
+    <ClInclude Include="SDK\PL_XAudio2_structs.hpp" />
+    <ClInclude Include="settings\settings.h" />
+    <ClInclude Include="spoofer\return_spoofer.h" />
+    <ClInclude Include="spoofer\spoof.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="utils\config.h" />
+    <ClInclude Include="utils\ntapi.h" />
+    <ClInclude Include="utils\scanner.h" />
+    <ClInclude Include="utils\skcrypt.h" />
+    <ClInclude Include="utils\TEB.h" />
+    <ClInclude Include="utils\utils_importer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="SDK\PL_AkAudio_functions.cpp" />
+    <ClCompile Include="SDK\PL_Basic.cpp" />
+    <ClCompile Include="SDK\PL_BattleClient_functions.cpp" />
+    <ClCompile Include="SDK\PL_BattleGame_functions.cpp" />
+    <ClCompile Include="SDK\PL_Core_functions.cpp" />
+    <ClCompile Include="SDK\PL_Engine_functions.cpp" />
+    <ClCompile Include="SDK\PL_GameFramework_functions.cpp" />
+    <ClCompile Include="SDK\PL_GFxUI_functions.cpp" />
+    <ClCompile Include="SDK\PL_IpDrv_functions.cpp" />
+    <ClCompile Include="SDK\PL_OnlineSubsystemDiscord_functions.cpp" />
+    <ClCompile Include="SDK\PL_OnlineSubsystemEpic_functions.cpp" />
+    <ClCompile Include="SDK\PL_OnlineSubsystemPC_functions.cpp" />
+    <ClCompile Include="SDK\PL_OnlineSubsystemSteamworks_functions.cpp" />
+    <ClCompile Include="SDK\PL_PlatformCommon_functions.cpp" />
+    <ClCompile Include="SDK\PL_TgClient_functions.cpp" />
+    <ClCompile Include="SDK\PL_TgGameContent_functions.cpp" />
+    <ClCompile Include="SDK\PL_TgGame_functions.cpp" />
+    <ClCompile Include="SDK\PL_Vivox_functions.cpp" />
+    <ClCompile Include="SDK\PL_WinDrv_functions.cpp" />
+    <ClCompile Include="SDK\PL_XAudio2_functions.cpp" />
+    <ClCompile Include="settings\settings.cpp" />
+    <ClCompile Include="utils\TEB.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="spoofer\spoofer_stub.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="exploits\exploits.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\marmasm.targets" />
+  </ImportGroup>
+</Project>
