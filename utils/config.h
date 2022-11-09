@@ -16,6 +16,7 @@ VOID ResetSettings() {
 
 	// VISUALS TAB
 	config_system.item.visuals = false;
+	config_system.item.espAllies = false;
 	config_system.item.players = false;
 	config_system.item.tracers = false;
 	config_system.item.box = false;

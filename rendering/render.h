@@ -226,6 +226,9 @@ ATgPawn* AimbotLockedPawn = nullptr;
 FVector LockedPawnHead = FVector{ 0, 0, 0 };
 bool bLocked = false;
 
+int delay = 1000;
+int lastFlick;
+
 void Aimbot()
 {
 	if (!AimbotLockedPawn ||
@@ -262,16 +265,16 @@ void Aimbot()
 			}
 			else {
 				if (!config_system.item.smooth) {
+					//ATgPlayerController* controller = (ATgPlayerController*)Globals::LocalController;
+					//controller->bPressingLeftMouseButton = false;
+
 					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
 
-					oldRotation = Globals::LocalController->Rotation;
+					//oldRotation = Globals::LocalController->Rotation;
 					Globals::LocalController->Rotation = AimRotation;
 
-					//Globals::LocalWeapon->InstantFire();
-					Globals::LocalController->bFire = true;
-					Globals::LocalWeapon->ForceStopFire();
-
-					Globals::LocalController->Rotation = oldRotation;
+					//controller->bPressingLeftMouseButton = true;
+					//Globals::LocalController->Rotation = oldRotation;
 				}
 				else {
 					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
@@ -314,7 +317,7 @@ void ActorLoop(UCanvas* canvas) {
 			!Globals::WorldInfo ||
 			CurrentPawn == Globals::LocalPawn ||
 			CurrentPawn->Health < 1 ||
-			CurrentPawnReplicationInfo->r_TaskForce->TeamIndex == Globals::ReplicationInfo->r_TaskForce->TeamIndex) {
+			((CurrentPawnReplicationInfo->r_TaskForce->TeamIndex == Globals::ReplicationInfo->r_TaskForce->TeamIndex) && !config_system.item.espAllies)) {
 				CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
 				continue;
 		}
@@ -519,7 +522,7 @@ void MainLoop(UCanvas* canvas) {
 	Globals::height = canvas->SizeY;
 
 	canvas->Font = Globals::Engine->MediumFont;
-	utils::DrawText(canvas, FString(_xor_(TEXT(L"Floppa 1.0.0 | By Wooteck (Xiloe)"))), FVector2D(10.f, 10.f), colors::Yellow);
+	utils::DrawText(canvas, FString(_xor_(TEXT(L"Bingus 1.0.0 | By Wooteck (Xiloe)"))), FVector2D(10.f, 10.f), colors::Yellow);
 	utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu"))), FVector2D(10.f, 30.f), utils::getColor(config_system.item.showSexyMenu));
 
 	if (!Globals::SetObjects()) return;
@@ -532,7 +535,7 @@ void MainLoop(UCanvas* canvas) {
 	Exploits();
 
 	static auto menuPos = FVector2D{ 150.f, 150.f };
-	if (ZeroGUI::Window(_xor_("Floppa 1.0.0 | By Wooteck (Xiloe)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
+	if (ZeroGUI::Window(_xor_("Bingus 1.0.0 | By Wooteck (Xiloe)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
 		static int tab = 0;
 
 		if (ZeroGUI::ButtonTab(_xor_("Aimbot"), FVector2D{ 100.f, 25.f }, tab == 0))
@@ -570,6 +573,7 @@ void MainLoop(UCanvas* canvas) {
 			{
 				ZeroGUI::Checkbox(_xor_("Visuals"), &config_system.item.visuals);
 				if (config_system.item.visuals) {
+					ZeroGUI::Checkbox(_xor_("Allies"), &config_system.item.espAllies);
 					ZeroGUI::Checkbox(_xor_("Aimbot FOV"), &config_system.item.espFOV);
 					ZeroGUI::Checkbox(_xor_("Tracers"), &config_system.item.tracers);
 					ZeroGUI::Checkbox(_xor_("2D Box"), &config_system.item.box);

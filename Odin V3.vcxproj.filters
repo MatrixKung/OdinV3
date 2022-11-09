@@ -503,9 +503,6 @@
     <ClCompile Include="DiscordRPC\lib\discord_rpc.cpp">
       <Filter>DiscordRPC</Filter>
     </ClCompile>
-    <ClCompile Include="DiscordRPC\lib\dllmain.cpp">
-      <Filter>DiscordRPC</Filter>
-    </ClCompile>
     <ClCompile Include="DiscordRPC\lib\rpc_connection.cpp">
       <Filter>DiscordRPC</Filter>
     </ClCompile>

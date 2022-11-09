@@ -286,7 +286,6 @@
     <ClCompile Include="DiscordRPC\lib\connection_win.cpp" />
     <ClCompile Include="DiscordRPC\lib\discord_register_win.cpp" />
     <ClCompile Include="DiscordRPC\lib\discord_rpc.cpp" />
-    <ClCompile Include="DiscordRPC\lib\dllmain.cpp" />
     <ClCompile Include="DiscordRPC\lib\rpc_connection.cpp" />
     <ClCompile Include="DiscordRPC\lib\serialization.cpp" />
     <ClCompile Include="dllmain.cpp" />

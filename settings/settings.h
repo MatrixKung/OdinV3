@@ -16,6 +16,7 @@ public:
 
 		// VISUALS TAB
 		bool visuals;
+		bool espAllies;
 		bool players;
 		bool tracers;
 		bool box;

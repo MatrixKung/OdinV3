@@ -21,6 +21,10 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParam
 	if (FunctionName == _xor_("Function TgClient.TgGameViewportClient.PostRender"))
 		MainLoop(((UTgGameViewportClient_PostRender_Params*)(pParams))->Canvas);
 
+	if (FunctionName == _xor_("Function Engine.GameViewportClient.HandleInputKey"))
+		printf("Pressed Key : %s\n", ((UGameViewportClient_HandleInputKey_Params*)(pParams))->Key.GetName().c_str());
+	
+
 	return spoof_call(game_rbx_jmp, ProcessEventOriginal, pObject, pFunction, pParams, pResult);
 }
 
