@@ -317,7 +317,7 @@ void ActorLoop(UCanvas* canvas) {
 			!Globals::WorldInfo ||
 			CurrentPawn == Globals::LocalPawn ||
 			CurrentPawn->Health < 1 ||
-			((CurrentPawnReplicationInfo->r_TaskForce->TeamIndex == Globals::ReplicationInfo->r_TaskForce->TeamIndex) && !config_system.item.espAllies)) {
+			CurrentPawnReplicationInfo->r_TaskForce->TeamIndex == Globals::ReplicationInfo->r_TaskForce->TeamIndex) {
 				CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
 				continue;
 		}
