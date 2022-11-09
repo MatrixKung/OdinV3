@@ -157,6 +157,18 @@ namespace utils {
 		return false;
 	}
 
+	bool IsPawnVisible(ATgPawn* pawn) {
+		if (!Globals::WorldInfo ||
+			!pawn) {
+			return false;
+		}
+
+		float lastRenderTime = pawn->Mesh->LastRenderTime;
+		float timeSeconds = Globals::WorldInfo->TimeSeconds;
+		
+		return (lastRenderTime > timeSeconds - 0.05f);
+	}
+
 	FBoneAtom GetBoneFromId(USkeletalMeshComponent* mesh, int id) {
 		int bones = mesh->SpaceBases.Num();
 		if (bones > 0) {
@@ -225,11 +237,9 @@ void Aimbot()
 	}
 
 	if (AimbotLockedPawn->Health > 1) {
-		FRotator AimRotation = FRotator{ 0, 0, 0 };
+		FRotator AimRotation, oldRotation = FRotator{ 0, 0, 0 };
 
-		float lastRenderTime = AimbotLockedPawn->Mesh->LastRenderTime;
-		float timeSeconds = Globals::WorldInfo->TimeSeconds;
-		bool isPawnVisible = (lastRenderTime > timeSeconds - 0.05f);
+		bool isPawnVisible = utils::IsPawnVisible(AimbotLockedPawn);
 
 		if (isPawnVisible) {
 			if (config_system.item.prediction) {
@@ -253,7 +263,15 @@ void Aimbot()
 			else {
 				if (!config_system.item.smooth) {
 					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
+
+					oldRotation = Globals::LocalController->Rotation;
 					Globals::LocalController->Rotation = AimRotation;
+
+					//Globals::LocalWeapon->InstantFire();
+					Globals::LocalController->bFire = true;
+					Globals::LocalWeapon->ForceStopFire();
+
+					Globals::LocalController->Rotation = oldRotation;
 				}
 				else {
 					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
@@ -283,8 +301,8 @@ void ActorLoop(UCanvas* canvas) {
 		ATgRepInfo_Player* CurrentPawnReplicationInfo = (ATgRepInfo_Player*)CurrentPawn->PlayerReplicationInfo;
 
 		// Doing it here else it's going to dissapear if there are now valid pawn
-		if (config_system.item.visuals && config_system.item.fov)
-			ZeroGUI::DrawCircle(FVector2D{ (float)Globals::width / 2, (float)Globals::height / 2 }, config_system.item.aimfov, config_system.item.resolution, ZeroGUI::Colors::ESP_Fov);
+		if (config_system.item.visuals && config_system.item.espFOV)
+			ZeroGUI::DrawCircle(FVector2D{ (float)Globals::width / 2, (float)Globals::height / 2 }, config_system.item.aimFOV, config_system.item.resolution, ZeroGUI::Colors::ESP_Fov);
 
 		if (!CurrentPawn ||
 			!CurrentPawn->Mesh ||
@@ -323,9 +341,7 @@ void ActorLoop(UCanvas* canvas) {
 				float flWidth = fabs((smax.Y - smin.Y) / 4);
 				float healthPercentage = CurrentPawn->Health / CurrentPawn->r_fCachedMaxHealth;
 
-				float lastRenderTime = CurrentPawn->Mesh->LastRenderTime;
-				float timeSeconds = Globals::WorldInfo->TimeSeconds;
-				bool isPawnVisible = (lastRenderTime > timeSeconds - 0.05f);
+				bool isPawnVisible = utils::IsPawnVisible(CurrentPawn);
 
 				FColor ESPColor = colors::White;
 				if (isPawnVisible)
@@ -422,12 +438,10 @@ void ActorLoop(UCanvas* canvas) {
 					printf("Total : %d\n\n", totalBones);
 					// TODO bonesPosition
 				}*/
-
-				
 			}
 		}
 
-		if (config_system.item.aimbot && o_getasynckeystate((DWORD)VK_LBUTTON)) { // Left mouse button
+		if (config_system.item.aimbot && o_getasynckeystate((DWORD)config_system.item.aimKey)) {
 			float ClosestPawn = 999999.0f;
 
 			int LocalTeam = Globals::ReplicationInfo->r_TaskForce->TeamIndex;
@@ -456,7 +470,7 @@ void ActorLoop(UCanvas* canvas) {
 				float cy = headPos.Y;
 				float crosshairDistance = maths::GetCrosshairDistance(cx, cy, ScreenCX, ScreenCY);
 
-				if (crosshairDistance < (float)config_system.item.aimfov) {
+				if (crosshairDistance < (float)config_system.item.aimFOV) {
 					if (crosshairDistance < ClosestPawn) {
 						ClosestPawn = crosshairDistance;
 						AimbotLockedPawn = CurrentPawn;
@@ -505,12 +519,12 @@ void MainLoop(UCanvas* canvas) {
 	Globals::height = canvas->SizeY;
 
 	canvas->Font = Globals::Engine->MediumFont;
-	utils::DrawText(canvas, FString(_xor_(TEXT(L"Odin 3.0.0b - TEST BUILD"))), FVector2D(10.f, 10.f), colors::Yellow);
-	utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu"))), FVector2D(10.f, 30.f), utils::getColor(config_system.item.ShowSexyMenu));
+	utils::DrawText(canvas, FString(_xor_(TEXT(L"Floppa 1.0.0 | By Wooteck (Xiloe)"))), FVector2D(10.f, 10.f), colors::Yellow);
+	utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu"))), FVector2D(10.f, 30.f), utils::getColor(config_system.item.showSexyMenu));
 
 	if (!Globals::SetObjects()) return;
 
-	if (o_getasynckeystate((DWORD)VK_INSERT) == -32767) config_system.item.ShowSexyMenu = !config_system.item.ShowSexyMenu;
+	if (o_getasynckeystate((DWORD)VK_INSERT) == -32767) config_system.item.showSexyMenu = !config_system.item.showSexyMenu;
 
 	if (config_system.item.visuals || config_system.item.aimbot)
 		ActorLoop(canvas);
@@ -518,7 +532,7 @@ void MainLoop(UCanvas* canvas) {
 	Exploits();
 
 	static auto menuPos = FVector2D{ 150.f, 150.f };
-	if (ZeroGUI::Window(_xor_("Odin V3.0.0a | By Wooteck (Xiloe)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.ShowSexyMenu)) {
+	if (ZeroGUI::Window(_xor_("Floppa 1.0.0 | By Wooteck (Xiloe)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
 		static int tab = 0;
 
 		if (ZeroGUI::ButtonTab(_xor_("Aimbot"), FVector2D{ 100.f, 25.f }, tab == 0))
@@ -527,10 +541,12 @@ void MainLoop(UCanvas* canvas) {
 			tab = 1;
 		if (ZeroGUI::ButtonTab(_xor_("Exploits"), FVector2D{ 100.f, 25.f }, tab == 2))
 			tab = 2;
-		if (ZeroGUI::ButtonTab(_xor_("Colors"), FVector2D{ 100.f, 25.f }, tab == 3))
+		if (ZeroGUI::ButtonTab(_xor_("Settings"), FVector2D{ 100.f, 25.f }, tab == 3))
 			tab = 3;
 		if (ZeroGUI::ButtonTab(_xor_("Extra"), FVector2D{ 100.f, 25.f }, tab == 4))
 			tab = 4;
+		if (ZeroGUI::ButtonTab(_xor_("DEBUG"), FVector2D{ 100.f, 25.f }, tab == 5))
+			tab = 5;
 
 		ZeroGUI::NextColumn(130.0f);
 
@@ -538,13 +554,14 @@ void MainLoop(UCanvas* canvas) {
 		{
 			case 0:
 			{
-				ZeroGUI::Checkbox(_xor_("Aimbot"), &config_system.item.aimbot);
+				ZeroGUI::Checkbox(_xor_("Aimbot"), &config_system.item.aimbot); ZeroGUI::SameLine();
+				ZeroGUI::Hotkey(_xor_("Key"), FVector2D{ 100.0f, 25.0f }, &config_system.item.aimKey);
 				if (config_system.item.aimbot) {
-					ZeroGUI::Checkbox(_xor_("Prediction"), &config_system.item.prediction);
-					ZeroGUI::SliderFloat(_xor_("Aimbot FOV"), &config_system.item.aimfov, 30.0f, 150.0f);
+					ZeroGUI::Checkbox(_xor_("Projectile Prediction"), &config_system.item.prediction);
 					ZeroGUI::Checkbox(_xor_("Smooth"), &config_system.item.smooth);
 					if (config_system.item.smooth)
 						ZeroGUI::SliderFloat(_xor_("Smoothess"), &config_system.item.smoothness, 30.0f, 800.0f);
+					ZeroGUI::SliderFloat(_xor_("FOV"), &config_system.item.aimFOV, 30.0f, 150.0f);
 				}
 				break;
 			}
@@ -553,17 +570,20 @@ void MainLoop(UCanvas* canvas) {
 			{
 				ZeroGUI::Checkbox(_xor_("Visuals"), &config_system.item.visuals);
 				if (config_system.item.visuals) {
-					ZeroGUI::Checkbox(_xor_("Aimbot FOV"), &config_system.item.fov);
-					if (config_system.item.fov)
-						ZeroGUI::SliderInt(_xor_("Resolution"), &config_system.item.resolution, 4, 64);
-
+					ZeroGUI::Checkbox(_xor_("Aimbot FOV"), &config_system.item.espFOV);
 					ZeroGUI::Checkbox(_xor_("Tracers"), &config_system.item.tracers);
 					ZeroGUI::Checkbox(_xor_("2D Box"), &config_system.item.box);
 					ZeroGUI::Checkbox(_xor_("Names"), &config_system.item.players);
 					if (config_system.item.players)
 						ZeroGUI::Checkbox(_xor_("Health"), &config_system.item.health);
-					ZeroGUI::Checkbox(_xor_("Bones"), &config_system.item.bones);
 				}
+
+				ZeroGUI::Text(_xor_("Colors"));
+
+				ZeroGUI::ColorPicker(_xor_("Text"), &ZeroGUI::Colors::ESP_Text); ZeroGUI::SameLine();
+				ZeroGUI::ColorPicker(_xor_("FOV"), &ZeroGUI::Colors::ESP_Fov);
+				ZeroGUI::ColorPicker(_xor_("Visible"), &ZeroGUI::Colors::Visible); ZeroGUI::SameLine();
+				ZeroGUI::ColorPicker(_xor_("Invisible"), &ZeroGUI::Colors::Not_Visible);
 				
 				break;
 			}
@@ -573,12 +593,27 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Checkbox(_xor_("No recoil"), &config_system.item.recoil); ZeroGUI::SameLine();
 				ZeroGUI::Checkbox(_xor_("No spread"), &config_system.item.spread);
 				ZeroGUI::Checkbox(_xor_("Glow"), &config_system.item.glow); ZeroGUI::SameLine();
-				ZeroGUI::Checkbox(_xor_("3rd person"), &config_system.item.thirdPerson); ZeroGUI::SameLine();
-				ZeroGUI::Checkbox(_xor_("Speedhack"), &config_system.item.speedhack);
+				ZeroGUI::Checkbox(_xor_("3rd person"), &config_system.item.thirdPerson);
 				break;
 			}
 
 			case 3:
+			{
+				ZeroGUI::Text(_xor_("Config (WIP)"));
+				
+				if (ZeroGUI::Button(_xor_("Save"), FVector2D{ 100.0f, 25.0f })) {
+					// ...
+				}
+
+				ZeroGUI::SameLine();
+				if (ZeroGUI::Button(_xor_("Load"), FVector2D{ 100.0f, 25.0f })) {
+					// ...
+				}
+
+				break;
+			}
+
+			case 4:
 			{
 				ZeroGUI::Text(_xor_("Text"));
 
@@ -623,15 +658,24 @@ void MainLoop(UCanvas* canvas) {
 				break;
 			}
 
-			case 4:
+			case 5:
 			{
-				ZeroGUI::Text(_xor_("ESP Colors"));
+				ZeroGUI::Text(_xor_("DEBUG"));
 
-				ZeroGUI::ColorPicker(_xor_("Text"), &ZeroGUI::Colors::ESP_Text); ZeroGUI::SameLine();
-				ZeroGUI::ColorPicker(_xor_("FOV"), &ZeroGUI::Colors::ESP_Fov);// ZeroGUI::SameLine();
-				//ZeroGUI::ColorPicker(_xor_("2D Box"), &ZeroGUI::Colors::ESP_Box);
-				ZeroGUI::ColorPicker(_xor_("Visible"), &ZeroGUI::Colors::Visible); ZeroGUI::SameLine();
-				ZeroGUI::ColorPicker(_xor_("Not Visible"), &ZeroGUI::Colors::Not_Visible);
+				static bool mounted = false;
+				static bool recoil = true;
+				ZeroGUI::Checkbox(_xor_("r_bIsMounted"), &mounted);
+				ZeroGUI::Checkbox(_xor_("m_bUsesRecoil"), &recoil);
+
+				if (mounted)
+					((ATgPawn*)Globals::LocalPawn)->r_bIsMounted = true;
+				else
+					((ATgPawn*)Globals::LocalPawn)->r_bIsMounted = false;
+
+				if (recoil)
+					((ATgPawn*)Globals::LocalPawn)->m_bUsesRecoil = true;
+				else
+					((ATgPawn*)Globals::LocalPawn)->m_bUsesRecoil = false;
 
 				break;
 			}
@@ -639,5 +683,5 @@ void MainLoop(UCanvas* canvas) {
 	}
 
 	ZeroGUI::Render();
-	ZeroGUI::Draw_Cursor(config_system.item.ShowSexyMenu);
+	ZeroGUI::Draw_Cursor(config_system.item.showSexyMenu);
 }

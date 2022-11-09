@@ -4,14 +4,15 @@ class c_config final {
 public:
 	struct {
 		// Main
-		bool ShowSexyMenu;
+		bool showSexyMenu;
 
 		// AIMBOT TAB
 		bool aimbot;
 		bool prediction;
 		bool smooth;
 		float smoothness;
-		float aimfov;
+		float aimFOV;
+		int aimKey;
 
 		// VISUALS TAB
 		bool visuals;
@@ -19,7 +20,7 @@ public:
 		bool tracers;
 		bool box;
 		bool health;
-		bool fov;
+		bool espFOV;
 		int resolution;
 		bool bones;
 
@@ -29,6 +30,7 @@ public:
 		bool glow;
 		bool thirdPerson;
 		bool speedhack;
+		int FOV;
 	} item;
 };
 

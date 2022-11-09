@@ -13,13 +13,6 @@ tProcessEvent ProcessEventOriginal = nullptr;
 uintptr_t TEB;
 static const void* game_rbx_jmp;
 
-LONG WINAPI SimplestCrashHandler(EXCEPTION_POINTERS* ExceptionInfo)
-{
-	std::cout << _xor_("Crash detected at 0x") << ExceptionInfo->ExceptionRecord->ExceptionAddress << _xor_(" by 0x") << std::hex << ExceptionInfo->ExceptionRecord->ExceptionCode << std::endl;
-
-	return EXCEPTION_EXECUTE_HANDLER;
-}
-
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParams, __int64 pResult) {
 	TEB = __readgsqword(0x58u);
 
@@ -45,14 +38,15 @@ bool HookKeyState() {
 }
 
 void Main() {
-	SetUnhandledExceptionFilter(SimplestCrashHandler);
-
 #ifdef DEBUG
 	AllocConsole();
 	freopen(_xor_("conin$"), _xor_("r"), stdin);
 	freopen(_xor_("conout$"), _xor_("w"), stdout);
 	freopen(_xor_("conout$"), _xor_("w"), stderr);
 #endif // DEBUG
+
+	// Discord
+	discord_rpc::init();
 
 	// Settings helper
 	ResetSettings();
@@ -141,6 +135,8 @@ void Main() {
 	DetourUpdateThread(GetCurrentThread());
 	DetourAttach(&(PVOID&)ProcessEventOriginal, ProcessEventHook);
 	DetourTransactionCommit();
+
+	discord_rpc::update();
 }
 
 BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {

@@ -49,7 +49,7 @@ namespace ZeroGUI
 		FColor Button_Active = FColor{ 210, 112, 166, 255 };
 
 		FColor Checkbox_Idle = FColor{ 54, 54, 54, 255 };
-		FColor Checkbox_Hovered = FColor{ 210, 112, 166, 255 };
+		FColor Checkbox_Hovered = FColor{ 187, 25, 7, 255 };
 		FColor Checkbox_Enabled = FColor{ 210, 112, 166, 255 };
 
 		FColor Combobox_Idle = FColor{ 54, 54, 54, 255 };
@@ -65,8 +65,8 @@ namespace ZeroGUI
 		FColor Pixel_Outline = FColor{ 0, 0, 0, 255 };
 
 		// ESP
-		FColor Visible = FColor{ 0, 0, 255, 255 };
-		FColor Not_Visible = FColor{ 255, 0, 0, 255 };
+		FColor Visible = FColor{ 255, 0, 0, 255 };
+		FColor Not_Visible = FColor{ 255, 255, 255, 255 };
 
 		FColor ESP_Text = FColor{ 255, 255, 255, 255 };
 		FColor ESP_Box = FColor{ 255, 0, 0, 255 };
@@ -851,11 +851,11 @@ namespace ZeroGUI
 
 		if (virtualKey == VK_LBUTTON)
 		{
-			return _xor_("MOUSE0");
+			return _xor_("LMOUSE");
 		}
 		if (virtualKey == VK_RBUTTON)
 		{
-			return _xor_("MOUSE1");
+			return _xor_("RMOUSE");
 		}
 		if (virtualKey == VK_MBUTTON)
 		{

@@ -17,6 +17,9 @@
 #include <stdio.h>
 #include <intrin.h>
 
+#include "utils/rpc.h"
+#pragma comment(lib, "discord-rpc.lib")
+
 #include <d3dx9math.h>
 #pragma comment(lib, "d3dx9.lib")
 

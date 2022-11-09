@@ -76,7 +76,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>test</TargetName>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;C:\Users\coochie\source\repos\Odin V3\DiscordRPC;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -162,6 +162,50 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="config\ini.h" />
+    <ClInclude Include="DiscordRPC\lib\backoff.h" />
+    <ClInclude Include="DiscordRPC\lib\connection.h" />
+    <ClInclude Include="DiscordRPC\lib\discord_register.h" />
+    <ClInclude Include="DiscordRPC\lib\discord_rpc.h" />
+    <ClInclude Include="DiscordRPC\lib\msg_queue.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\allocators.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\document.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\encodedstream.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\encodings.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\error\en.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\error\error.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\filereadstream.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\filewritestream.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\fwd.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\clzll.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\itoa.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\meta.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\pow10.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\regex.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\stack.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\strtod.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\internal\swap.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\memorybuffer.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\memorystream.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\pointer.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\prettywriter.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\rapidjson.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\reader.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\schema.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\stream.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\stringbuffer.h" />
+    <ClInclude Include="DiscordRPC\lib\rapidjson\writer.h" />
+    <ClInclude Include="DiscordRPC\lib\rpc_connection.h" />
+    <ClInclude Include="DiscordRPC\lib\serialization.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="process_event.h" />
     <ClInclude Include="rendering\render.h" />
@@ -232,12 +276,19 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="utils\config.h" />
     <ClInclude Include="utils\ntapi.h" />
+    <ClInclude Include="Utils\rpc.h" />
     <ClInclude Include="utils\scanner.h" />
     <ClInclude Include="utils\skcrypt.h" />
     <ClInclude Include="utils\TEB.h" />
     <ClInclude Include="utils\utils_importer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DiscordRPC\lib\connection_win.cpp" />
+    <ClCompile Include="DiscordRPC\lib\discord_register_win.cpp" />
+    <ClCompile Include="DiscordRPC\lib\discord_rpc.cpp" />
+    <ClCompile Include="DiscordRPC\lib\dllmain.cpp" />
+    <ClCompile Include="DiscordRPC\lib\rpc_connection.cpp" />
+    <ClCompile Include="DiscordRPC\lib\serialization.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="SDK\PL_AkAudio_functions.cpp" />
     <ClCompile Include="SDK\PL_Basic.cpp" />
@@ -260,6 +311,7 @@
     <ClCompile Include="SDK\PL_WinDrv_functions.cpp" />
     <ClCompile Include="SDK\PL_XAudio2_functions.cpp" />
     <ClCompile Include="settings\settings.cpp" />
+    <ClCompile Include="Utils\rpc.cpp" />
     <ClCompile Include="utils\TEB.cpp" />
   </ItemGroup>
   <ItemGroup>
