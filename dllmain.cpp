@@ -5,12 +5,14 @@
 #include <detours/detours.h>
 #include "utils/TEB.h"
 
+#include "memory_manager.h"
+
 #define DEBUG
 
 HMODULE moduleBase;
 tProcessEvent ProcessEventOriginal = nullptr;
 
-uintptr_t TEB;
+uintptr_t TEB, xorKey;
 static const void* game_rbx_jmp;
 
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParams, __int64 pResult) {
@@ -104,11 +106,17 @@ void Main() {
 	}*/
 
 	moduleBase = (HMODULE)imageBase();
+	const IMAGE_DOS_HEADER* DOSHeader = reinterpret_cast<IMAGE_DOS_HEADER*>(moduleBase);
+	const IMAGE_NT_HEADERS* NtHeaders = reinterpret_cast<IMAGE_NT_HEADERS*>(reinterpret_cast<long long>(moduleBase) + DOSHeader->e_lfanew);
+	const DWORD SizeOfImage = NtHeaders->OptionalHeader.SizeOfImage;
 
-	GObject = reinterpret_cast<decltype(GObject)>((DWORD64)(moduleBase)+0x388A2BC);
-	GName = reinterpret_cast<decltype(GObject)>((DWORD64)(moduleBase)+0x388A24C);
-	Globals::UEngineAddr = *(uintptr_t*)((uintptr_t)moduleBase+0x389F850);
-	ProcessEventOriginal = (tProcessEvent)((DWORD64)(moduleBase)+0x180620);
+	GObject = reinterpret_cast<decltype(GObject)>(GetMovAddress(PatternScan<void*>(_xor_("48 8B 05 ? ? ? ? 4C 8B 04 0A 4C 33 04 F0 44"), (uint64_t)moduleBase, SizeOfImage)));
+	GName = reinterpret_cast<decltype(GName)>(GetMovAddress(PatternScan<void*>(_xor_("48 8B 05 ? ? ? ? B9 ? ? ? ? 48 8B 0C 0A 48 BA"), (uint64_t)moduleBase, SizeOfImage)));
+	Globals::UEngineAddr = *(uintptr_t*)(GetMovAddress(PatternScan<void*>(_xor_("48 8B 0D ? ? ? ? 48 85 C9 0F 84 ? ? ? ? 48 39 B9 ? ? ? ?"), (uint64_t)moduleBase, SizeOfImage)));
+	ProcessEventOriginal = (tProcessEvent)(GetCallAddress(PatternScan<void*>(_xor_("E8 ? ? ? ? 8D 4E FD"), (uint64_t)moduleBase, SizeOfImage)));
+
+	void* xorFunc = GetCallAddress(PatternScan<void*>(_xor_("E8 ? ? ? ? 85 C0 75 0F 48 8B 03"), (uint64_t)moduleBase, SizeOfImage));
+	xorKey = (uintptr_t)GetAndAddress((void*)((DWORD64)xorFunc + 0x63));
 
 	game_rbx_jmp = gadget(NULL);
 
@@ -122,6 +130,8 @@ void Main() {
 	printf(_xor_("GNames       : 0x%p\n"), GName);
 	printf(_xor_("UEngine      : 0x%p\n"), Globals::UEngineAddr);
 	printf(_xor_("ProcessEvent : 0x%p\n"), (uintptr_t*)ProcessEventOriginal);
+	printf(_xor_("XOR          : 0x%p\n"), xorFunc);
+	printf(_xor_("XOR Key      : 0x%p\n"), xorKey);
 
 	Globals::Engine = (UEngine*)Globals::UEngineAddr;
 

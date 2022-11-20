@@ -1,10 +1,8 @@
 #pragma once
-#include "ntapi.h"
+#include <Windows.h>
 #include "../utils/skcrypt.h"
 
 extern HMODULE moduleBase;
-extern uintptr_t TEB;
+extern uintptr_t TEB, xorKey;
 
-//HANDLE GetFirstThread();
-//uintptr_t StealTLS();
 uintptr_t GetXorKey(size_t index);

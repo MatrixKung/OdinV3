@@ -207,6 +207,7 @@
     <ClInclude Include="DiscordRPC\lib\rpc_connection.h" />
     <ClInclude Include="DiscordRPC\lib\serialization.h" />
     <ClInclude Include="globals.h" />
+    <ClInclude Include="memory_manager.h" />
     <ClInclude Include="process_event.h" />
     <ClInclude Include="rendering\render.h" />
     <ClInclude Include="rendering\ZeroGUI.h" />
@@ -275,7 +276,6 @@
     <ClInclude Include="spoofer\spoof.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="utils\config.h" />
-    <ClInclude Include="utils\ntapi.h" />
     <ClInclude Include="Utils\rpc.h" />
     <ClInclude Include="utils\scanner.h" />
     <ClInclude Include="utils\skcrypt.h" />

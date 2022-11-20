@@ -261,9 +261,6 @@
     <ClInclude Include="utils\config.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="utils\ntapi.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="utils\scanner.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
@@ -419,6 +416,9 @@
     </ClInclude>
     <ClInclude Include="DiscordRPC\lib\rapidjson\msinttypes\stdint.h">
       <Filter>DiscordRPC\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="memory_manager.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
