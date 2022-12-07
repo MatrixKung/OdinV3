@@ -60,180 +60,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SDK\PL_AkAudio_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_AkAudio_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_AkAudio_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Basic.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_BattleClient_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_BattleClient_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_BattleClient_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_BattleGame_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_BattleGame_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_BattleGame_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Core_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Core_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Core_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Engine_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Engine_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Engine_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_GameFramework_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_GameFramework_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_GameFramework_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_GFxUI_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_GFxUI_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_GFxUI_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_IpDrv_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_IpDrv_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_IpDrv_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemPC_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemPC_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemPC_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_PlatformCommon_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_PlatformCommon_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_PlatformCommon_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgClient_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgClient_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgClient_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgGame_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgGame_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgGame_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgGameContent_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgGameContent_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_TgGameContent_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Vivox_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Vivox_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_Vivox_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_WinDrv_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_WinDrv_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_WinDrv_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_XAudio2_classes.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_XAudio2_parameters.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\PL_XAudio2_structs.hpp">
-      <Filter>Header Files\SDK</Filter>
-    </ClInclude>
     <ClInclude Include="globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -420,8 +246,218 @@
     <ClInclude Include="memory_manager.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="SDK\PL_AkAudio_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_AkAudio_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_AkAudio_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Basic.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_BattleClient_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_BattleClient_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_BattleClient_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_BattleGame_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_BattleGame_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_BattleGame_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Core_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Core_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Core_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Engine_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Engine_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Engine_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_GameFramework_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_GameFramework_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_GameFramework_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_GFxUI_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_GFxUI_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_GFxUI_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_IpDrv_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_IpDrv_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_IpDrv_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemDiscord_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemEpic_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemLuna_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemLuna_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemLuna_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemPC_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemPC_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemPC_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_OnlineSubsystemSteamworks_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_PlatformCommon_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_PlatformCommon_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_PlatformCommon_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgClient_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgClient_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgClient_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgGame_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgGame_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgGame_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgGameContent_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgGameContent_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_TgGameContent_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Vivox_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Vivox_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_Vivox_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_WinDrv_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_WinDrv_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_WinDrv_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_XAudio2_classes.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_XAudio2_parameters.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\PL_XAudio2_structs.hpp">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\TEB.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="settings\settings.cpp">
+      <Filter>Source Files\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\rpc.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\lib\connection_win.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\lib\discord_register_win.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\lib\discord_rpc.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\lib\rpc_connection.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\lib\serialization.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
     <ClCompile Include="SDK\PL_AkAudio_functions.cpp">
       <Filter>Source Files\SDK</Filter>
     </ClCompile>
@@ -455,6 +491,9 @@
     <ClCompile Include="SDK\PL_OnlineSubsystemEpic_functions.cpp">
       <Filter>Source Files\SDK</Filter>
     </ClCompile>
+    <ClCompile Include="SDK\PL_OnlineSubsystemLuna_functions.cpp">
+      <Filter>Source Files\SDK</Filter>
+    </ClCompile>
     <ClCompile Include="SDK\PL_OnlineSubsystemPC_functions.cpp">
       <Filter>Source Files\SDK</Filter>
     </ClCompile>
@@ -481,33 +520,6 @@
     </ClCompile>
     <ClCompile Include="SDK\PL_XAudio2_functions.cpp">
       <Filter>Source Files\SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utils\TEB.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="settings\settings.cpp">
-      <Filter>Source Files\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\rpc.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="DiscordRPC\lib\connection_win.cpp">
-      <Filter>DiscordRPC</Filter>
-    </ClCompile>
-    <ClCompile Include="DiscordRPC\lib\discord_register_win.cpp">
-      <Filter>DiscordRPC</Filter>
-    </ClCompile>
-    <ClCompile Include="DiscordRPC\lib\discord_rpc.cpp">
-      <Filter>DiscordRPC</Filter>
-    </ClCompile>
-    <ClCompile Include="DiscordRPC\lib\rpc_connection.cpp">
-      <Filter>DiscordRPC</Filter>
-    </ClCompile>
-    <ClCompile Include="DiscordRPC\lib\serialization.cpp">
-      <Filter>DiscordRPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

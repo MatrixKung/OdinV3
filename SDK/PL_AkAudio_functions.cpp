@@ -13,9 +13,9 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function AkAudio.AkAmbientSound.StopPlayback
-// (Iterator, Singular, Net, NetReliable, Exec, Static, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Operator, HasOptionalParms)
 
-void AAkAmbientSound::STATIC_StopPlayback()
+void AAkAmbientSound::StopPlayback()
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function AkAudio.AkAmbientSound.StopPlayback"));
 
@@ -30,9 +30,9 @@ void AAkAmbientSound::STATIC_StopPlayback()
 
 
 // Function AkAudio.AkAmbientSound.StartPlayback
-// (Defined, Singular, Net, NetReliable, Exec, Static, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Operator, HasOptionalParms)
 
-void AAkAmbientSound::STATIC_StartPlayback()
+void AAkAmbientSound::StartPlayback()
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function AkAudio.AkAmbientSound.StartPlayback"));
 

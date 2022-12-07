@@ -47,8 +47,8 @@ public:
 	}
 
 
-	void STATIC_StopPlayback();
-	void STATIC_StartPlayback();
+	void StopPlayback();
+	void StartPlayback();
 };
 
 

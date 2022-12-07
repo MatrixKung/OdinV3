@@ -2,7 +2,7 @@
 #include <Windows.h>
 
 #ifdef _MSC_VER
-    #pragma pack(push, 0x4)
+	#pragma pack(push, 0x4)
 #endif
 
 inline PBYTE GName = 0;

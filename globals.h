@@ -106,6 +106,8 @@ namespace Globals {
 	AWorldInfo* WorldInfo;
 	ATgDevice* LocalWeapon;
 	
+	void* xorFunc;
+
 	int width, height;
 	float FOV;
 
@@ -123,7 +125,7 @@ namespace Globals {
 	bool SetObjects()
 	{
 		// Set Engine
-		Engine = (UEngine*)(UEngineAddr);
+		Engine = (UEngine*)(*(uintptr_t*)UEngineAddr);
 		if (!Engine) return false;
 
 		// Set Local Player

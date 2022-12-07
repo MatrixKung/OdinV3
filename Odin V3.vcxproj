@@ -244,6 +244,9 @@
     <ClInclude Include="SDK\PL_OnlineSubsystemEpic_classes.hpp" />
     <ClInclude Include="SDK\PL_OnlineSubsystemEpic_parameters.hpp" />
     <ClInclude Include="SDK\PL_OnlineSubsystemEpic_structs.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemLuna_classes.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemLuna_parameters.hpp" />
+    <ClInclude Include="SDK\PL_OnlineSubsystemLuna_structs.hpp" />
     <ClInclude Include="SDK\PL_OnlineSubsystemPC_classes.hpp" />
     <ClInclude Include="SDK\PL_OnlineSubsystemPC_parameters.hpp" />
     <ClInclude Include="SDK\PL_OnlineSubsystemPC_structs.hpp" />
@@ -300,6 +303,7 @@
     <ClCompile Include="SDK\PL_IpDrv_functions.cpp" />
     <ClCompile Include="SDK\PL_OnlineSubsystemDiscord_functions.cpp" />
     <ClCompile Include="SDK\PL_OnlineSubsystemEpic_functions.cpp" />
+    <ClCompile Include="SDK\PL_OnlineSubsystemLuna_functions.cpp" />
     <ClCompile Include="SDK\PL_OnlineSubsystemPC_functions.cpp" />
     <ClCompile Include="SDK\PL_OnlineSubsystemSteamworks_functions.cpp" />
     <ClCompile Include="SDK\PL_PlatformCommon_functions.cpp" />

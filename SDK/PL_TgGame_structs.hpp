@@ -287,6 +287,12 @@ namespace SDK
 #define CONST_TGPID_HP5                                          1011
 #define CONST_OBJECTIVE_FRIENDLY_SPECIALFX                       2929
 #define CONST_CHAMPION_ID_PVE_BARIK_TURRET1                      2326
+#define CONST_BNT_CONDITION_DELTA_GODS_CAPTURE_POINT             425
+#define CONST_TgGamePhase_Push_GAMEEVENT_GAMETHREAD_POLL         41
+#define CONST_WALL_KNOCKBACK_HIT_CHECK_HEIGHT                    43.0f
+#define CONST_ITEM_SKIN_WEAPON_ANDROXUS_PS4                      15147
+#define CONST_TgAIController_BehaviorGod_GAMEEVENT_TEAM_GAME_SCORE 51
+#define CONST_CHAMPION_ID_NYX                                    2560
 #define CONST_CHAMPION_ID_PVE_BARIK_TURRET2                      2337
 #define CONST_BNT_ACTION_SELECT_COMBAT_LEASH                     1048596
 #define CONST_SMITE_MIDPOINT_ROUTE_THRESHOLD                     176.0f
@@ -416,8 +422,8 @@ namespace SDK
 #define CONST_COMPLETE_DECK_ANDROXUS                             782
 #define CONST_DODM_SHOW_OWNED_INDICATOR                          1
 #define CONST_COMPLETE_DECK_KINESSA                              793
-#define CONST_BNT_ACTION_UPDATE_TARGET_LAST_KNOWN_LOCATION       1048720
 #define CONST_TGPID_FORCE_3P_VIEW                                1654
+#define CONST_BNT_ACTION_UPDATE_TARGET_LAST_KNOWN_LOCATION       1048720
 #define CONST_BNT_CONDITION_NUM_GODS_NEAR_DEPLOYABLE             438
 #define CONST_LOCAL_SILHOUETTE_RED                               1.0f
 #define CONST_MIN_FOV                                            80
@@ -817,7 +823,6 @@ namespace SDK
 #define CONST_BNT_UTILITY_FILTER_ASSAULTRANGETYPE                268435462
 #define CONST_BNT_CONDITION_NUM_DEATHS                           424
 #define CONST_TGPID_CREDITS                                      399
-#define CONST_BNT_CONDITION_DELTA_GODS_CAPTURE_POINT             425
 #define CONST_TGTT_ATTACK_GROUND_TARGET_BOT                      10382
 #define CONST_BNT_CONDITION_IS_LANEPUSHER_ACTIVE                 426
 #define CONST_BNT_CONDITION_DISTANCE_FROM_SQUAD_TARGET           428
@@ -1097,6 +1102,7 @@ namespace SDK
 #define CONST_CUE_ATTACKFROMSNIPER_PERIOD                        30.0
 #define CONST_TGPID_ENERGY                                       1004
 #define CONST_HEAL_BEAM_FX_ID                                    7224
+#define CONST_ENVIRONMENT_KILL_DEVICE                            11310
 #define CONST_TGPID_PROTECTION_POLYMORPH                         2148
 #define CONST_MEDIUM_DIFFICULTY_CONFIG_ID                        64
 #define CONST_CONTRIBUTION_BUFFEE                                0.25f
@@ -1112,6 +1118,7 @@ namespace SDK
 #define CONST_TGPID_SLOW_IMMUNITY                                1746
 #define CONST_TGPID_JUMP_PENALTY_IMMUNITY                        1753
 #define CONST_TGPID_TGEFFECTMODIFYEFFECT_LIFETIME                1950
+#define CONST_KASUMI_REVEAL_EFFECT_GROUP                         65647
 #define CONST_TGPID_REMOVE_PROTECTION_CC                         1560
 #define CONST_TGPID_MISSING_HEALTH                               211
 #define CONST_TGPID_CAPTURE_TIME_EXTENTION                       300
@@ -1134,8 +1141,8 @@ namespace SDK
 #define CONST_TgPawn_GAMEEVENT_TEAM_CREATED                      50
 #define CONST_TGPID_RESPAWN_DELAY                                173
 #define CONST_TgGame_Paladins_GAMEEVENT_TEAM_CREATED             50
-#define CONST_TGPID_SPAWN_DELAY                                  174
 #define CONST_COOLDOWN_SERVER_GRACE                              0.5f
+#define CONST_TGPID_SPAWN_DELAY                                  174
 #define CONST_TGPID_TASK_FORCE_NUMBER                            176
 #define CONST_TGPID_SELECTION_METHOD                             178
 #define CONST_TGPID_BOT_SELECTION_LIST                           179
@@ -1346,10 +1353,6 @@ namespace SDK
 #define CONST_TgAIController_BehaviorGod_GAMEEVENT_GAMETHREAD_POLL 41
 #define CONST_PRO_DIFFICULTY_CONFIG_ID                           66
 #define CONST_TgAIController_BehaviorGod_GAMEEVENT_FRAMETIME_POLL 43
-#define CONST_TgGamePhase_Push_GAMEEVENT_GAMETHREAD_POLL         41
-#define CONST_WALL_KNOCKBACK_HIT_CHECK_HEIGHT                    43.0f
-#define CONST_ITEM_SKIN_WEAPON_ANDROXUS_PS4                      15147
-#define CONST_TgAIController_BehaviorGod_GAMEEVENT_TEAM_GAME_SCORE 51
 #define CONST_GTT_HUD_SPECIAL                                    15101
 #define CONST_TgAIController_BehaviorGod_GAMEEVENT_TEAM_ROUND_WON 5
 #define CONST_TgAIController_BehaviorGod_GAMEEVENT_PLAYER_LOGOUT 101

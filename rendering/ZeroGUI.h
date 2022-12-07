@@ -20,17 +20,17 @@ namespace ZeroGUI
 			FVector2D oldPos = FVector2D(canvas->CurX, canvas->CurY);
 			FColor oldColor = canvas->DrawColor;
 
-			canvas->SetPos(pos.X, pos.Y, 0.f);
-			canvas->SetDrawColor(color.R, color.G, color.B, color.A);
+			canvas->STATIC_SetPos(pos.X, pos.Y, 0.f);
+			canvas->STATIC_SetDrawColor(color.R, color.G, color.B, color.A);
 
-			canvas->STATIC_DrawText(FString(s2wc(text)), false, scale.X, scale.Y, EDisplayPlane::DISPLAYPLANE_HUD, renderInfo);
+			canvas->DrawText(FString(s2wc(text)), false, scale.X, scale.Y, EDisplayPlane::DISPLAYPLANE_HUD, renderInfo);
 
-			canvas->SetPos(oldPos.X, oldPos.Y, 0.f);
-			canvas->SetDrawColor(oldColor.R, oldColor.G, oldColor.B, oldColor.A);
+			canvas->STATIC_SetPos(oldPos.X, oldPos.Y, 0.f);
+			canvas->STATIC_SetDrawColor(oldColor.R, oldColor.G, oldColor.B, oldColor.A);
 		}
 
 		void DrawLine(UCanvas* canvas, FVector2D from, FVector2D to, FColor color) {
-			canvas->STATIC_Draw2DLine(from.X, from.Y, to.X, to.Y, color);
+			canvas->Draw2DLine(from.X, from.Y, to.X, to.Y, color);
 		}
 	}
 
@@ -49,7 +49,7 @@ namespace ZeroGUI
 		FColor Button_Active = FColor{ 210, 112, 166, 255 };
 
 		FColor Checkbox_Idle = FColor{ 54, 54, 54, 255 };
-		FColor Checkbox_Hovered = FColor{ 187, 25, 7, 255 };
+		FColor Checkbox_Hovered = FColor{ 104, 32, 71, 255 };
 		FColor Checkbox_Enabled = FColor{ 210, 112, 166, 255 };
 
 		FColor Combobox_Idle = FColor{ 54, 54, 54, 255 };
@@ -183,7 +183,7 @@ namespace ZeroGUI
 		//POINT cursorPos;
 		//GetCursorPos(&cursorPos);
 		//return FVector2D{ (float)cursorPos.x, (float)cursorPos.y };
-		return Globals::LocalPlayer->ViewportClient->STATIC_GetMousePosition();
+		return Globals::LocalPlayer->ViewportClient->GetMousePosition();
 	}
 	bool MouseInZone(FVector2D pos, FVector2D size)
 	{
@@ -585,8 +585,9 @@ namespace ZeroGUI
 	{
 		elements_count++;
 
-		FVector2D size = FVector2D{ 240, 50 };
-		FVector2D slider_size = FVector2D{ 200, 10 };
+		FVector2D size = FVector2D{ 210, 40 };
+		FVector2D slider_size = FVector2D{ 170, 7 };
+		FVector2D adjust_zone = FVector2D{ 0, 20 };
 		FVector2D padding = FVector2D{ 10, 15 };
 		FVector2D pos = FVector2D{ menu_pos.X + padding.X + offset_x, menu_pos.Y + padding.Y + offset_y };
 		if (sameLine)
@@ -601,7 +602,7 @@ namespace ZeroGUI
 			pushYvalue = 0.0f;
 			offset_y = pos.Y - menu_pos.Y;
 		}
-		bool isHovered = MouseInZone(FVector2D{ pos.X, pos.Y + slider_size.Y + padding.Y }, slider_size);
+		bool isHovered = MouseInZone(FVector2D{ pos.X, pos.Y + slider_size.Y + padding.Y - adjust_zone.Y }, FVector2D{ slider_size.X, slider_size.Y + adjust_zone.Y * 1.5f });
 
 		if (!sameLine)
 			offset_y += size.Y + padding.Y;
@@ -621,32 +622,32 @@ namespace ZeroGUI
 			}
 
 			drawFilledRect(FVector2D{ pos.X, pos.Y + slider_size.Y + padding.Y }, slider_size.X, slider_size.Y, Colors::Slider_Hovered);
-			drawFilledRect(FVector2D{ pos.X, pos.Y + slider_size.Y + padding.Y + 5.0f }, 5.0f, 5.0f, Colors::Slider_Progress);
+			DrawFilledCircle(FVector2D{ pos.X, pos.Y + padding.Y + 9.3f }, 3.1f, Colors::Slider_Progress);
+			DrawFilledCircle(FVector2D{ pos.X + slider_size.X, pos.Y + padding.Y + 9.3f }, 3.1f, Colors::Slider_Hovered);
 
 			hover_element = true;
 		}
 		else
 		{
 			drawFilledRect(FVector2D{ pos.X, pos.Y + slider_size.Y + padding.Y }, slider_size.X, slider_size.Y, Colors::Slider_Idle);
-			drawFilledRect(FVector2D{ pos.X, pos.Y + slider_size.Y + padding.Y + 5.0f }, 5.0f, 5.0f, Colors::Slider_Progress);
+			DrawFilledCircle(FVector2D{ pos.X, pos.Y + padding.Y + 9.3f }, 3.1f, Colors::Slider_Progress);
+			DrawFilledCircle(FVector2D{ pos.X + slider_size.X, pos.Y + padding.Y + 9.3f }, 3.1f, Colors::Slider_Idle);
 		}
 
+		//Text
+		FVector2D textPos = FVector2D{ pos.X, pos.Y + 5 };
+		TextLeft(name, textPos, Colors::Text);
 
 		//Value
 		float oneP = slider_size.X / (max - min);
 		drawFilledRect(FVector2D{ pos.X, pos.Y + slider_size.Y + padding.Y }, oneP * (*value - min), slider_size.Y, Colors::Slider_Progress);
-		//drawFilledRect(FVector2D{ pos.X + oneP * (*value - min) - 10.0f, pos.Y + slider_size.Y - 5.0f + padding.Y }, 20.0f, 20.0f, Colors::Slider_Button);
-		DrawFilledCircle(FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 3.3f + padding.Y }, 10.0f, Colors::Slider_Button);
-		DrawFilledCircle(FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 3.3f + padding.Y }, 5.0f, Colors::Slider_Progress);
+		DrawFilledCircle(FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 2.66f + padding.Y }, 8.0f, Colors::Slider_Button);
+		DrawFilledCircle(FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 2.66f + padding.Y }, 4.0f, Colors::Slider_Progress);
 
 		char buffer[32];
 		sprintf_s(buffer, "%i", *value);
-		FVector2D valuePos = FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 25 + padding.Y };
+		FVector2D valuePos = FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 10 + padding.Y };
 		TextLeft(buffer, valuePos, Colors::Text);
-
-		//Text
-		FVector2D textPos = FVector2D{ pos.X + 5, pos.Y + 10 };
-		TextLeft(name, textPos, Colors::Text);
 
 
 		sameLine = false;
@@ -722,7 +723,7 @@ namespace ZeroGUI
 
 		char buffer[32];
 		sprintf_s(buffer, format, *value);
-		FVector2D valuePos = FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 20 + padding.Y };
+		FVector2D valuePos = FVector2D{ pos.X + oneP * (*value - min), pos.Y + slider_size.Y + 10 + padding.Y };
 		TextLeft(buffer, valuePos, Colors::Text);
 
 
@@ -770,7 +771,7 @@ namespace ZeroGUI
 			offset_y += size.Y + padding.Y;
 
 		//Text
-		FVector2D textPos = FVector2D{ pos.X + size.X + 5.0f, pos.Y + size.Y / 4 };
+		FVector2D textPos = FVector2D{ pos.X + size.X + 5.0f, pos.Y + size.Y / 8 };
 		TextLeft(name, textPos, Colors::Text);
 
 		//Elements
@@ -815,7 +816,7 @@ namespace ZeroGUI
 					PostRenderer::drawFilledRect(FVector2D{ element_pos.X, element_pos.Y }, size.X, 25.0f, Colors::Combobox_Idle);
 				}
 
-				PostRenderer::TextLeft((char*)arg, FVector2D{ element_pos.X + 5.0f, element_pos.Y + 15.0f }, Colors::Text);
+				PostRenderer::TextLeft((char*)arg, FVector2D{ element_pos.X + 5.0f, element_pos.Y + 7.5f }, Colors::Text);
 			}
 			num++;
 		}
@@ -893,7 +894,7 @@ namespace ZeroGUI
 	{
 		elements_count++;
 
-		FVector2D padding = FVector2D{ 5, 10 };
+		FVector2D padding = FVector2D{ 5, 35 };
 		FVector2D pos = FVector2D{ menu_pos.X + padding.X + offset_x, menu_pos.Y + padding.Y + offset_y };
 		if (sameLine)
 		{
@@ -907,17 +908,20 @@ namespace ZeroGUI
 			pushYvalue = 0.0f;
 			offset_y = pos.Y - menu_pos.Y;
 		}
-		bool isHovered = MouseInZone(FVector2D{ pos.X, pos.Y }, size);
+		bool isHovered = MouseInZone(FVector2D{ pos.X, pos.Y + 25 }, size);
+
+		FVector2D textPos = FVector2D{ pos.X, pos.Y + 5 };
+		TextLeft(name, textPos, Colors::Text);
 
 		//Bg
 		if (isHovered)
 		{
-			drawFilledRect(FVector2D{ pos.X, pos.Y }, size.X, size.Y, Colors::Button_Hovered);
+			drawFilledRect(FVector2D{ pos.X, pos.Y + 25 }, size.X, size.Y, Colors::Button_Hovered);
 			hover_element = true;
 		}
 		else
 		{
-			drawFilledRect(FVector2D{ pos.X, pos.Y }, size.X, size.Y, Colors::Button_Idle);
+			drawFilledRect(FVector2D{ pos.X, pos.Y + 25 }, size.X, size.Y, Colors::Button_Idle);
 		}
 
 		if (!sameLine)
@@ -926,7 +930,7 @@ namespace ZeroGUI
 		if (active_hotkey == elements_count)
 		{
 			//Text
-			FVector2D textPos = FVector2D{ pos.X + size.X / 4, pos.Y + size.Y / 4 };
+			FVector2D textPos = FVector2D{ pos.X + size.X / 4, pos.Y + size.Y + 25 / 4 };
 			TextLeft(_xor_("[Press Key]"), textPos, Colors::Text);
 
 			if (!ZeroGUI::Input::IsAnyMouseDown())
@@ -949,8 +953,12 @@ namespace ZeroGUI
 		else
 		{
 			//Text
-			FVector2D textPos = FVector2D{ pos.X + size.X / 4, pos.Y + size.Y / 4 };
-			TextLeft((char*)VirtualKeyCodeToString(*key).c_str(), textPos, Colors::Text);
+			FVector2D textPos = FVector2D{ pos.X + size.X / 4, pos.Y + size.Y + 25 / 4 };
+
+			if (*key == 0x07)
+				TextLeft("Unbinded", textPos, Colors::Text);
+			else
+				TextLeft((char*)VirtualKeyCodeToString(*key).c_str(), textPos, Colors::Text);
 
 			if (isHovered)
 			{

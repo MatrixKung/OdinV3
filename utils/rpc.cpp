@@ -25,7 +25,7 @@ void discord_rpc::update()
 	discordPresence.state = "discord.gg/UTZWB6vxWV";
 	discordPresence.details = "Cheating on Paladins!";
 	discordPresence.largeImageKey = "floppa"; //large image file name no extension
-	discordPresence.largeImageText = "Floppa 1.0.0 | By Wooteck (Xiloe)";
+	discordPresence.largeImageText = "Odin V4 | By Wooteck (Xiloe)";
 	discordPresence.startTimestamp = std::time(0);
 	Discord_UpdatePresence(&discordPresence); //do the do
 }

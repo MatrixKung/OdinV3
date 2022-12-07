@@ -27,7 +27,7 @@ public:
 	}
 
 
-	void STATIC_BattleHUDFunction();
+	void BattleHUDFunction();
 };
 
 

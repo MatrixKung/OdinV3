@@ -8480,7 +8480,7 @@ struct FSessionUpdateInfo
 };
 
 // ScriptStruct Engine.OnlineSubsystem.MarketplaceInventoryItem
-// 0x0064
+// 0x0074
 struct FMarketplaceInventoryItem
 {
 	struct FString                                     ProductID;                                                // 0x0000(0x0010) (Const, NeedCtorLink)
@@ -8495,6 +8495,7 @@ struct FMarketplaceInventoryItem
 	struct FQWord                                      RightsObtainedDate;                                       // 0x003C(0x0008) (Const)
 	struct FString                                     URL;                                                      // 0x0044(0x0010) (Const, NeedCtorLink)
 	struct FString                                     ConsumableUrl;                                            // 0x0054(0x0010) (Const, NeedCtorLink)
+	struct FString                                     Receipt;                                                  // 0x0064(0x0010) (Const, NeedCtorLink)
 };
 
 // ScriptStruct Engine.OnlineSubsystem.MarketplaceProductImage

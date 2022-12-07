@@ -13,9 +13,9 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function BattleGame.BattlePlayerController.BattlePlayerControllerFunction
-// (Final, Iterator, PreOperator, Net, NetReliable, Exec, Native, Event, Static, HasOptionalParms, Const)
+// (Defined, Iterator, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms, Const)
 
-void ABattlePlayerController::STATIC_BattlePlayerControllerFunction()
+void ABattlePlayerController::BattlePlayerControllerFunction()
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function BattleGame.BattlePlayerController.BattlePlayerControllerFunction"));
 

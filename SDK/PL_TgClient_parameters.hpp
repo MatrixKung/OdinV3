@@ -3044,6 +3044,7 @@ struct ATgLobbyHUD_TryPushScene_Params
 {
 	struct FString                                     sName;                                                    // (Parm, NeedCtorLink)
 	bool                                               bSkipPrivilegeCheck;                                      // (OptionalParm, Parm)
+	bool                                               bResetStack;                                              // (OptionalParm, Parm)
 };
 
 // Function TgClient.TgLobbyHUD.TriggerLazyPrecache

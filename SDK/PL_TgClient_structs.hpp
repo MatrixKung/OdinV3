@@ -8,9 +8,9 @@
 
 #include "PL_Basic.hpp"
 #include "PL_Engine_classes.hpp"
+#include "PL_TgGame_classes.hpp"
 #include "PL_PlatformCommon_classes.hpp"
 #include "PL_Core_classes.hpp"
-#include "PL_TgGame_classes.hpp"
 #include "PL_GFxUI_classes.hpp"
 
 namespace SDK
@@ -233,6 +233,7 @@ namespace SDK
 #define CONST_UISTORE_FILTER_RARITY_COUNT                        5
 #define CONST_UIHUDBURNSCONQUEST_ARROWS                          2
 #define CONST_UIHUDBURNSCONQUEST_OPTIONS                         5
+#define CONST_BUTTON_BLUE_FRAME                                  1
 #define CONST_UIHUDBURNSCONQUEST_UPGRADES                        3
 #define CONST_UIHUDCARD_SLOTS                                    4
 #define CONST_UIHUDCARD_LOADOUTSIZE                              5
@@ -269,7 +270,7 @@ namespace SDK
 #define CONST_UIHUDMAP_CHOSEN                                    4
 #define CONST_UIHUDMAP_GRIDWIDTH                                 8
 #define CONST_UIHUDMAP_CHAMPIONS                                 8
-#define CONST_UIHUDMENU_COUNT                                    8
+#define CONST_UIHUDMENU_COUNT                                    10
 #define CONST_UIPROFILE_CHAMPION_ROWS                            8
 #define CONST_UIHudNotify_SUDDEN_DEATH_MSG_ID                    195974
 #define CONST_ABYSSAL_ECHO_FERNANDO_ID                           2496
@@ -356,6 +357,7 @@ namespace SDK
 #define CONST_UIPLAY_MAX_REGION_ENTRIES                          12
 #define CONST_SCROLL_OFFSET_JUMP                                 20
 #define CONST_PROP_POPUP_TWITCH_PRIME_LAST_SEEN_LOWER            2102
+#define CONST_BUTTON_RED_FRAME                                   2
 #define CONST_GFXSETTINGS_OPTIONS                                12
 #define CONST_GFXSETTINGS_KEYBINDS                               12
 #define CONST_UIWORLDOVERLAY_TARGET_ICONS_COLOR_FRAMES           6
@@ -1225,6 +1227,16 @@ enum class EUIChampionItemSort : uint8_t
 };
 
 
+// Enum TgClient.UIComponent_LoadoutSubscene.UIITEMS_OWNERSHIP_FILTER
+enum class EUIITEMS_OWNERSHIP_FILTER : uint8_t
+{
+	UIIOF_NONE                     = 0,
+	UIIOF_OWNED_OR_RENTED          = 1,
+	UIIOF_NOT_OWNED_OR_RENTED      = 2,
+	UIIOF_MAX                      = 3
+};
+
+
 // Enum TgClient.UIComponent_BattlePassHome.UIHBATTLEPASSHOME_STATE
 enum class EUIHBATTLEPASSHOME_STATE : uint8_t
 {
@@ -1967,12 +1979,13 @@ enum class EHUDMENU_OPTIONS : uint8_t
 	UIHM_SETTINGS                  = 4,
 	UIHM_SCOREBOARD                = 5,
 	UIHM_CHANGECHAMPION            = 6,
-	UIHM_SKILLS                    = 7,
-	UIHM_DEATHRECAP                = 8,
-	UIHM_RETURNTOLOBBY             = 9,
-	UIHM_FACEBOOKLIVE              = 10,
-	UIHM_QUITGAME                  = 11,
-	UIHM_MAX                       = 12
+	UIHM_TOGGLE3P                  = 7,
+	UIHM_SKILLS                    = 8,
+	UIHM_DEATHRECAP                = 9,
+	UIHM_RETURNTOLOBBY             = 10,
+	UIHM_FACEBOOKLIVE              = 11,
+	UIHM_QUITGAME                  = 12,
+	UIHM_MAX                       = 13
 };
 
 
@@ -2089,6 +2102,16 @@ enum class ELoadoutState : uint8_t
 	ELS_MUSIC_PACKS                = 7,
 	ELS_DEATH_CARDS                = 8,
 	ELS_MAX                        = 9
+};
+
+
+// Enum TgClient.UIScene.UIScene_EmptyHeaderType
+enum class EUIScene_EmptyHeaderType : uint8_t
+{
+	SEHT_Home                      = 0,
+	SEHT_Title                     = 1,
+	SEHT_Minimal                   = 2,
+	SEHT_MAX                       = 3
 };
 
 
@@ -2427,8 +2450,9 @@ enum class EUISOCIAL_TAB : uint8_t
 {
 	UISOCIAL_PARTY                 = 0,
 	UISOCIAL_FRIENDS               = 1,
-	UISOCIAL_REFERRALS             = 2,
-	UISOCIAL_MAX                   = 3
+	UISOCIAL_BLOCKS                = 2,
+	UISOCIAL_REFERRALS             = 3,
+	UISOCIAL_MAX                   = 4
 };
 
 
@@ -2440,7 +2464,8 @@ enum class EUISTORE_STATE : uint8_t
 	UISS_CHESTS                    = 2,
 	UISS_BOUNTY                    = 3,
 	UISS_ACCOUNT                   = 4,
-	UISS_MAX                       = 5
+	UISS_ACCESSORIES               = 5,
+	UISS_MAX                       = 6
 };
 
 
@@ -2774,6 +2799,36 @@ struct FInputKeyEvent
 	struct FString                                     sDisplayName;                                             // 0x000C(0x0010) (NeedCtorLink)
 };
 
+// ScriptStruct TgClient.TgAwardsUIDataManager.UIGoalData_New
+// 0x0070
+struct FUIGoalData_New
+{
+	int                                                nDate;                                                    // 0x0000(0x0004)
+	int                                                nGoal;                                                    // 0x0004(0x0004)
+	int                                                nValue;                                                   // 0x0008(0x0004)
+	int                                                nProgress;                                                // 0x000C(0x0004)
+	int                                                nDisplayId;                                               // 0x0010(0x0004)
+	int                                                nLootId;                                                  // 0x0014(0x0004)
+	int                                                nGoalProgress;                                            // 0x0018(0x0004)
+	unsigned long                                      bCompleted : 1;                                           // 0x001C(0x0004)
+	struct FString                                     sDate;                                                    // 0x0020(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sDesc;                                                    // 0x0030(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sTier;                                                    // 0x0040(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sTitle;                                                   // 0x0050(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sSource;                                                  // 0x0060(0x0010) (AlwaysInit, NeedCtorLink)
+};
+
+// ScriptStruct TgClient.TgAwardsUIDataManager.UIAwardData_New
+// 0x0470
+struct FUIAwardData_New
+{
+	int                                                nType;                                                    // 0x0000(0x0004)
+	int                                                nActivity;                                                // 0x0004(0x0004)
+	int                                                nGoalCount;                                               // 0x0008(0x0004)
+	int                                                nGoalGroup;                                               // 0x000C(0x0004)
+	struct FUIGoalData_New                             Goals[0xA];                                               // 0x0010(0x0070) (NeedCtorLink)
+};
+
 // ScriptStruct TgClient.TgGameDC_Chat.QueueMessage
 // 0x0030
 struct FQueueMessage
@@ -3065,6 +3120,36 @@ struct FSmoothScrollingAxis
 	float                                              fBufferPos;                                               // 0x0014(0x0004)
 	float                                              fSpan;                                                    // 0x0018(0x0004)
 	float                                              fAnimTime;                                                // 0x001C(0x0004)
+};
+
+// ScriptStruct TgClient.UIProfileLegacy.UIGoalData
+// 0x0070
+struct FUIGoalData
+{
+	int                                                nDate;                                                    // 0x0000(0x0004)
+	int                                                nGoal;                                                    // 0x0004(0x0004)
+	int                                                nValue;                                                   // 0x0008(0x0004)
+	int                                                nProgress;                                                // 0x000C(0x0004)
+	int                                                nDisplayId;                                               // 0x0010(0x0004)
+	int                                                nLootId;                                                  // 0x0014(0x0004)
+	int                                                nGoalProgress;                                            // 0x0018(0x0004)
+	unsigned long                                      bCompleted : 1;                                           // 0x001C(0x0004)
+	struct FString                                     sDate;                                                    // 0x0020(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sDesc;                                                    // 0x0030(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sTier;                                                    // 0x0040(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sTitle;                                                   // 0x0050(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     sSource;                                                  // 0x0060(0x0010) (AlwaysInit, NeedCtorLink)
+};
+
+// ScriptStruct TgClient.UIProfileLegacy.UIAwardData
+// 0x0470
+struct FUIAwardData
+{
+	int                                                nType;                                                    // 0x0000(0x0004)
+	int                                                nActivity;                                                // 0x0004(0x0004)
+	int                                                nGoalCount;                                               // 0x0008(0x0004)
+	int                                                nGoalGroup;                                               // 0x000C(0x0004)
+	struct FUIGoalData                                 Goals[0xA];                                               // 0x0010(0x0070) (NeedCtorLink)
 };
 
 // ScriptStruct TgClient.TgGfxScene.UIDisplayData
@@ -3568,36 +3653,6 @@ struct FChannelCloseTimeOverride
 {
 	int                                                Channel;                                                  // 0x0000(0x0004)
 	int                                                AutoCloseTime;                                            // 0x0004(0x0004)
-};
-
-// ScriptStruct TgClient.UIProfileLegacy.UIGoalData
-// 0x0070
-struct FUIGoalData
-{
-	int                                                nDate;                                                    // 0x0000(0x0004)
-	int                                                nGoal;                                                    // 0x0004(0x0004)
-	int                                                nValue;                                                   // 0x0008(0x0004)
-	int                                                nProgress;                                                // 0x000C(0x0004)
-	int                                                nDisplayId;                                               // 0x0010(0x0004)
-	int                                                nLootId;                                                  // 0x0014(0x0004)
-	int                                                nGoalProgress;                                            // 0x0018(0x0004)
-	unsigned long                                      bCompleted : 1;                                           // 0x001C(0x0004)
-	struct FString                                     sDate;                                                    // 0x0020(0x0010) (AlwaysInit, NeedCtorLink)
-	struct FString                                     sDesc;                                                    // 0x0030(0x0010) (AlwaysInit, NeedCtorLink)
-	struct FString                                     sTier;                                                    // 0x0040(0x0010) (AlwaysInit, NeedCtorLink)
-	struct FString                                     sTitle;                                                   // 0x0050(0x0010) (AlwaysInit, NeedCtorLink)
-	struct FString                                     sSource;                                                  // 0x0060(0x0010) (AlwaysInit, NeedCtorLink)
-};
-
-// ScriptStruct TgClient.UIProfileLegacy.UIAwardData
-// 0x0470
-struct FUIAwardData
-{
-	int                                                nType;                                                    // 0x0000(0x0004)
-	int                                                nActivity;                                                // 0x0004(0x0004)
-	int                                                nGoalCount;                                               // 0x0008(0x0004)
-	int                                                nGoalGroup;                                               // 0x000C(0x0004)
-	struct FUIGoalData                                 Goals[0xA];                                               // 0x0010(0x0070) (NeedCtorLink)
 };
 
 // ScriptStruct TgClient.UIProfileLegacy.UIHistoryData

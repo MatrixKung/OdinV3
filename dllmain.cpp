@@ -7,7 +7,7 @@
 
 #include "memory_manager.h"
 
-#define DEBUG
+//#define DEBUG
 
 HMODULE moduleBase;
 tProcessEvent ProcessEventOriginal = nullptr;
@@ -22,10 +22,6 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParam
 
 	if (FunctionName == _xor_("Function TgClient.TgGameViewportClient.PostRender"))
 		MainLoop(((UTgGameViewportClient_PostRender_Params*)(pParams))->Canvas);
-
-	if (FunctionName == _xor_("Function Engine.GameViewportClient.HandleInputKey"))
-		printf("Pressed Key : %s\n", ((UGameViewportClient_HandleInputKey_Params*)(pParams))->Key.GetName().c_str());
-	
 
 	return spoof_call(game_rbx_jmp, ProcessEventOriginal, pObject, pFunction, pParams, pResult);
 }
@@ -110,13 +106,15 @@ void Main() {
 	const IMAGE_NT_HEADERS* NtHeaders = reinterpret_cast<IMAGE_NT_HEADERS*>(reinterpret_cast<long long>(moduleBase) + DOSHeader->e_lfanew);
 	const DWORD SizeOfImage = NtHeaders->OptionalHeader.SizeOfImage;
 
-	GObject = reinterpret_cast<decltype(GObject)>(GetMovAddress(PatternScan<void*>(_xor_("48 8B 05 ? ? ? ? 4C 8B 04 0A 4C 33 04 F0 44"), (uint64_t)moduleBase, SizeOfImage)));
-	GName = reinterpret_cast<decltype(GName)>(GetMovAddress(PatternScan<void*>(_xor_("48 8B 05 ? ? ? ? B9 ? ? ? ? 48 8B 0C 0A 48 BA"), (uint64_t)moduleBase, SizeOfImage)));
-	Globals::UEngineAddr = *(uintptr_t*)(GetMovAddress(PatternScan<void*>(_xor_("48 8B 0D ? ? ? ? 48 85 C9 0F 84 ? ? ? ? 48 39 B9 ? ? ? ?"), (uint64_t)moduleBase, SizeOfImage)));
-	ProcessEventOriginal = (tProcessEvent)(GetCallAddress(PatternScan<void*>(_xor_("E8 ? ? ? ? 8D 4E FD"), (uint64_t)moduleBase, SizeOfImage)));
+	GObject = GetMovAddress<decltype(GObject)>(PatternScan<void*>(_xor_("48 8B 05 ? ? ? ? 4C 8B 04 0A 4C 33 04 F0 44"), (uint64_t)moduleBase, SizeOfImage));
+	GName = GetMovAddress<decltype(GName)>(PatternScan<void*>(_xor_("48 8B 05 ? ? ? ? B9 ? ? ? ? 48 8B 0C 0A 48 BA"), (uint64_t)moduleBase, SizeOfImage));
+	Globals::UEngineAddr = GetMovAddress<DWORD_PTR>(PatternScan<void*>(_xor_("48 8B 0D ? ? ? ? 48 85 C9 0F 84 ? ? ? ? 48 39 B9 ? ? ? ?"), (uint64_t)moduleBase, SizeOfImage));
+	ProcessEventOriginal = GetCallAddress<tProcessEvent>(PatternScan<void*>(_xor_("E8 ? ? ? ? 8D 4E FD"), (uint64_t)moduleBase, SizeOfImage));
 
-	void* xorFunc = GetCallAddress(PatternScan<void*>(_xor_("E8 ? ? ? ? 85 C0 75 0F 48 8B 03"), (uint64_t)moduleBase, SizeOfImage));
-	xorKey = (uintptr_t)GetAndAddress((void*)((DWORD64)xorFunc + 0x63));
+	Globals::Engine = (UEngine*)(*(uintptr_t*)Globals::UEngineAddr);
+
+	Globals::xorFunc = GetCallAddress<void*>(PatternScan<void*>(_xor_("E8 ? ? ? ? 85 C0 75 0F 48 8B 03"), (uint64_t)moduleBase, SizeOfImage));
+	xorKey = (uintptr_t)GetAndAddress<void*>((void*)((DWORD64)Globals::xorFunc + 0x63));
 
 	game_rbx_jmp = gadget(NULL);
 
@@ -128,15 +126,18 @@ void Main() {
 	printf(_xor_("Legit Tramp  : 0x%p\n"), game_rbx_jmp);
 	printf(_xor_("GObjects     : 0x%p\n"), GObject);
 	printf(_xor_("GNames       : 0x%p\n"), GName);
-	printf(_xor_("UEngine      : 0x%p\n"), Globals::UEngineAddr);
+	printf(_xor_("UEngine      : 0x%p (0x%p)\n"), Globals::UEngineAddr, Globals::Engine);
 	printf(_xor_("ProcessEvent : 0x%p\n"), (uintptr_t*)ProcessEventOriginal);
-	printf(_xor_("XOR          : 0x%p\n"), xorFunc);
-	printf(_xor_("XOR Key      : 0x%p\n"), xorKey);
+	printf(_xor_("XOR          : 0x%p\n"), Globals::xorFunc);
+	printf(_xor_("XOR Key      : 0x%p\n\n"), xorKey);
 
-	Globals::Engine = (UEngine*)Globals::UEngineAddr;
+	printf(_xor_("GObjects     : %d\n"), UObject::GetGlobalObjects().Num());
+	printf(_xor_("GNames       : %d\n"), FName::GetGlobalNames().Num());
 
 	//printf(_xor_("Tramp 1      : 0x%p\n"), tramp1);
 	//printf(_xor_("Tramp 2      : 0x%p\n"), tramp2);
+
+	spoof_call(game_rbx_jmp, MessageBox, (HWND)0, (LPCSTR)0, (LPCSTR)0, (UINT)0);
 #endif // DEBUG
 
 	//FC::SetSpoofStub((void*)tramp1, (void*)tramp2);

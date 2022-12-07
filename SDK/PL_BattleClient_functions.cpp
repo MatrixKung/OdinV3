@@ -13,9 +13,9 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function BattleClient.BattleHUD.BattleHUDFunction
-// (Defined, Iterator, PreOperator, Net, NetReliable, Exec, Native, Event, Static, HasOptionalParms, Const)
+// (Final, Defined, Iterator, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms, Const)
 
-void ABattleHUD::STATIC_BattleHUDFunction()
+void ABattleHUD::BattleHUDFunction()
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function BattleClient.BattleHUD.BattleHUDFunction"));
 

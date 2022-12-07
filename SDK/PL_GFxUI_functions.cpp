@@ -13,7 +13,7 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function GFxUI.GFxFSCmdHandler.FSCommand
-// (Final, Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UGFxMoviePlayer*         Movie                          (Parm)
 // class UGFxEvent_FSCommand*     Event                          (Parm)
@@ -43,7 +43,7 @@ bool UGFxFSCmdHandler::FSCommand(class UGFxMoviePlayer* Movie, class UGFxEvent_F
 
 
 // Function GFxUI.GFxInteraction.CloseAllMoviePlayers
-// (Iterator, PreOperator, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, HasOptionalParms)
 
 void UGFxInteraction::CloseAllMoviePlayers()
 {
@@ -60,7 +60,7 @@ void UGFxInteraction::CloseAllMoviePlayers()
 
 
 // Function GFxUI.GFxInteraction.NotifySplitscreenLayoutChanged
-// (Final, Defined, Iterator, Latent, PreOperator, Net, Simulated, Exec, Event, Operator, Static)
+// (Final, Iterator, Simulated, Event, Static)
 
 void UGFxInteraction::STATIC_NotifySplitscreenLayoutChanged()
 {
@@ -77,7 +77,7 @@ void UGFxInteraction::STATIC_NotifySplitscreenLayoutChanged()
 
 
 // Function GFxUI.GFxInteraction.NotifyPlayerRemoved
-// (Final, Latent, PreOperator, Net, Simulated, Exec, Event, Operator, Static)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Event, Static)
 // Parameters:
 // int                            PlayerIndex                    (Parm)
 // class ULocalPlayer*            RemovedPlayer                  (Parm)
@@ -99,7 +99,7 @@ void UGFxInteraction::STATIC_NotifyPlayerRemoved(int PlayerIndex, class ULocalPl
 
 
 // Function GFxUI.GFxInteraction.NotifyPlayerAdded
-// (Latent, PreOperator, Net, Simulated, Exec, Event, Operator, Static)
+// (Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Event, Static)
 // Parameters:
 // int                            PlayerIndex                    (Parm)
 // class ULocalPlayer*            AddedPlayer                    (Parm)
@@ -121,7 +121,7 @@ void UGFxInteraction::STATIC_NotifyPlayerAdded(int PlayerIndex, class ULocalPlay
 
 
 // Function GFxUI.GFxInteraction.NotifyGameSessionEnded
-// (Final, Iterator, PreOperator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (PreOperator, Net, Exec, Native, HasOptionalParms)
 
 void UGFxInteraction::NotifyGameSessionEnded()
 {
@@ -139,7 +139,7 @@ void UGFxInteraction::NotifyGameSessionEnded()
 
 
 // Function GFxUI.GFxInteraction.GetFocusMovie
-// (Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // class UGFxMoviePlayer*         ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -162,7 +162,7 @@ class UGFxMoviePlayer* UGFxInteraction::GetFocusMovie(int ControllerId)
 
 
 // Function GFxUI.GFxMoviePlayer.UpdateSplitscreenLayout
-// (Final, PreOperator, Net, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, Simulated, HasOptionalParms)
 
 void UGFxMoviePlayer::UpdateSplitscreenLayout()
 {
@@ -179,7 +179,7 @@ void UGFxMoviePlayer::UpdateSplitscreenLayout()
 
 
 // Function GFxUI.GFxMoviePlayer.ApplyPriorityVisibilityEffect
-// (Final, Iterator, Latent, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, Net, HasOptionalParms)
 // Parameters:
 // bool                           bRemoveEffect                  (Parm)
 
@@ -199,7 +199,7 @@ void UGFxMoviePlayer::ApplyPriorityVisibilityEffect(bool bRemoveEffect)
 
 
 // Function GFxUI.GFxMoviePlayer.ApplyPriorityBlurEffect
-// (Iterator, Latent, NetReliable, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, HasOptionalParms)
 // Parameters:
 // bool                           bRemoveEffect                  (Parm)
 
@@ -219,7 +219,7 @@ void UGFxMoviePlayer::ApplyPriorityBlurEffect(bool bRemoveEffect)
 
 
 // Function GFxUI.GFxMoviePlayer.ApplyPriorityEffect
-// (Defined, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bRequestedBlurState            (Parm)
 // bool                           bRequestedHiddenState          (Parm)
@@ -242,7 +242,7 @@ void UGFxMoviePlayer::ApplyPriorityEffect(bool bRequestedBlurState, bool bReques
 
 
 // Function GFxUI.GFxMoviePlayer.PlaySoundFromTheme
-// (Final, Defined, Iterator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FName                   EventName                      (Parm)
 // struct FName                   SoundThemeName                 (OptionalParm, Parm)
@@ -264,7 +264,7 @@ void UGFxMoviePlayer::PlaySoundFromTheme(const struct FName& EventName, const st
 
 
 // Function GFxUI.GFxMoviePlayer.OnFocusLost
-// (Final, Defined, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            LocalPlayerIndex               (Parm)
 
@@ -285,7 +285,7 @@ void UGFxMoviePlayer::OnFocusLost(int LocalPlayerIndex)
 
 
 // Function GFxUI.GFxMoviePlayer.OnFocusGained
-// (Defined, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            LocalPlayerIndex               (Parm)
 
@@ -306,11 +306,11 @@ void UGFxMoviePlayer::OnFocusGained(int LocalPlayerIndex)
 
 
 // Function GFxUI.GFxMoviePlayer.ConsoleCommand
-// (Iterator, Latent, Singular, Net, Simulated, Static)
+// (Final, Defined, Singular, Net, NetReliable, Exec, Native, Event)
 // Parameters:
 // struct FString                 Command                        (Parm, NeedCtorLink)
 
-void UGFxMoviePlayer::STATIC_ConsoleCommand(const struct FString& Command)
+void UGFxMoviePlayer::ConsoleCommand(const struct FString& Command)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxMoviePlayer.ConsoleCommand"));
 
@@ -318,6 +318,7 @@ void UGFxMoviePlayer::STATIC_ConsoleCommand(const struct FString& Command)
 	params.Command = Command;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -326,7 +327,7 @@ void UGFxMoviePlayer::STATIC_ConsoleCommand(const struct FString& Command)
 
 
 // Function GFxUI.GFxMoviePlayer.GetPC
-// (Final, Defined, Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APlayerController*       ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -348,7 +349,7 @@ class APlayerController* UGFxMoviePlayer::GetPC()
 
 
 // Function GFxUI.GFxMoviePlayer.GetLP
-// (Defined, Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // class ULocalPlayer*            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -390,7 +391,7 @@ void UGFxMoviePlayer::Init(class ULocalPlayer* LocPlay)
 
 
 // Function GFxUI.GFxMoviePlayer.SetWidgetPathBinding
-// (Defined, Iterator, Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // class UGFxObject*              WidgetToBind                   (Parm)
 // struct FName                   Path                           (Parm)
@@ -412,7 +413,7 @@ void UGFxMoviePlayer::SetWidgetPathBinding(class UGFxObject* WidgetToBind, const
 
 
 // Function GFxUI.GFxMoviePlayer.PostWidgetInit
-// (Final, Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Latent, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 
 void UGFxMoviePlayer::PostWidgetInit()
 {
@@ -430,7 +431,7 @@ void UGFxMoviePlayer::PostWidgetInit()
 
 
 // Function GFxUI.GFxMoviePlayer.WidgetUnloaded
-// (Final, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   WidgetName                     (Parm)
 // struct FName                   WidgetPath                     (Parm)
@@ -458,7 +459,7 @@ bool UGFxMoviePlayer::WidgetUnloaded(const struct FName& WidgetName, const struc
 
 
 // Function GFxUI.GFxMoviePlayer.WidgetInitialized
-// (PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   WidgetName                     (Parm)
 // struct FName                   WidgetPath                     (Parm)
@@ -486,7 +487,7 @@ bool UGFxMoviePlayer::WidgetInitialized(const struct FName& WidgetName, const st
 
 
 // Function GFxUI.GFxMoviePlayer.ActionScriptConstructor
-// (Defined, Iterator, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 ClassName                      (Parm, NeedCtorLink)
 // class UGFxObject*              ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -509,7 +510,7 @@ class UGFxObject* UGFxMoviePlayer::ActionScriptConstructor(const struct FString&
 
 
 // Function GFxUI.GFxMoviePlayer.ActionScriptObject
-// (Final, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // class UGFxObject*              ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -532,7 +533,7 @@ class UGFxObject* UGFxMoviePlayer::ActionScriptObject(const struct FString& Path
 
 
 // Function GFxUI.GFxMoviePlayer.ActionScriptString
-// (Iterator, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -555,7 +556,7 @@ struct FString UGFxMoviePlayer::ActionScriptString(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.ActionScriptFloat
-// (Final, Defined, Iterator, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -578,7 +579,7 @@ float UGFxMoviePlayer::ActionScriptFloat(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.ActionScriptInt
-// (Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -601,7 +602,7 @@ int UGFxMoviePlayer::ActionScriptInt(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.ActionScriptVoid
-// (Final, Iterator, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 
@@ -621,7 +622,7 @@ void UGFxMoviePlayer::ActionScriptVoid(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.Invoke
-// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 method                         (Parm, NeedCtorLink)
 // TArray<struct FASValue>        args                           (Parm, NeedCtorLink)
@@ -646,7 +647,7 @@ struct FASValue UGFxMoviePlayer::Invoke(const struct FString& method, TArray<str
 
 
 // Function GFxUI.GFxMoviePlayer.ActionScriptSetFunction
-// (Defined, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // class UGFxObject*              Object                         (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -668,7 +669,7 @@ void UGFxMoviePlayer::ActionScriptSetFunction(class UGFxObject* Object, const st
 
 
 // Function GFxUI.GFxMoviePlayer.CreateArray
-// (Defined, Iterator, PreOperator, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, HasOptionalParms)
 // Parameters:
 // class UGFxObject*              ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -689,7 +690,7 @@ class UGFxObject* UGFxMoviePlayer::CreateArray()
 
 
 // Function GFxUI.GFxMoviePlayer.CreateObject
-// (Latent, PreOperator, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 ASClass                        (Parm, NeedCtorLink)
 // class UClass*                  Type                           (OptionalParm, Parm)
@@ -716,7 +717,7 @@ class UGFxObject* UGFxMoviePlayer::CreateObject(const struct FString& ASClass, c
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableStringArray
-// (Final, Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -743,7 +744,7 @@ bool UGFxMoviePlayer::SetVariableStringArray(const struct FString& Path, int Ind
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableFloatArray
-// (Final, Defined, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -770,7 +771,7 @@ bool UGFxMoviePlayer::SetVariableFloatArray(const struct FString& Path, int Inde
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableIntArray
-// (Final, Iterator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -797,7 +798,7 @@ bool UGFxMoviePlayer::SetVariableIntArray(const struct FString& Path, int Index,
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableArray
-// (Final, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -824,7 +825,7 @@ bool UGFxMoviePlayer::SetVariableArray(const struct FString& Path, int Index, TA
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableStringArray
-// (Defined, Iterator, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -853,7 +854,7 @@ bool UGFxMoviePlayer::GetVariableStringArray(const struct FString& Path, int Ind
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableFloatArray
-// (PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -882,7 +883,7 @@ bool UGFxMoviePlayer::GetVariableFloatArray(const struct FString& Path, int Inde
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableIntArray
-// (Defined, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -911,7 +912,7 @@ bool UGFxMoviePlayer::GetVariableIntArray(const struct FString& Path, int Index,
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableArray
-// (Defined, Iterator, Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            Index                          (Parm)
@@ -940,7 +941,7 @@ bool UGFxMoviePlayer::GetVariableArray(const struct FString& Path, int Index, TA
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableObject
-// (Final, Defined, Iterator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // class UGFxObject*              Object                         (Parm)
@@ -962,7 +963,7 @@ void UGFxMoviePlayer::SetVariableObject(const struct FString& Path, class UGFxOb
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableString
-// (Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // struct FString                 S                              (Parm, NeedCtorLink)
@@ -984,7 +985,7 @@ void UGFxMoviePlayer::SetVariableString(const struct FString& Path, const struct
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableInt
-// (Iterator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            I                              (Parm)
@@ -1006,7 +1007,7 @@ void UGFxMoviePlayer::SetVariableInt(const struct FString& Path, int I)
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableNumber
-// (Defined, Iterator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // float                          F                              (Parm)
@@ -1028,7 +1029,7 @@ void UGFxMoviePlayer::SetVariableNumber(const struct FString& Path, float F)
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariableBool
-// (Defined, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // bool                           B                              (Parm)
@@ -1050,7 +1051,7 @@ void UGFxMoviePlayer::SetVariableBool(const struct FString& Path, bool B)
 
 
 // Function GFxUI.GFxMoviePlayer.SetVariable
-// (Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // struct FASValue                Arg                            (Parm, NeedCtorLink)
@@ -1072,7 +1073,7 @@ void UGFxMoviePlayer::SetVariable(const struct FString& Path, const struct FASVa
 
 
 // Function GFxUI.GFxMoviePlayer.GetAS3ClassObject
-// (Final, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Defined, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // class UClass*                  Type                           (OptionalParm, Parm)
@@ -1097,7 +1098,7 @@ class UGFxObject* UGFxMoviePlayer::GetAS3ClassObject(const struct FString& Path,
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableObject
-// (Iterator, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // class UClass*                  Type                           (OptionalParm, Parm)
@@ -1122,7 +1123,7 @@ class UGFxObject* UGFxMoviePlayer::GetVariableObject(const struct FString& Path,
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableString
-// (Final, Iterator, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -1145,7 +1146,7 @@ struct FString UGFxMoviePlayer::GetVariableString(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableInt
-// (Final, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -1168,7 +1169,7 @@ int UGFxMoviePlayer::GetVariableInt(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableNumber
-// (Final, Defined, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -1191,7 +1192,7 @@ float UGFxMoviePlayer::GetVariableNumber(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariableBool
-// (Final, Defined, Iterator, Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -1214,7 +1215,7 @@ bool UGFxMoviePlayer::GetVariableBool(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.GetVariable
-// (Final, Iterator, Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // struct FASValue                ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -1237,7 +1238,7 @@ struct FASValue UGFxMoviePlayer::GetVariable(const struct FString& Path)
 
 
 // Function GFxUI.GFxMoviePlayer.GetAVMVersion
-// (Defined, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1258,7 +1259,7 @@ int UGFxMoviePlayer::GetAVMVersion()
 
 
 // Function GFxUI.GFxMoviePlayer.ShouldBlockKey
-// (Defined, Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // struct FName                   ButtonName                     (Parm)
@@ -1286,7 +1287,7 @@ bool UGFxMoviePlayer::ShouldBlockKey(int ControllerId, const struct FName& Butto
 
 
 // Function GFxUI.GFxMoviePlayer.FilterButtonInput
-// (Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // struct FName                   ButtonName                     (Parm)
@@ -1314,7 +1315,7 @@ bool UGFxMoviePlayer::FilterButtonInput(int ControllerId, const struct FName& Bu
 
 
 // Function GFxUI.GFxMoviePlayer.NativeAllowButtonInput
-// (Final, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // struct FName                   ButtonName                     (Parm)
@@ -1341,11 +1342,11 @@ bool UGFxMoviePlayer::NativeAllowButtonInput(int ControllerId, const struct FNam
 
 
 // Function GFxUI.GFxMoviePlayer.FlushPlayerInput
-// (Net, Simulated, Exec, Event, Static)
+// (Final, Net, NetReliable, Event, Operator)
 // Parameters:
 // bool                           capturekeysonly                (Parm)
 
-void UGFxMoviePlayer::STATIC_FlushPlayerInput(bool capturekeysonly)
+void UGFxMoviePlayer::FlushPlayerInput(bool capturekeysonly)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxMoviePlayer.FlushPlayerInput"));
 
@@ -1361,7 +1362,7 @@ void UGFxMoviePlayer::STATIC_FlushPlayerInput(bool capturekeysonly)
 
 
 // Function GFxUI.GFxMoviePlayer.ClearFocusIgnoreKeys
-// (Final, Defined, PreOperator, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, NetReliable, HasOptionalParms)
 
 void UGFxMoviePlayer::ClearFocusIgnoreKeys()
 {
@@ -1378,7 +1379,7 @@ void UGFxMoviePlayer::ClearFocusIgnoreKeys()
 
 
 // Function GFxUI.GFxMoviePlayer.AddFocusIgnoreKey
-// (NetReliable, Exec, Operator, HasOptionalParms)
+// (Singular, Net, HasOptionalParms)
 // Parameters:
 // struct FName                   Key                            (Parm)
 
@@ -1398,7 +1399,7 @@ void UGFxMoviePlayer::AddFocusIgnoreKey(const struct FName& Key)
 
 
 // Function GFxUI.GFxMoviePlayer.ClearCaptureKeys
-// (Defined, PreOperator, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, HasOptionalParms)
 
 void UGFxMoviePlayer::ClearCaptureKeys()
 {
@@ -1415,7 +1416,7 @@ void UGFxMoviePlayer::ClearCaptureKeys()
 
 
 // Function GFxUI.GFxMoviePlayer.AddCaptureKey
-// (Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FName                   Key                            (Parm)
 
@@ -1435,7 +1436,7 @@ void UGFxMoviePlayer::AddCaptureKey(const struct FName& Key)
 
 
 // Function GFxUI.GFxMoviePlayer.SetMovieCanReceiveInput
-// (Final, Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // bool                           bCanReceiveInput               (Parm)
 
@@ -1455,7 +1456,7 @@ void UGFxMoviePlayer::SetMovieCanReceiveInput(bool bCanReceiveInput)
 
 
 // Function GFxUI.GFxMoviePlayer.SetMovieCanReceiveFocus
-// (Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // bool                           bCanReceiveFocus               (Parm)
 
@@ -1475,7 +1476,7 @@ void UGFxMoviePlayer::SetMovieCanReceiveFocus(bool bCanReceiveFocus)
 
 
 // Function GFxUI.GFxMoviePlayer.SetPerspective3D
-// (Final, Defined, Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FMatrix                 matPersp                       (Const, Parm, OutParm)
 
@@ -1497,7 +1498,7 @@ void UGFxMoviePlayer::SetPerspective3D(struct FMatrix* matPersp)
 
 
 // Function GFxUI.GFxMoviePlayer.SetView3D
-// (Defined, Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FMatrix                 matView                        (Const, Parm, OutParm)
 
@@ -1519,7 +1520,7 @@ void UGFxMoviePlayer::SetView3D(struct FMatrix* matView)
 
 
 // Function GFxUI.GFxMoviePlayer.GetVisibleFrameRect
-// (Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          x0                             (Parm, OutParm)
 // float                          y0                             (Parm, OutParm)
@@ -1550,7 +1551,7 @@ void UGFxMoviePlayer::GetVisibleFrameRect(float* x0, float* y0, float* X1, float
 
 
 // Function GFxUI.GFxMoviePlayer.SetAlignment
-// (Final, Defined, Iterator, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<EGFxAlign>         A                              (Parm)
 
@@ -1570,7 +1571,7 @@ void UGFxMoviePlayer::SetAlignment(TEnumAsByte<EGFxAlign> A)
 
 
 // Function GFxUI.GFxMoviePlayer.SetViewScaleMode
-// (Iterator, Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<EGFxScaleMode>     SM                             (Parm)
 
@@ -1590,7 +1591,7 @@ void UGFxMoviePlayer::SetViewScaleMode(TEnumAsByte<EGFxScaleMode> SM)
 
 
 // Function GFxUI.GFxMoviePlayer.ViewportToScreen
-// (Final, Defined, Iterator, PreOperator, Net, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // int                            X                              (Parm)
 // int                            Y                              (Parm)
@@ -1619,7 +1620,7 @@ void UGFxMoviePlayer::ViewportToScreen(int X, int Y, int* xOut, int* yOut)
 
 
 // Function GFxUI.GFxMoviePlayer.ScreenToViewport
-// (Defined, Iterator, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            X                              (Parm)
 // int                            Y                              (Parm)
@@ -1648,7 +1649,7 @@ void UGFxMoviePlayer::ScreenToViewport(int X, int Y, int* xOut, int* yOut)
 
 
 // Function GFxUI.GFxMoviePlayer.GetViewport
-// (Final, Defined, Iterator, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            X                              (Parm, OutParm)
 // int                            Y                              (Parm, OutParm)
@@ -1679,7 +1680,7 @@ void UGFxMoviePlayer::GetViewport(int* X, int* Y, int* Width, int* Height)
 
 
 // Function GFxUI.GFxMoviePlayer.SetViewport
-// (Final, Defined, Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // int                            X                              (Parm)
 // int                            Y                              (Parm)
@@ -1705,7 +1706,7 @@ void UGFxMoviePlayer::SetViewport(int X, int Y, int Width, int Height)
 
 
 // Function GFxUI.GFxMoviePlayer.GetGameViewportClient
-// (Final, Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // class UGameViewportClient*     ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1726,7 +1727,7 @@ class UGameViewportClient* UGFxMoviePlayer::GetGameViewportClient()
 
 
 // Function GFxUI.GFxMoviePlayer.SetPriority
-// (Iterator, Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // unsigned char                  NewPriority                    (Parm)
 
@@ -1746,7 +1747,7 @@ void UGFxMoviePlayer::SetPriority(unsigned char NewPriority)
 
 
 // Function GFxUI.GFxMoviePlayer.SetExternalTexture
-// (Final, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Resource                       (Parm, NeedCtorLink)
 // class UTexture*                Texture                        (Parm)
@@ -1771,7 +1772,7 @@ bool UGFxMoviePlayer::SetExternalTexture(const struct FString& Resource, class U
 
 
 // Function GFxUI.GFxMoviePlayer.SetExternalInterface
-// (PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // class UObject*                 H                              (Parm)
 
@@ -1791,7 +1792,7 @@ void UGFxMoviePlayer::SetExternalInterface(class UObject* H)
 
 
 // Function GFxUI.GFxMoviePlayer.SetTimingMode
-// (Final, Defined, Iterator, Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<EGFxTimingMode>    Mode                           (Parm)
 
@@ -1811,7 +1812,7 @@ void UGFxMoviePlayer::SetTimingMode(TEnumAsByte<EGFxTimingMode> Mode)
 
 
 // Function GFxUI.GFxMoviePlayer.SetMovieInfo
-// (Defined, Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // class USwfMovie*               Data                           (Parm)
 
@@ -1831,7 +1832,7 @@ void UGFxMoviePlayer::SetMovieInfo(class USwfMovie* Data)
 
 
 // Function GFxUI.GFxMoviePlayer.ConditionalClearPause
-// (Final, Defined, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 
 void UGFxMoviePlayer::ConditionalClearPause()
 {
@@ -1849,7 +1850,7 @@ void UGFxMoviePlayer::ConditionalClearPause()
 
 
 // Function GFxUI.GFxMoviePlayer.OnCleanup
-// (Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 
 void UGFxMoviePlayer::OnCleanup()
 {
@@ -1867,7 +1868,7 @@ void UGFxMoviePlayer::OnCleanup()
 
 
 // Function GFxUI.GFxMoviePlayer.OnClose
-// (Final, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 
 void UGFxMoviePlayer::OnClose()
 {
@@ -1885,7 +1886,7 @@ void UGFxMoviePlayer::OnClose()
 
 
 // Function GFxUI.GFxMoviePlayer.Close
-// (Final, Defined, Iterator, Latent, Net, Simulated, Native, Event, HasOptionalParms)
+// (Iterator, PreOperator, Singular, NetReliable, HasOptionalParms)
 // Parameters:
 // bool                           Unload                         (OptionalParm, Parm)
 
@@ -1897,7 +1898,6 @@ void UGFxMoviePlayer::Close(bool Unload)
 	params.Unload = Unload;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1906,7 +1906,7 @@ void UGFxMoviePlayer::Close(bool Unload)
 
 
 // Function GFxUI.GFxMoviePlayer.SetPause
-// (Final, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, PreOperator, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bPausePlayback                 (OptionalParm, Parm)
 
@@ -1927,7 +1927,7 @@ void UGFxMoviePlayer::SetPause(bool bPausePlayback)
 
 
 // Function GFxUI.GFxMoviePlayer.OnPostAdvance
-// (Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // float                          DeltaTime                      (Parm)
 
@@ -1948,7 +1948,7 @@ void UGFxMoviePlayer::OnPostAdvance(float DeltaTime)
 
 
 // Function GFxUI.GFxMoviePlayer.PostAdvance
-// (Final, Latent, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, Net, Simulated, HasOptionalParms)
 // Parameters:
 // float                          DeltaTime                      (Parm)
 
@@ -1968,7 +1968,7 @@ void UGFxMoviePlayer::PostAdvance(float DeltaTime)
 
 
 // Function GFxUI.GFxMoviePlayer.Advance
-// (Final, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Singular, Net, HasOptionalParms)
 // Parameters:
 // float                          Time                           (Parm)
 
@@ -1988,7 +1988,7 @@ void UGFxMoviePlayer::Advance(float Time)
 
 
 // Function GFxUI.GFxMoviePlayer.Start
-// (Final, Defined, Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           StartPaused                    (OptionalParm, Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2012,7 +2012,7 @@ bool UGFxMoviePlayer::Start(bool StartPaused)
 
 
 // Function GFxUI.GFxObject.GetFocused
-// (Final, Defined, Iterator, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2033,7 +2033,7 @@ bool UGFxObject::GetFocused()
 
 
 // Function GFxUI.GFxObject.GetTextHeight
-// (Final, Defined, Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2054,7 +2054,7 @@ float UGFxObject::GetTextHeight()
 
 
 // Function GFxUI.GFxObject.GetTextWidth
-// (Iterator, Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2075,7 +2075,7 @@ float UGFxObject::GetTextWidth()
 
 
 // Function GFxUI.GFxObject.GetYRotation
-// (Defined, Iterator, Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2096,7 +2096,7 @@ float UGFxObject::GetYRotation()
 
 
 // Function GFxUI.GFxObject.GetXRotation
-// (Final, Defined, Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2117,11 +2117,11 @@ float UGFxObject::GetXRotation()
 
 
 // Function GFxUI.GFxObject.GetRotation
-// (Final, Iterator, Net, NetReliable, Exec, Native, Event, Static)
+// (Defined, Latent, Net, Native, Event, Operator)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
-float UGFxObject::STATIC_GetRotation()
+float UGFxObject::GetRotation()
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.GetRotation"));
 
@@ -2139,7 +2139,7 @@ float UGFxObject::STATIC_GetRotation()
 
 
 // Function GFxUI.GFxObject.GetYScale
-// (Final, Defined, Iterator, Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Simulated, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2160,7 +2160,7 @@ float UGFxObject::GetYScale()
 
 
 // Function GFxUI.GFxObject.GetXScale
-// (Iterator, Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2181,7 +2181,7 @@ float UGFxObject::GetXScale()
 
 
 // Function GFxUI.GFxObject.GetHeight
-// (Iterator, PreOperator, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2203,7 +2203,7 @@ float UGFxObject::GetHeight()
 
 
 // Function GFxUI.GFxObject.GetWidth
-// (Final, Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2224,7 +2224,7 @@ float UGFxObject::GetWidth()
 
 
 // Function GFxUI.GFxObject.GetAlpha
-// (PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2245,7 +2245,7 @@ float UGFxObject::GetAlpha()
 
 
 // Function GFxUI.GFxObject.GetY
-// (Final, Iterator, Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2266,7 +2266,7 @@ float UGFxObject::GetY()
 
 
 // Function GFxUI.GFxObject.GetX
-// (Defined, Latent, PreOperator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2287,7 +2287,7 @@ float UGFxObject::GetX()
 
 
 // Function GFxUI.GFxObject.SetYRotation
-// (Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2307,7 +2307,7 @@ void UGFxObject::SetYRotation(float fValue)
 
 
 // Function GFxUI.GFxObject.SetXRotation
-// (Final, PreOperator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2327,11 +2327,11 @@ void UGFxObject::SetXRotation(float fValue)
 
 
 // Function GFxUI.GFxObject.SetRotation
-// (Defined, Latent, PreOperator, Net, Event, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Exec, Native, Operator, Static)
 // Parameters:
 // float                          fValue                         (Parm)
 
-void UGFxObject::SetRotation(float fValue)
+void UGFxObject::STATIC_SetRotation(float fValue)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.SetRotation"));
 
@@ -2339,6 +2339,7 @@ void UGFxObject::SetRotation(float fValue)
 	params.fValue = fValue;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2347,7 +2348,7 @@ void UGFxObject::SetRotation(float fValue)
 
 
 // Function GFxUI.GFxObject.SetDisabled
-// (Final, Defined, Iterator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bValue                         (Parm)
 
@@ -2368,7 +2369,7 @@ void UGFxObject::SetDisabled(bool bValue)
 
 
 // Function GFxUI.GFxObject.SetYScale
-// (Final, Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2388,7 +2389,7 @@ void UGFxObject::SetYScale(float fValue)
 
 
 // Function GFxUI.GFxObject.SetXScale
-// (Defined, PreOperator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2408,7 +2409,7 @@ void UGFxObject::SetXScale(float fValue)
 
 
 // Function GFxUI.GFxObject.SetHeight
-// (Final, Iterator, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2428,7 +2429,7 @@ void UGFxObject::SetHeight(float fValue)
 
 
 // Function GFxUI.GFxObject.SetWidth
-// (Final, Defined, Iterator, Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2448,7 +2449,7 @@ void UGFxObject::SetWidth(float fValue)
 
 
 // Function GFxUI.GFxObject.SetAlpha
-// (Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2468,7 +2469,7 @@ void UGFxObject::SetAlpha(float fValue)
 
 
 // Function GFxUI.GFxObject.SetY
-// (Final, Defined, PreOperator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2488,7 +2489,7 @@ void UGFxObject::SetY(float fValue)
 
 
 // Function GFxUI.GFxObject.SetX
-// (PreOperator, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // float                          fValue                         (Parm)
 
@@ -2508,7 +2509,7 @@ void UGFxObject::SetX(float fValue)
 
 
 // Function GFxUI.GFxObject.WidgetUnloaded
-// (Final, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   WidgetName                     (Parm)
 // struct FName                   WidgetPath                     (Parm)
@@ -2536,7 +2537,7 @@ bool UGFxObject::WidgetUnloaded(const struct FName& WidgetName, const struct FNa
 
 
 // Function GFxUI.GFxObject.WidgetInitialized
-// (PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   WidgetName                     (Parm)
 // struct FName                   WidgetPath                     (Parm)
@@ -2564,7 +2565,7 @@ bool UGFxObject::WidgetInitialized(const struct FName& WidgetName, const struct 
 
 
 // Function GFxUI.GFxObject.ListChildren
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Operator, HasOptionalParms)
+// (Singular, Simulated, HasOptionalParms)
 
 void UGFxObject::ListChildren()
 {
@@ -2581,7 +2582,7 @@ void UGFxObject::ListChildren()
 
 
 // Function GFxUI.GFxObject.RemoveMovieClip
-// (Final, Iterator, Latent, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 PathName                       (Parm, NeedCtorLink)
 
@@ -2601,7 +2602,7 @@ void UGFxObject::RemoveMovieClip(const struct FString& PathName)
 
 
 // Function GFxUI.GFxObject.AttachMovie
-// (Defined, Singular, NetReliable, Exec, Operator, HasOptionalParms)
+// (Defined, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 symbolname                     (Parm, NeedCtorLink)
 // struct FString                 instancename                   (Parm, NeedCtorLink)
@@ -2630,7 +2631,7 @@ class UGFxObject* UGFxObject::AttachMovie(const struct FString& symbolname, cons
 
 
 // Function GFxUI.GFxObject.CreateEmptyMovieClip
-// (Final, Defined, Iterator, PreOperator, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 instancename                   (Parm, NeedCtorLink)
 // int                            Depth                          (OptionalParm, Parm)
@@ -2657,7 +2658,7 @@ class UGFxObject* UGFxObject::CreateEmptyMovieClip(const struct FString& instanc
 
 
 // Function GFxUI.GFxObject.GotoAndStopI
-// (Final, Iterator, Latent, Singular, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Simulated, HasOptionalParms)
 // Parameters:
 // int                            frame                          (Parm)
 
@@ -2677,7 +2678,7 @@ void UGFxObject::GotoAndStopI(int frame)
 
 
 // Function GFxUI.GFxObject.GotoAndStop
-// (Iterator, Latent, Singular, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 frame                          (Parm, NeedCtorLink)
 
@@ -2697,7 +2698,7 @@ void UGFxObject::GotoAndStop(const struct FString& frame)
 
 
 // Function GFxUI.GFxObject.GotoAndPlayI
-// (Final, Defined, Latent, Singular, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, Simulated, HasOptionalParms)
 // Parameters:
 // int                            frame                          (Parm)
 
@@ -2717,7 +2718,7 @@ void UGFxObject::GotoAndPlayI(int frame)
 
 
 // Function GFxUI.GFxObject.GotoAndPlay
-// (Defined, Latent, Singular, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 frame                          (Parm, NeedCtorLink)
 
@@ -2737,7 +2738,7 @@ void UGFxObject::GotoAndPlay(const struct FString& frame)
 
 
 // Function GFxUI.GFxObject.ActionScriptArray
-// (Final, Iterator, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // TArray<class UGFxObject*>      ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -2760,7 +2761,7 @@ TArray<class UGFxObject*> UGFxObject::ActionScriptArray(const struct FString& Pa
 
 
 // Function GFxUI.GFxObject.ActionScriptObject
-// (Final, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Path                           (Parm, NeedCtorLink)
 // class UGFxObject*              ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2783,7 +2784,7 @@ class UGFxObject* UGFxObject::ActionScriptObject(const struct FString& Path)
 
 
 // Function GFxUI.GFxObject.ActionScriptString
-// (Iterator, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 method                         (Parm, NeedCtorLink)
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -2806,7 +2807,7 @@ struct FString UGFxObject::ActionScriptString(const struct FString& method)
 
 
 // Function GFxUI.GFxObject.ActionScriptFloat
-// (Final, Defined, Iterator, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 method                         (Parm, NeedCtorLink)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2829,7 +2830,7 @@ float UGFxObject::ActionScriptFloat(const struct FString& method)
 
 
 // Function GFxUI.GFxObject.ActionScriptInt
-// (Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 method                         (Parm, NeedCtorLink)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2852,7 +2853,7 @@ int UGFxObject::ActionScriptInt(const struct FString& method)
 
 
 // Function GFxUI.GFxObject.ActionScriptVoid
-// (Final, Iterator, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 method                         (Parm, NeedCtorLink)
 
@@ -2872,7 +2873,7 @@ void UGFxObject::ActionScriptVoid(const struct FString& method)
 
 
 // Function GFxUI.GFxObject.Invoke
-// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // TArray<struct FASValue>        args                           (Parm, NeedCtorLink)
@@ -2897,7 +2898,7 @@ struct FASValue UGFxObject::Invoke(const struct FString& Member, TArray<struct F
 
 
 // Function GFxUI.GFxObject.ActionScriptSetFunctionOn
-// (Final, Defined, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // class UGFxObject*              Target                         (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -2919,7 +2920,7 @@ void UGFxObject::ActionScriptSetFunctionOn(class UGFxObject* Target, const struc
 
 
 // Function GFxUI.GFxObject.ActionScriptSetFunction
-// (Defined, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 
@@ -2939,7 +2940,7 @@ void UGFxObject::ActionScriptSetFunction(const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.SetElementMemberString
-// (Final, Defined, Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -2963,7 +2964,7 @@ void UGFxObject::SetElementMemberString(int Index, const struct FString& Member,
 
 
 // Function GFxUI.GFxObject.SetElementMemberInt
-// (Final, Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -2987,7 +2988,7 @@ void UGFxObject::SetElementMemberInt(int Index, const struct FString& Member, in
 
 
 // Function GFxUI.GFxObject.SetElementMemberFloat
-// (Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3011,7 +3012,7 @@ void UGFxObject::SetElementMemberFloat(int Index, const struct FString& Member, 
 
 
 // Function GFxUI.GFxObject.SetElementMemberBool
-// (Final, Defined, Iterator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3035,7 +3036,7 @@ void UGFxObject::SetElementMemberBool(int Index, const struct FString& Member, b
 
 
 // Function GFxUI.GFxObject.SetElementMemberObject
-// (Defined, Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3059,7 +3060,7 @@ void UGFxObject::SetElementMemberObject(int Index, const struct FString& Member,
 
 
 // Function GFxUI.GFxObject.SetElementMember
-// (Defined, Iterator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3083,7 +3084,7 @@ void UGFxObject::SetElementMember(int Index, const struct FString& Member, const
 
 
 // Function GFxUI.GFxObject.GetElementMemberString
-// (Final, Defined, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3108,7 +3109,7 @@ struct FString UGFxObject::GetElementMemberString(int Index, const struct FStrin
 
 
 // Function GFxUI.GFxObject.GetElementMemberInt
-// (Final, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3133,7 +3134,7 @@ int UGFxObject::GetElementMemberInt(int Index, const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.GetElementMemberFloat
-// (Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3158,7 +3159,7 @@ float UGFxObject::GetElementMemberFloat(int Index, const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.GetElementMemberBool
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3183,7 +3184,7 @@ bool UGFxObject::GetElementMemberBool(int Index, const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.GetElementMemberObject
-// (Defined, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3210,7 +3211,7 @@ class UGFxObject* UGFxObject::GetElementMemberObject(int Index, const struct FSt
 
 
 // Function GFxUI.GFxObject.GetElementMember
-// (Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -3235,7 +3236,7 @@ struct FASValue UGFxObject::GetElementMember(int Index, const struct FString& Me
 
 
 // Function GFxUI.GFxObject.SetElementColorTransform
-// (Final, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Iterator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FASColorTransform       cxform                         (Parm)
@@ -3257,7 +3258,7 @@ void UGFxObject::SetElementColorTransform(int Index, const struct FASColorTransf
 
 
 // Function GFxUI.GFxObject.SetElementPosition
-// (Final, Iterator, Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // float                          X                              (Parm)
@@ -3281,7 +3282,7 @@ void UGFxObject::SetElementPosition(int Index, float X, float Y)
 
 
 // Function GFxUI.GFxObject.SetElementVisible
-// (Final, Defined, Iterator, Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // bool                           Visible                        (Parm)
@@ -3303,7 +3304,7 @@ void UGFxObject::SetElementVisible(int Index, bool Visible)
 
 
 // Function GFxUI.GFxObject.SetElementDisplayMatrix
-// (Final, Defined, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FMatrix                 M                              (Parm)
@@ -3325,7 +3326,7 @@ void UGFxObject::SetElementDisplayMatrix(int Index, const struct FMatrix& M)
 
 
 // Function GFxUI.GFxObject.SetElementDisplayInfo
-// (Defined, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FASDisplayInfo          D                              (Parm)
@@ -3347,7 +3348,7 @@ void UGFxObject::SetElementDisplayInfo(int Index, const struct FASDisplayInfo& D
 
 
 // Function GFxUI.GFxObject.GetElementDisplayMatrix
-// (Final, Defined, Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FMatrix                 ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3370,7 +3371,7 @@ struct FMatrix UGFxObject::GetElementDisplayMatrix(int Index)
 
 
 // Function GFxUI.GFxObject.GetElementDisplayInfo
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FASDisplayInfo          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3393,7 +3394,7 @@ struct FASDisplayInfo UGFxObject::GetElementDisplayInfo(int Index)
 
 
 // Function GFxUI.GFxObject.SetElementString
-// (Defined, Iterator, Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 S                              (Parm, NeedCtorLink)
@@ -3415,7 +3416,7 @@ void UGFxObject::SetElementString(int Index, const struct FString& S)
 
 
 // Function GFxUI.GFxObject.SetElementInt
-// (Final, Iterator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // int                            I                              (Parm)
@@ -3437,7 +3438,7 @@ void UGFxObject::SetElementInt(int Index, int I)
 
 
 // Function GFxUI.GFxObject.SetElementFloat
-// (Iterator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // float                          F                              (Parm)
@@ -3459,7 +3460,7 @@ void UGFxObject::SetElementFloat(int Index, float F)
 
 
 // Function GFxUI.GFxObject.SetElementBool
-// (NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // bool                           B                              (Parm)
@@ -3481,7 +3482,7 @@ void UGFxObject::SetElementBool(int Index, bool B)
 
 
 // Function GFxUI.GFxObject.SetElementObject
-// (Iterator, Latent, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // class UGFxObject*              val                            (Parm)
@@ -3503,7 +3504,7 @@ void UGFxObject::SetElementObject(int Index, class UGFxObject* val)
 
 
 // Function GFxUI.GFxObject.SetElement
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FASValue                Arg                            (Parm, NeedCtorLink)
@@ -3525,7 +3526,7 @@ void UGFxObject::SetElement(int Index, const struct FASValue& Arg)
 
 
 // Function GFxUI.GFxObject.GetElementString
-// (Final, Iterator, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -3548,7 +3549,7 @@ struct FString UGFxObject::GetElementString(int Index)
 
 
 // Function GFxUI.GFxObject.GetElementInt
-// (Final, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3571,7 +3572,7 @@ int UGFxObject::GetElementInt(int Index)
 
 
 // Function GFxUI.GFxObject.GetElementFloat
-// (Iterator, Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3594,7 +3595,7 @@ float UGFxObject::GetElementFloat(int Index)
 
 
 // Function GFxUI.GFxObject.GetElementBool
-// (Final, Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3617,7 +3618,7 @@ bool UGFxObject::GetElementBool(int Index)
 
 
 // Function GFxUI.GFxObject.GetElementObject
-// (Iterator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // class UClass*                  Type                           (OptionalParm, Parm)
@@ -3642,7 +3643,7 @@ class UGFxObject* UGFxObject::GetElementObject(int Index, class UClass* Type)
 
 
 // Function GFxUI.GFxObject.GetElement
-// (Latent, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // int                            Index                          (Parm)
 // struct FASValue                ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -3665,7 +3666,7 @@ struct FASValue UGFxObject::GetElement(int Index)
 
 
 // Function GFxUI.GFxObject.SetText
-// (Defined, Iterator, Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Text                           (Parm, CoerceParm, NeedCtorLink)
 // class UTranslationContext*     InContext                      (OptionalParm, Parm)
@@ -3687,7 +3688,7 @@ void UGFxObject::SetText(const struct FString& Text, class UTranslationContext* 
 
 
 // Function GFxUI.GFxObject.GetText
-// (Defined, Latent, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -3708,7 +3709,7 @@ struct FString UGFxObject::GetText()
 
 
 // Function GFxUI.GFxObject.SetForceHidden
-// (Final, Defined, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // bool                           bForceHide                     (Parm)
 
@@ -3728,7 +3729,7 @@ void UGFxObject::SetForceHidden(bool bForceHide)
 
 
 // Function GFxUI.GFxObject.SetVisible
-// (Final, Iterator, Latent, Singular, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (PreOperator, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // bool                           Visible                        (Parm)
 
@@ -3748,7 +3749,7 @@ void UGFxObject::SetVisible(bool Visible)
 
 
 // Function GFxUI.GFxObject.SetDisplayMatrix3D
-// (Defined, Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FMatrix                 M                              (Parm)
 
@@ -3768,7 +3769,7 @@ void UGFxObject::SetDisplayMatrix3D(const struct FMatrix& M)
 
 
 // Function GFxUI.GFxObject.SetDisplayMatrix
-// (Final, Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FMatrix                 M                              (Parm)
 
@@ -3788,7 +3789,7 @@ void UGFxObject::SetDisplayMatrix(const struct FMatrix& M)
 
 
 // Function GFxUI.GFxObject.SetColorTransform
-// (Final, Defined, Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FASColorTransform       cxform                         (Parm)
 
@@ -3808,7 +3809,7 @@ void UGFxObject::SetColorTransform(const struct FASColorTransform& cxform)
 
 
 // Function GFxUI.GFxObject.SetPosition
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Exec, Event, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Net, Simulated, Exec, Event, HasOptionalParms)
 // Parameters:
 // float                          X                              (Parm)
 // float                          Y                              (Parm)
@@ -3830,7 +3831,7 @@ void UGFxObject::SetPosition(float X, float Y)
 
 
 // Function GFxUI.GFxObject.SetDisplayInfo
-// (Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FASDisplayInfo          D                              (Parm)
 // bool                           bResetCache                    (OptionalParm, Parm)
@@ -3852,7 +3853,7 @@ void UGFxObject::SetDisplayInfo(const struct FASDisplayInfo& D, bool bResetCache
 
 
 // Function GFxUI.GFxObject.GetDisplayMatrix3D
-// (Final, Defined, Iterator, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Latent, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FMatrix                 ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3873,7 +3874,7 @@ struct FMatrix UGFxObject::GetDisplayMatrix3D()
 
 
 // Function GFxUI.GFxObject.GetDisplayMatrix
-// (Defined, Iterator, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FMatrix                 ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3894,7 +3895,7 @@ struct FMatrix UGFxObject::GetDisplayMatrix()
 
 
 // Function GFxUI.GFxObject.GetColorTransform
-// (Iterator, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FASColorTransform       ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3915,13 +3916,13 @@ struct FASColorTransform UGFxObject::GetColorTransform()
 
 
 // Function GFxUI.GFxObject.GetPosition
-// (Defined, Iterator, Latent, NetReliable, Exec, Native, Event, Static)
+// (Final, Defined, PreOperator, Native, Event, Operator)
 // Parameters:
 // float                          X                              (Parm, OutParm)
 // float                          Y                              (Parm, OutParm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
-bool UGFxObject::STATIC_GetPosition(float* X, float* Y)
+bool UGFxObject::GetPosition(float* X, float* Y)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.GetPosition"));
 
@@ -3944,7 +3945,7 @@ bool UGFxObject::STATIC_GetPosition(float* X, float* Y)
 
 
 // Function GFxUI.GFxObject.GetDisplayInfo
-// (Final, Iterator, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FASDisplayInfo          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3965,7 +3966,7 @@ struct FASDisplayInfo UGFxObject::GetDisplayInfo()
 
 
 // Function GFxUI.GFxObject.TranslateString
-// (Defined, Iterator, Latent, Net, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 StringToTranslate              (Parm, NeedCtorLink)
 // class UTranslationContext*     InContext                      (OptionalParm, Parm)
@@ -3990,7 +3991,7 @@ struct FString UGFxObject::TranslateString(const struct FString& StringToTransla
 
 
 // Function GFxUI.GFxObject.SetFunction
-// (Iterator, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // class UObject*                 context                        (Parm)
@@ -4014,12 +4015,12 @@ void UGFxObject::SetFunction(const struct FString& Member, class UObject* contex
 
 
 // Function GFxUI.GFxObject.SetObject
-// (Final, Latent, PreOperator, Event, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, Static)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // class UGFxObject*              val                            (Parm)
 
-void UGFxObject::SetObject(const struct FString& Member, class UGFxObject* val)
+void UGFxObject::STATIC_SetObject(const struct FString& Member, class UGFxObject* val)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.SetObject"));
 
@@ -4028,6 +4029,7 @@ void UGFxObject::SetObject(const struct FString& Member, class UGFxObject* val)
 	params.val = val;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4036,7 +4038,7 @@ void UGFxObject::SetObject(const struct FString& Member, class UGFxObject* val)
 
 
 // Function GFxUI.GFxObject.SetString
-// (Final, Iterator, Latent, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (NetReliable, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // struct FString                 S                              (Parm, NeedCtorLink)
@@ -4060,7 +4062,7 @@ void UGFxObject::SetString(const struct FString& Member, const struct FString& S
 
 
 // Function GFxUI.GFxObject.SetInt
-// (Defined, Iterator, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // int                            I                              (Parm)
@@ -4082,7 +4084,7 @@ void UGFxObject::SetInt(const struct FString& Member, int I)
 
 
 // Function GFxUI.GFxObject.SetFloat
-// (Defined, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // float                          F                              (Parm)
@@ -4104,7 +4106,7 @@ void UGFxObject::SetFloat(const struct FString& Member, float F)
 
 
 // Function GFxUI.GFxObject.SetBool
-// (Final, Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // bool                           B                              (Parm)
@@ -4126,12 +4128,12 @@ void UGFxObject::SetBool(const struct FString& Member, bool B)
 
 
 // Function GFxUI.GFxObject.Set
-// (Final, Defined, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, NetReliable, Native, Operator, Static)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // struct FASValue                Arg                            (Parm, NeedCtorLink)
 
-void UGFxObject::Set(const struct FString& Member, const struct FASValue& Arg)
+void UGFxObject::STATIC_Set(const struct FString& Member, const struct FASValue& Arg)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.Set"));
 
@@ -4149,13 +4151,13 @@ void UGFxObject::Set(const struct FString& Member, const struct FASValue& Arg)
 
 
 // Function GFxUI.GFxObject.GetObject
-// (Final, Iterator, Latent, PreOperator, Net, Exec, Native, Event, Static)
+// (Defined, Singular, Net, NetReliable, Simulated, Exec, Event, Operator)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // class UClass*                  Type                           (OptionalParm, Parm)
 // class UGFxObject*              ReturnValue                    (Parm, OutParm, ReturnParm)
 
-class UGFxObject* UGFxObject::STATIC_GetObject(const struct FString& Member, class UClass* Type)
+class UGFxObject* UGFxObject::GetObject(const struct FString& Member, class UClass* Type)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.GetObject"));
 
@@ -4164,7 +4166,6 @@ class UGFxObject* UGFxObject::STATIC_GetObject(const struct FString& Member, cla
 	params.Type = Type;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4175,12 +4176,12 @@ class UGFxObject* UGFxObject::STATIC_GetObject(const struct FString& Member, cla
 
 
 // Function GFxUI.GFxObject.GetString
-// (Final, Defined, PreOperator, Singular, Net, NetReliable, Exec, Native, Event, Static)
+// (Latent, PreOperator, Singular, Net, Native, Event, Operator)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
-struct FString UGFxObject::STATIC_GetString(const struct FString& Member)
+struct FString UGFxObject::GetString(const struct FString& Member)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.GetString"));
 
@@ -4199,12 +4200,12 @@ struct FString UGFxObject::STATIC_GetString(const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.GetInt
-// (Final, Defined, Latent, Exec, Native, Event, Static)
+// (PreOperator, NetReliable, Simulated, Exec, Event, Operator)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
-int UGFxObject::STATIC_GetInt(const struct FString& Member)
+int UGFxObject::GetInt(const struct FString& Member)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.GetInt"));
 
@@ -4212,7 +4213,6 @@ int UGFxObject::STATIC_GetInt(const struct FString& Member)
 	params.Member = Member;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4223,12 +4223,12 @@ int UGFxObject::STATIC_GetInt(const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.GetFloat
-// (Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Singular, Net, Simulated, Exec, Event, Operator)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
-float UGFxObject::STATIC_GetFloat(const struct FString& Member)
+float UGFxObject::GetFloat(const struct FString& Member)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function GFxUI.GFxObject.GetFloat"));
 
@@ -4236,7 +4236,6 @@ float UGFxObject::STATIC_GetFloat(const struct FString& Member)
 	params.Member = Member;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4247,7 +4246,7 @@ float UGFxObject::STATIC_GetFloat(const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.GetBool
-// (Final, Defined, PreOperator, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // bool                           bIgnoreUndefined               (OptionalParm, Parm)
@@ -4272,7 +4271,7 @@ bool UGFxObject::GetBool(const struct FString& Member, bool bIgnoreUndefined)
 
 
 // Function GFxUI.GFxObject.Get
-// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (PreOperator, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FString                 Member                         (Parm, NeedCtorLink)
 // struct FASValue                ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -4295,7 +4294,7 @@ struct FASValue UGFxObject::Get(const struct FString& Member)
 
 
 // Function GFxUI.GFxObject.SetColorMultiplier
-// (Defined, Latent, PreOperator, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // float                          R                              (Parm)
 // float                          G                              (Parm)
@@ -4323,7 +4322,7 @@ void UGFxObject::SetColorMultiplier(float R, float G, float B, float A, bool bMa
 
 
 // Function GFxUI.GFxObject.SetColor
-// (Iterator, PreOperator, Exec, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, Simulated, HasOptionalParms)
 // Parameters:
 // float                          R                              (Parm)
 // float                          G                              (Parm)
@@ -4351,7 +4350,7 @@ void UGFxObject::SetColor(float R, float G, float B, float A, bool bMaintainMult
 
 
 // Function GFxUI.GFxAction_CloseMovie.IsValidLevelSequenceObject
-// (PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4373,7 +4372,7 @@ bool UGFxAction_CloseMovie::IsValidLevelSequenceObject()
 
 
 // Function GFxUI.GFxAction_GetVariable.IsValidLevelSequenceObject
-// (PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4395,7 +4394,7 @@ bool UGFxAction_GetVariable::IsValidLevelSequenceObject()
 
 
 // Function GFxUI.GFxAction_Invoke.IsValidLevelSequenceObject
-// (PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4417,7 +4416,7 @@ bool UGFxAction_Invoke::IsValidLevelSequenceObject()
 
 
 // Function GFxUI.GFxAction_OpenMovie.IsValidLevelSequenceObject
-// (PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4439,7 +4438,7 @@ bool UGFxAction_OpenMovie::IsValidLevelSequenceObject()
 
 
 // Function GFxUI.GFxAction_SetVariable.IsValidLevelSequenceObject
-// (PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4461,7 +4460,7 @@ bool UGFxAction_SetVariable::IsValidLevelSequenceObject()
 
 
 // Function GFxUI.GFxFSCmdHandler_Kismet.FSCommand
-// (Final, Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UGFxMoviePlayer*         Movie                          (Parm)
 // class UGFxEvent_FSCommand*     Event                          (Parm)
@@ -4491,7 +4490,7 @@ bool UGFxFSCmdHandler_Kismet::FSCommand(class UGFxMoviePlayer* Movie, class UGFx
 
 
 // Function GFxUI.GFxClikWidget.ASRemoveAllEventListeners
-// (Final, Iterator, Latent, PreOperator, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Event                          (Parm, NeedCtorLink)
 
@@ -4511,7 +4510,7 @@ void UGFxClikWidget::ASRemoveAllEventListeners(const struct FString& Event)
 
 
 // Function GFxUI.GFxClikWidget.AS3AddEventListener
-// (Final, PreOperator, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Type                           (Parm, NeedCtorLink)
 // class UGFxObject*              O                              (Parm)
@@ -4539,7 +4538,7 @@ void UGFxClikWidget::AS3AddEventListener(const struct FString& Type, class UGFxO
 
 
 // Function GFxUI.GFxClikWidget.ASAddEventListener
-// (Final, Latent, PreOperator, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, HasOptionalParms)
 // Parameters:
 // struct FString                 Type                           (Parm, NeedCtorLink)
 // class UGFxObject*              O                              (Parm)
@@ -4563,7 +4562,7 @@ void UGFxClikWidget::ASAddEventListener(const struct FString& Type, class UGFxOb
 
 
 // Function GFxUI.GFxClikWidget.SetListener
-// (Final, Defined, Iterator, PreOperator, NetReliable, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, Net, Simulated, HasOptionalParms)
 // Parameters:
 // class UGFxObject*              O                              (Parm)
 // struct FString                 Member                         (Parm, NeedCtorLink)
@@ -4587,7 +4586,7 @@ void UGFxClikWidget::SetListener(class UGFxObject* O, const struct FString& Memb
 
 
 // Function GFxUI.GFxClikWidget.GetEventStringFromTypename
-// (Defined, Iterator, Simulated, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FName                   Typename                       (Parm)
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -4610,7 +4609,7 @@ struct FString UGFxClikWidget::GetEventStringFromTypename(const struct FName& Ty
 
 
 // Function GFxUI.GFxClikWidget.RemoveAllEventListeners
-// (Iterator, Latent, Singular, Net, Simulated, Exec, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, Simulated, HasOptionalParms)
 // Parameters:
 // struct FString                 Event                          (Parm, NeedCtorLink)
 
@@ -4630,7 +4629,7 @@ void UGFxClikWidget::RemoveAllEventListeners(const struct FString& Event)
 
 
 // Function GFxUI.GFxClikWidget.AddEventListener
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, HasOptionalParms)
 // Parameters:
 // struct FName                   Type                           (Parm)
 // struct FScriptDelegate         Listener                       (Parm, NeedCtorLink)
@@ -4658,7 +4657,7 @@ void UGFxClikWidget::AddEventListener(const struct FName& Type, const struct FSc
 
 
 // Function GFxUI.GFxClikWidget.EventListener
-// (Iterator, Latent, PreOperator, Net, NetReliable, Exec, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, HasOptionalParms)
 // Parameters:
 // struct FEventData              Data                           (Parm, NeedCtorLink)
 

@@ -42,7 +42,7 @@ public:
 	}
 
 
-	void STATIC_BattlePlayerControllerFunction();
+	void BattlePlayerControllerFunction();
 };
 
 

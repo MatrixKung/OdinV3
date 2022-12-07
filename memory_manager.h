@@ -3,24 +3,27 @@
 #include <vector>
 #include <stdint.h>
 
-static void* GetCallAddress(void* address) {
+template<typename T>
+static T GetCallAddress(void* address) {
 	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 1);
 	void* absolute = (void*)((unsigned __int64)address + relative + 5);
 
-	return absolute;
+	return reinterpret_cast<T>(absolute);
 }
 
-static void* GetMovAddress(void* address) {
+template<typename T>
+static T GetMovAddress(void* address) {
 	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 3);
 	void* absolute = (void*)((unsigned __int64)address + relative + 7);
 
-	return absolute;
+	return reinterpret_cast<T>(absolute);
 }
 
-static void* GetAndAddress(void* address) {
+template<typename T>
+static T GetAndAddress(void* address) {
 	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 2);
 
-	return (void*)relative;
+	return reinterpret_cast<T>(relative);
 }
 
 static std::vector<int> PatternToIntVector(const char* Pattern)

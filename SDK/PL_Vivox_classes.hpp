@@ -38,7 +38,7 @@ public:
 	bool STATIC_CanCommunicateVoiceWithUsersByUniqueNetIds(TArray<struct FUniqueNetId> Users);
 	bool STATIC_OnPrivilegeLevelChecked(int ChannelJoinCount, unsigned char LocalUserNum, TEnumAsByte<EFeaturePrivilege> Privilege, TEnumAsByte<EFeaturePrivilegeLevel> PrivilegeLevel, bool bDiffersFromHint);
 	bool STATIC_CanCommunicateVoice(int ChannelJoinCount, TEnumAsByte<EFeaturePrivilegeLevel>* PrivilegeLevelHint);
-	void STATIC_RemoveClosure(class UVivoxClosure* Closure);
+	void RemoveClosure(class UVivoxClosure* Closure);
 	void STATIC_RegisterOnlineDelegates();
 };
 
@@ -81,7 +81,7 @@ public:
 	void STATIC_OnPrivilegeLevelChecked(unsigned char LocalUserNum, TEnumAsByte<EFeaturePrivilege> Privilege, TEnumAsByte<EFeaturePrivilegeLevel> PrivilegeLevel, bool bDiffersFromHint);
 	void ClearOnlineDelegates();
 	void STATIC_RegisterOnlineDelegates(class UOnlineSubsystem* OnlineSub);
-	void STATIC_InitClosure(int ChannelJoinCount, class UVivoxOSSConnectors* Connector);
+	void InitClosure(int ChannelJoinCount, class UVivoxOSSConnectors* Connector);
 };
 
 

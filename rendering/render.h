@@ -23,6 +23,30 @@ namespace maths
 		return Vec;
 	}
 
+	int ClampYaw(int angle) {
+		static const auto max = Const_URotation180;
+
+		while (angle > max)
+		{
+			angle -= max;
+		}
+
+		while (angle < 0) {
+			angle += max;
+		}
+		return angle;
+	}
+
+	int ClampPitch(int angle) {
+		if (angle > 16000) {
+			angle = 16000;
+		}
+		if (angle < -16000) {
+			angle = -16000;
+		}
+		return angle;
+	}
+
 	float VectorMagnitude(FVector Vec) {
 		return sqrt((Vec.X * Vec.X) + (Vec.Y * Vec.Y) + (Vec.Z * Vec.Z));
 	}
@@ -42,8 +66,6 @@ namespace maths
 			v.Z /= size;
 		}
 	}
-
-
 	void GetAxes(FRotator R, FVector& X, FVector& Y, FVector& Z)
 	{
 		X = RotationToVector(R);
@@ -99,9 +121,11 @@ namespace maths
 		return (float)sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 	}
 
-	float GetCrosshairDistance(float Xx, float Yy, float xX, float yY)
-	{
-		return sqrt((yY - Yy) * (yY - Yy) + (xX - Xx) * (xX - Xx));
+	float GetDistance2D(FVector2D to, FVector2D from) {
+		float deltaX = to.X - from.X;
+		float deltaY = to.Y - from.Y;
+
+		return (float)sqrt(deltaX * deltaX + deltaY * deltaY);
 	}
 }
 
@@ -127,17 +151,25 @@ namespace utils {
 			once = false;
 	}
 	
+	const const char* addy2str(void* addr) {
+		const void* address = static_cast<const void*>(addr);
+		std::stringstream ss;
+		ss << "0x" << address;
+
+		return ss.str().c_str();
+	}
+
 	const wchar_t* St2Wc(const char* sz) {
 		wchar_t Buff[1024];
 		mbstowcs(Buff, sz, 1024);
 		return Buff;
 	}
 	
-	bool W2S(FVector target, FVector2D& dst) {
+	bool W2S(FVector from, FVector2D& to) {
 		FVector AxisX, AxisY, AxisZ, Delta, Transformed;
-		maths::GetAxes(Globals::PlayerCamera->STATIC_GetCameraRotation(), AxisX, AxisY, AxisZ);
+		maths::GetAxes(Globals::PlayerCamera->GetCameraRotation(), AxisX, AxisY, AxisZ);
 
-		Delta = target - Globals::PlayerCamera->LastFrameCameraCache.POV.Location;
+		Delta = from - Globals::PlayerCamera->LastFrameCameraCache.POV.Location;
 		Transformed = FVector(Delta.Dot(AxisY), Delta.Dot(AxisZ), Delta.Dot(AxisX));
 
 		if (Transformed.Z < 1.00f)
@@ -146,17 +178,18 @@ namespace utils {
 		float CentX = (Globals::width / 2.0f);
 		float CentY = (Globals::height / 2.0f);
 
-		dst.X = CentX + Transformed.X * (CentX / tan(Globals::FOV * Const_PI / 360.0f)) / Transformed.Z;
-		dst.Y = CentY + -Transformed.Y * (CentX / tan(Globals::FOV * Const_PI / 360.0f)) / Transformed.Z;
+		to.X = CentX + Transformed.X * (CentX / tan(Globals::FOV * Const_PI / 360.0f)) / Transformed.Z;
+		to.Y = CentY + -Transformed.Y * (CentX / tan(Globals::FOV * Const_PI / 360.0f)) / Transformed.Z;
 
-		if (dst.X >= 0.0f && dst.X <= Globals::width) {
-			if (dst.Y >= 0.0f && dst.Y <= Globals::height) {
+		if (to.X >= 0.0f && to.X <= Globals::width) {
+			if (to.Y >= 0.0f && to.Y <= Globals::height) {
 				return true;
 			}
 		}
 		return false;
 	}
 
+	// TODO: Change to Trace for better VisCheck
 	bool IsPawnVisible(ATgPawn* pawn) {
 		if (!Globals::WorldInfo ||
 			!pawn) {
@@ -167,6 +200,59 @@ namespace utils {
 		float timeSeconds = Globals::WorldInfo->TimeSeconds;
 		
 		return (lastRenderTime > timeSeconds - 0.05f);
+	}
+
+	FName GetBoneFromId(int id) {
+		switch (id)
+		{
+		case 0:
+			return FName(_xor_("head"));
+			break;
+
+		case 1:
+			return FName(_xor_("L_UpperArm"));
+			break;
+
+		case 2:
+			return FName(_xor_("L_Forearm"));
+			break;
+
+		case 3:
+			return FName(_xor_("R_UpperArm"));
+			break;
+
+		case 4:
+			return FName(_xor_("R_Forearm"));
+			break;
+
+		case 5:
+			return FName(_xor_("L_Thigh"));
+			break;
+
+		case 6:
+			return FName(_xor_("L_Calf"));
+			break;
+
+		case 7:
+			return FName(_xor_("L_Foot"));
+			break;
+
+		case 8:
+			return FName(_xor_("R_Thigh"));
+			break;
+
+		case 9:
+			return FName(_xor_("R_Calf"));
+			break;
+
+		case 10:
+			return FName(_xor_("R_Foot"));
+			break;
+
+		default:
+			return FName(_xor_("head"));
+			break;
+		}
 	}
 
 	FBoneAtom GetBoneFromId(USkeletalMeshComponent* mesh, int id) {
@@ -203,7 +289,7 @@ namespace utils {
 		return FBoneAtom{0};
 	}
 
-	FColor getColor(bool state) {
+	FColor GetColor(bool state) {
 		return state ? colors::Green : colors::Red;
 	}
 
@@ -211,13 +297,13 @@ namespace utils {
 		FVector2D oldPos = FVector2D(canvas->CurX, canvas->CurY);
 		FColor oldColor = canvas->DrawColor;
 
-		canvas->SetPos(pos.X, pos.Y, 0.f);
-		canvas->SetDrawColor(color.R, color.G, color.B, color.A);
+		canvas->STATIC_SetPos(pos.X, pos.Y, 0.f);
+		canvas->STATIC_SetDrawColor(color.R, color.G, color.B, color.A);
 
-		canvas->STATIC_DrawText(text, false, 1.f, 1.f, EDisplayPlane::DISPLAYPLANE_HUD, NULL);
+		canvas->DrawText(text, false, 1.f, 1.f, EDisplayPlane::DISPLAYPLANE_HUD, NULL);
 
-		canvas->SetPos(oldPos.X, oldPos.Y, 0.f);
-		canvas->SetDrawColor(oldColor.R, oldColor.G, oldColor.B, oldColor.A);
+		canvas->STATIC_SetPos(oldPos.X, oldPos.Y, 0.f);
+		canvas->STATIC_SetDrawColor(oldColor.R, oldColor.G, oldColor.B, oldColor.A);
 	}
 }
 
@@ -264,7 +350,41 @@ void Aimbot()
 				Globals::LocalController->Rotation = AimRotation;
 			}
 			else {
-				if (!config_system.item.smooth) {
+				if (config_system.item.smooth) {
+					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
+
+					FVector difference;
+					difference.X = AimRotation.Pitch - Globals::LocalController->Rotation.Pitch;
+					difference.Y = AimRotation.Yaw - Globals::LocalController->Rotation.Yaw;
+
+					//Globals::LocalController->Rotation.Pitch += difference.X / config_system.item.smoothness;
+					//Globals::LocalController->Rotation.Yaw += difference.Y / config_system.item.smoothness;
+
+					int a = maths::ClampYaw(Globals::LocalController->Rotation.Yaw);
+					int b = maths::ClampYaw(AimRotation.Yaw);
+					const int Full360 = Const_URotation180;
+
+					int dist1 = -(a - b + Full360) % Full360;
+					int dist2 = (b - a + Full360) % Full360;
+
+					int dist = dist1;
+					if (abs(dist2) < abs(dist1)) {
+						dist = dist2;
+					}
+
+					float smoothAmount = config_system.item.smoothness;
+
+					if (config_system.item.lockWhenClose && abs(dist) + abs(difference.X) < Const_URotation180 / config_system.item.tolerance) {
+						smoothAmount = 1.0f;
+					}
+
+					difference.Y = (int)(dist * smoothAmount);
+					difference.X = (int)(difference.X * smoothAmount);
+					
+					Globals::LocalController->Rotation.Pitch += difference.X;
+					Globals::LocalController->Rotation.Yaw += difference.Y;
+				}
+				else {
 					//ATgPlayerController* controller = (ATgPlayerController*)Globals::LocalController;
 					//controller->bPressingLeftMouseButton = false;
 
@@ -275,16 +395,6 @@ void Aimbot()
 
 					//controller->bPressingLeftMouseButton = true;
 					//Globals::LocalController->Rotation = oldRotation;
-				}
-				else {
-					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
-
-					FVector difference;
-					difference.X = AimRotation.Pitch - Globals::LocalController->Rotation.Pitch;
-					difference.Y = AimRotation.Yaw - Globals::LocalController->Rotation.Yaw;
-
-					Globals::LocalController->Rotation.Pitch += difference.X / config_system.item.smoothness;
-					Globals::LocalController->Rotation.Yaw += difference.Y / config_system.item.smoothness;
 				}
 			}
 		}
@@ -299,6 +409,7 @@ void Aimbot()
 
 void ActorLoop(UCanvas* canvas) {
 	ATgPawn* CurrentPawn = (ATgPawn*)Globals::WorldInfo->PawnList;
+	float ClosestPawn = 999999.0f;
 
 	while (CurrentPawn != NULL) {
 		ATgRepInfo_Player* CurrentPawnReplicationInfo = (ATgRepInfo_Player*)CurrentPawn->PlayerReplicationInfo;
@@ -369,14 +480,14 @@ void ActorLoop(UCanvas* canvas) {
 
 				// Tracer
 				if (config_system.item.tracers)
-					canvas->STATIC_Draw2DLine(Globals::width / 2, Globals::height, pos.X, smin.Y, ESPColor);
+					canvas->Draw2DLine(Globals::width / 2, Globals::height, pos.X, smin.Y, ESPColor);
 
 				// 2D Box
 				if (config_system.item.box) {
-					canvas->STATIC_Draw2DLine(pos.X - flWidth, smin.Y, pos.X + flWidth, smin.Y, ESPColor); // bottom
-					canvas->STATIC_Draw2DLine(pos.X - flWidth, smax.Y, pos.X + flWidth, smax.Y, ESPColor); // up
-					canvas->STATIC_Draw2DLine(pos.X - flWidth, smin.Y, pos.X - flWidth, smax.Y, ESPColor); // left
-					canvas->STATIC_Draw2DLine(pos.X + flWidth, smin.Y, pos.X + flWidth, smax.Y, ESPColor); // right
+					canvas->Draw2DLine(pos.X - flWidth, smin.Y, pos.X + flWidth, smin.Y, ESPColor); // bottom
+					canvas->Draw2DLine(pos.X - flWidth, smax.Y, pos.X + flWidth, smax.Y, ESPColor); // up
+					canvas->Draw2DLine(pos.X - flWidth, smin.Y, pos.X - flWidth, smax.Y, ESPColor); // left
+					canvas->Draw2DLine(pos.X + flWidth, smin.Y, pos.X + flWidth, smax.Y, ESPColor); // right
 				}
 
 				// Bones
@@ -441,21 +552,23 @@ void ActorLoop(UCanvas* canvas) {
 					printf("Total : %d\n\n", totalBones);
 					// TODO bonesPosition
 				}*/
+
+				FVector2D bonePos;
+				if (utils::W2S(CurrentPawn->Mesh->GetBoneLocation(CurrentPawn->BaseBoneName, (int)EBoneControlSpace::BCS_WorldSpace), bonePos))
+					utils::DrawText(canvas, FString(L"bone"), bonePos, colors::Yellow);
 			}
 		}
 
 		if (config_system.item.aimbot && o_getasynckeystate((DWORD)config_system.item.aimKey)) {
-			float ClosestPawn = 999999.0f;
-
 			int LocalTeam = Globals::ReplicationInfo->r_TaskForce->TeamIndex;
 			int EnemyTeam = CurrentPawnReplicationInfo->r_TaskForce->TeamIndex;
 
-			FVector head = CurrentPawn->Mesh->STATIC_GetBoneLocation(CurrentPawn->m_HeadShotBoneName, (int)EBoneControlSpace::BCS_WorldSpace);
+			FVector head = CurrentPawn->Mesh->GetBoneLocation(utils::GetBoneFromId(config_system.item.aimBone), (int)EBoneControlSpace::BCS_WorldSpace);
 			FVector2D headPos;
 
 			if (AimbotLockedPawn)
 			{
-				LockedPawnHead = AimbotLockedPawn->Mesh->STATIC_GetBoneLocation(AimbotLockedPawn->m_HeadShotBoneName, (int)EBoneControlSpace::BCS_WorldSpace);
+				LockedPawnHead = AimbotLockedPawn->Mesh->GetBoneLocation(utils::GetBoneFromId(config_system.item.aimBone), (int)EBoneControlSpace::BCS_WorldSpace);
 
 				if (bLocked)
 				{
@@ -471,7 +584,7 @@ void ActorLoop(UCanvas* canvas) {
 				float ScreenCY = Globals::height / 2;
 				float cx = headPos.X;
 				float cy = headPos.Y;
-				float crosshairDistance = maths::GetCrosshairDistance(cx, cy, ScreenCX, ScreenCY);
+				float crosshairDistance = maths::GetDistance2D(FVector2D{ cx, cy }, FVector2D{ ScreenCX, ScreenCY });
 
 				if (crosshairDistance < (float)config_system.item.aimFOV) {
 					if (crosshairDistance < ClosestPawn) {
@@ -479,18 +592,14 @@ void ActorLoop(UCanvas* canvas) {
 						AimbotLockedPawn = CurrentPawn;
 					}
 
-					if (!bLocked && AimbotLockedPawn) {
-						bLocked = true;
-						Aimbot();
-					}
-					else {
-						AimbotLockedPawn = nullptr;
-						LockedPawnHead = FVector{ 0, 0, 0 };
-						bLocked = false;
+					//else {
+					//	AimbotLockedPawn = nullptr;
+					//	LockedPawnHead = FVector{ 0, 0, 0 };
+					//	bLocked = false;
 
-						CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
-						continue;
-					}
+					//	CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
+					//	continue;
+					//}
 				}
 				CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
 				continue;
@@ -508,6 +617,11 @@ void ActorLoop(UCanvas* canvas) {
 		CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
 		continue;
 	}
+
+	if (!bLocked && AimbotLockedPawn && AimbotLockedPawn != NULL) {
+		bLocked = true;
+		Aimbot();
+	}
 }
 
 void MainLoop(UCanvas* canvas) {
@@ -516,18 +630,25 @@ void MainLoop(UCanvas* canvas) {
 	ZeroGUI::Input::Handle();
 	ZeroGUI::SetupCanvas(canvas);
 
-	canvas->SetPos(0, 0, 0);
+	canvas->STATIC_SetPos(0, 0, 0);
 
 	Globals::width = canvas->SizeX;
 	Globals::height = canvas->SizeY;
 
 	canvas->Font = Globals::Engine->MediumFont;
-	utils::DrawText(canvas, FString(_xor_(TEXT(L"Bingus 1.0.0 | By Wooteck (Xiloe)"))), FVector2D(10.f, 10.f), colors::Yellow);
-	utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu"))), FVector2D(10.f, 30.f), utils::getColor(config_system.item.showSexyMenu));
+	utils::DrawText(canvas, FString(_xor_(TEXT(L"Odin V4 | By Xiloe (Wooteck)"))), FVector2D(10.f, 10.f), colors::Yellow);
+	utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu (In-Game only)"))), FVector2D(10.f, 30.f), utils::GetColor(config_system.item.showSexyMenu));
 
 	if (!Globals::SetObjects()) return;
 
-	if (o_getasynckeystate((DWORD)VK_INSERT) == -32767) config_system.item.showSexyMenu = !config_system.item.showSexyMenu;
+	if (o_getasynckeystate((DWORD)config_system.item.menuKey) == -32767) config_system.item.showSexyMenu = !config_system.item.showSexyMenu;
+	Globals::LocalController->bIgnoreLookInput = config_system.item.showSexyMenu;
+
+	if (o_getasynckeystate((DWORD)config_system.item.visualsKey) == -32767) config_system.item.visuals = !config_system.item.visuals;
+	if (o_getasynckeystate((DWORD)config_system.item.recoilKey) == -32767) config_system.item.recoil = !config_system.item.recoil;
+	if (o_getasynckeystate((DWORD)config_system.item.spreadKey) == -32767) config_system.item.spread = !config_system.item.spread;
+	if (o_getasynckeystate((DWORD)config_system.item.glowKey) == -32767) config_system.item.glow = !config_system.item.glow;
+	if (o_getasynckeystate((DWORD)config_system.item.thirdPersonKey) == -32767) config_system.item.thirdPerson = !config_system.item.thirdPerson;
 
 	if (config_system.item.visuals || config_system.item.aimbot)
 		ActorLoop(canvas);
@@ -535,7 +656,7 @@ void MainLoop(UCanvas* canvas) {
 	Exploits();
 
 	static auto menuPos = FVector2D{ 150.f, 150.f };
-	if (ZeroGUI::Window(_xor_("Bingus 1.0.0 | By Wooteck (Xiloe)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
+	if (ZeroGUI::Window(_xor_("Odin V4 | By Xiloe (Wooteck)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
 		static int tab = 0;
 
 		if (ZeroGUI::ButtonTab(_xor_("Aimbot"), FVector2D{ 100.f, 25.f }, tab == 0))
@@ -546,10 +667,13 @@ void MainLoop(UCanvas* canvas) {
 			tab = 2;
 		if (ZeroGUI::ButtonTab(_xor_("Settings"), FVector2D{ 100.f, 25.f }, tab == 3))
 			tab = 3;
-		if (ZeroGUI::ButtonTab(_xor_("Extra"), FVector2D{ 100.f, 25.f }, tab == 4))
+		if (ZeroGUI::ButtonTab(_xor_("Colors"), FVector2D{ 100.f, 25.f }, tab == 4))
 			tab = 4;
-		if (ZeroGUI::ButtonTab(_xor_("DEBUG"), FVector2D{ 100.f, 25.f }, tab == 5))
-			tab = 5;
+		//if (ZeroGUI::ButtonTab(_xor_("DEBUG"), FVector2D{ 100.f, 25.f }, tab == 5))
+		//	tab = 5;
+		if (ZeroGUI::ButtonTab(_xor_("Infos"), FVector2D{ 100.f, 25.f }, tab == 6)) {
+			tab = 6;
+		}
 
 		ZeroGUI::NextColumn(130.0f);
 
@@ -557,23 +681,31 @@ void MainLoop(UCanvas* canvas) {
 		{
 			case 0:
 			{
+				ZeroGUI::Hotkey(_xor_("Keybind"), FVector2D{ 100.0f, 25.0f }, &config_system.item.aimKey); // TODO: Hold key
 				ZeroGUI::Checkbox(_xor_("Aimbot"), &config_system.item.aimbot); ZeroGUI::SameLine();
-				ZeroGUI::Hotkey(_xor_("Key"), FVector2D{ 100.0f, 25.0f }, &config_system.item.aimKey);
+				ZeroGUI::Combobox("Aim bone", FVector2D{ 125.0f, 25.0f }, &config_system.item.aimBone, "Head", "Left Upperarm", "Left Forearm", "Right Upperarm", "Right Forearm", "Left Thigh", "Left Calf", "Left Foot", "Right Thigh", "Right Calf", "Right Foot", NULL);
 				if (config_system.item.aimbot) {
 					ZeroGUI::Checkbox(_xor_("Projectile Prediction"), &config_system.item.prediction);
 					ZeroGUI::Checkbox(_xor_("Smooth"), &config_system.item.smooth);
 					if (config_system.item.smooth)
-						ZeroGUI::SliderFloat(_xor_("Smoothess"), &config_system.item.smoothness, 30.0f, 800.0f);
-					ZeroGUI::SliderFloat(_xor_("FOV"), &config_system.item.aimFOV, 30.0f, 150.0f);
+						ZeroGUI::Checkbox(_xor_("Lock when close"), &config_system.item.lockWhenClose);
+
+					ZeroGUI::SliderFloat(_xor_("FOV"), &config_system.item.aimFOV, 30.0f, 500.0f);
+					if (config_system.item.smooth) {
+						ZeroGUI::SliderFloat(_xor_("Smoothess"), &config_system.item.smoothness, 0.0055f, 0.01f, "%.3f");
+						if (config_system.item.lockWhenClose)
+							ZeroGUI::SliderInt(_xor_("Tolerance"), &config_system.item.tolerance, 50, 150);
+					}
 				}
 				break;
 			}
 
 			case 1:
 			{
-				ZeroGUI::Checkbox(_xor_("Visuals"), &config_system.item.visuals);
+				ZeroGUI::Checkbox(_xor_("Keybind"), &config_system.item.visuals);
+				ZeroGUI::Hotkey(_xor_("Visuals"), FVector2D{ 100.0f, 25.0f }, &config_system.item.visualsKey);
 				if (config_system.item.visuals) {
-					ZeroGUI::Checkbox(_xor_("Allies"), &config_system.item.espAllies);
+					//ZeroGUI::Checkbox(_xor_("Allies"), &config_system.item.espAllies);
 					ZeroGUI::Checkbox(_xor_("Aimbot FOV"), &config_system.item.espFOV);
 					ZeroGUI::Checkbox(_xor_("Tracers"), &config_system.item.tracers);
 					ZeroGUI::Checkbox(_xor_("2D Box"), &config_system.item.box);
@@ -598,13 +730,13 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Checkbox(_xor_("No spread"), &config_system.item.spread);
 				ZeroGUI::Checkbox(_xor_("Glow"), &config_system.item.glow); ZeroGUI::SameLine();
 				ZeroGUI::Checkbox(_xor_("3rd person"), &config_system.item.thirdPerson);
+				ZeroGUI::SliderFloat(_xor_("FOV Slider"), &Globals::PlayerCamera->DefaultFOV, 50.0f, 170.0f);
 				break;
 			}
 
 			case 3:
 			{
-				ZeroGUI::Text(_xor_("Config (WIP)"));
-				
+				ZeroGUI::Text(_xor_("Config (TBD)"));
 				if (ZeroGUI::Button(_xor_("Save"), FVector2D{ 100.0f, 25.0f })) {
 					// ...
 				}
@@ -613,6 +745,24 @@ void MainLoop(UCanvas* canvas) {
 				if (ZeroGUI::Button(_xor_("Load"), FVector2D{ 100.0f, 25.0f })) {
 					// ...
 				}
+
+				ZeroGUI::Text(_xor_("Discord Rich Presence"));
+				if (ZeroGUI::Button(_xor_("Enable Discord RPC"), FVector2D{ 205.0f, 25.0f })) {
+					discord_rpc::init();
+				}
+
+				if (ZeroGUI::Button(_xor_("Disable Discord RPC"), FVector2D{ 205.0f, 25.0f })) {
+					discord_rpc::disable();
+					discord_rpc::shutdown();
+				}
+
+				/*ZeroGUI::Text(_xor_("Keybinds"));
+				ZeroGUI::Hotkey(_xor_("Aimbot"), FVector2D{ 100.0f, 25.0f }, &config_system.item.aimKey); ZeroGUI::SameLine();
+				ZeroGUI::Hotkey(_xor_("Visuals"), FVector2D{ 100.0f, 25.0f }, &config_system.item.visualsKey); ZeroGUI::SameLine();
+				ZeroGUI::Hotkey(_xor_("Recoil"), FVector2D{ 100.0f, 25.0f }, &config_system.item.recoilKey);
+				ZeroGUI::Hotkey(_xor_("Spread"), FVector2D{ 100.0f, 25.0f }, &config_system.item.spreadKey); ZeroGUI::SameLine();
+				ZeroGUI::Hotkey(_xor_("Glow"), FVector2D{ 100.0f, 25.0f }, &config_system.item.glowKey); ZeroGUI::SameLine();
+				ZeroGUI::Hotkey(_xor_("Third Person"), FVector2D{ 100.0f, 25.0f }, &config_system.item.thirdPersonKey);*/
 
 				break;
 			}
@@ -662,7 +812,7 @@ void MainLoop(UCanvas* canvas) {
 				break;
 			}
 
-			case 5:
+			/*case 5:
 			{
 				ZeroGUI::Text(_xor_("DEBUG"));
 
@@ -680,6 +830,47 @@ void MainLoop(UCanvas* canvas) {
 					((ATgPawn*)Globals::LocalPawn)->m_bUsesRecoil = true;
 				else
 					((ATgPawn*)Globals::LocalPawn)->m_bUsesRecoil = false;
+
+				break;
+			}*/
+
+			case 6:
+			{
+				ZeroGUI::Text(_xor_("Odin V4 Made by Xiloe (Wooteck on UnknownCheats)"));
+				ZeroGUI::Text(_xor_("Will be added in the next update:"));
+				ZeroGUI::Text(_xor_("- Speedhack"));
+				ZeroGUI::Text(_xor_("- Settings (Save/Load)"));
+				ZeroGUI::Text(_xor_("- Allies Aimbot/ESP"));
+				ZeroGUI::Text(_xor_("- More customization / keybinds"));
+
+				ZeroGUI::Text(_xor_("Offsets:"));
+				ZeroGUI::Text(_xor_("Module base: "));
+				ZeroGUI::SameLine();
+				ZeroGUI::Text(utils::addy2str(moduleBase));
+
+				ZeroGUI::Text(_xor_("GObjects: "));
+				ZeroGUI::SameLine();
+				ZeroGUI::Text(utils::addy2str(UObject::GObjects));
+				
+				ZeroGUI::Text(_xor_("GNames: "));
+				ZeroGUI::SameLine();
+				ZeroGUI::Text(utils::addy2str(FName::GNames));
+
+				ZeroGUI::Text(_xor_("UEngine: "));
+				ZeroGUI::SameLine();
+				ZeroGUI::Text(utils::addy2str((void*)Globals::UEngineAddr));
+
+				ZeroGUI::Text(_xor_("ProcessEvent: "));
+				ZeroGUI::SameLine();
+				ZeroGUI::Text(utils::addy2str(ProcessEventOriginal));
+				
+				ZeroGUI::Text(_xor_("XOR: "));
+				ZeroGUI::SameLine();
+				ZeroGUI::Text(utils::addy2str(Globals::xorFunc));
+
+				ZeroGUI::Text(_xor_("Key: "));
+				ZeroGUI::SameLine();
+				ZeroGUI::Text(utils::addy2str((void*)xorKey));
 
 				break;
 			}

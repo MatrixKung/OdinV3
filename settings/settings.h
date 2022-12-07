@@ -3,16 +3,14 @@
 class c_config final {
 public:
 	struct {
-		// Main
+		// MENU
 		bool showSexyMenu;
 
 		// AIMBOT TAB
 		bool aimbot;
 		bool prediction;
 		bool smooth;
-		float smoothness;
-		float aimFOV;
-		int aimKey;
+		bool lockWhenClose;
 
 		// VISUALS TAB
 		bool visuals;
@@ -22,7 +20,6 @@ public:
 		bool box;
 		bool health;
 		bool espFOV;
-		int resolution;
 		bool bones;
 
 		// EXPLOITS TAB
@@ -31,7 +28,26 @@ public:
 		bool glow;
 		bool thirdPerson;
 		bool speedhack;
-		int FOV;
+
+		// SETTINGS
+		int aimBone;
+		float aimFOV;
+		float smoothness;
+		int tolerance;
+		int resolution;
+		float FOV;
+		int speed;
+
+		// KEYBINDS
+		int menuKey;
+		int aimKey;
+		int visualsKey;
+		int recoilKey;
+		int spreadKey;
+		int glowKey;
+		int thirdPersonKey;
+		int speedKey;
+		int fovKey;
 	} item;
 };
 

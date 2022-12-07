@@ -13,7 +13,7 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function Vivox.VivoxOSSConnectors.OnGameChatBlockedChanged
-// (Iterator, Latent, PreOperator, NetReliable, Native, Event, Operator, Static)
+// (Final, Defined, Net, Exec, Event, Static)
 // Parameters:
 // bool                           bIsActive                      (Parm)
 
@@ -25,7 +25,6 @@ void UVivoxOSSConnectors::STATIC_OnGameChatBlockedChanged(bool bIsActive)
 	params.bIsActive = bIsActive;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -34,7 +33,7 @@ void UVivoxOSSConnectors::STATIC_OnGameChatBlockedChanged(bool bIsActive)
 
 
 // Function Vivox.VivoxOSSConnectors.IsGameChatBlocked
-// (Final, Defined, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -56,7 +55,7 @@ bool UVivoxOSSConnectors::STATIC_IsGameChatBlocked()
 
 
 // Function Vivox.VivoxOSSConnectors.SignalGameChatStopping
-// (Defined, Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Defined, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 
 void UVivoxOSSConnectors::STATIC_SignalGameChatStopping()
 {
@@ -74,7 +73,7 @@ void UVivoxOSSConnectors::STATIC_SignalGameChatStopping()
 
 
 // Function Vivox.VivoxOSSConnectors.SignalGameChatAttempting
-// (Final, Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Defined, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 
 void UVivoxOSSConnectors::STATIC_SignalGameChatAttempting()
 {
@@ -92,7 +91,7 @@ void UVivoxOSSConnectors::STATIC_SignalGameChatAttempting()
 
 
 // Function Vivox.VivoxOSSConnectors.OnPrivilegeCheckedForUsersByUniqueNetIds
-// (Final, Defined, Iterator, PreOperator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
+// (Iterator, Latent, Exec, Native, Event, Static)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -117,7 +116,7 @@ void UVivoxOSSConnectors::STATIC_OnPrivilegeCheckedForUsersByUniqueNetIds(unsign
 
 
 // Function Vivox.VivoxOSSConnectors.CanCommunicateVoiceWithUsersByUniqueNetIds
-// (Defined, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // TArray<struct FUniqueNetId>    Users                          (Parm, NeedCtorLink)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -141,7 +140,7 @@ bool UVivoxOSSConnectors::STATIC_CanCommunicateVoiceWithUsersByUniqueNetIds(TArr
 
 
 // Function Vivox.VivoxOSSConnectors.OnPrivilegeLevelChecked
-// (Latent, PreOperator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Iterator, Latent, Exec, Native, Event, Static)
 // Parameters:
 // int                            ChannelJoinCount               (Parm)
 // unsigned char                  LocalUserNum                   (Parm)
@@ -173,7 +172,7 @@ bool UVivoxOSSConnectors::STATIC_OnPrivilegeLevelChecked(int ChannelJoinCount, u
 
 
 // Function Vivox.VivoxOSSConnectors.CanCommunicateVoice
-// (Final, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // int                            ChannelJoinCount               (Parm)
 // TEnumAsByte<EFeaturePrivilegeLevel> PrivilegeLevelHint             (Parm, OutParm)
@@ -201,11 +200,11 @@ bool UVivoxOSSConnectors::STATIC_CanCommunicateVoice(int ChannelJoinCount, TEnum
 
 
 // Function Vivox.VivoxOSSConnectors.RemoveClosure
-// (Iterator, PreOperator, Net, NetReliable, Simulated, Static, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, HasOptionalParms)
 // Parameters:
 // class UVivoxClosure*           Closure                        (Parm)
 
-void UVivoxOSSConnectors::STATIC_RemoveClosure(class UVivoxClosure* Closure)
+void UVivoxOSSConnectors::RemoveClosure(class UVivoxClosure* Closure)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function Vivox.VivoxOSSConnectors.RemoveClosure"));
 
@@ -213,6 +212,7 @@ void UVivoxOSSConnectors::STATIC_RemoveClosure(class UVivoxClosure* Closure)
 	params.Closure = Closure;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -221,7 +221,7 @@ void UVivoxOSSConnectors::STATIC_RemoveClosure(class UVivoxClosure* Closure)
 
 
 // Function Vivox.VivoxOSSConnectors.RegisterOnlineDelegates
-// (Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 
 void UVivoxOSSConnectors::STATIC_RegisterOnlineDelegates()
 {
@@ -239,7 +239,7 @@ void UVivoxOSSConnectors::STATIC_RegisterOnlineDelegates()
 
 
 // Function Vivox.VivoxClosure.ClearOnlineDelegates
-// (Final, Latent, Singular, Simulated, Native, HasOptionalParms)
+// (Iterator, NetReliable, Simulated, Native, HasOptionalParms)
 
 void UVivoxClosure::ClearOnlineDelegates()
 {
@@ -257,7 +257,7 @@ void UVivoxClosure::ClearOnlineDelegates()
 
 
 // Function Vivox.VivoxClosure.RegisterOnlineDelegates
-// (Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // class UOnlineSubsystem*        OnlineSub                      (Parm)
 
@@ -298,7 +298,7 @@ void UVivoxClosure::Init(class UVivoxOSSConnectors* ParamConnector)
 
 
 // Function Vivox.VivoxClosureOnPrivilegeLevelChecked.OnPrivilegeLevelChecked
-// (Latent, PreOperator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Iterator, Latent, Exec, Native, Event, Static)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -325,7 +325,7 @@ void UVivoxClosureOnPrivilegeLevelChecked::STATIC_OnPrivilegeLevelChecked(unsign
 
 
 // Function Vivox.VivoxClosureOnPrivilegeLevelChecked.ClearOnlineDelegates
-// (Final, Latent, Singular, Simulated, Native, HasOptionalParms)
+// (Iterator, NetReliable, Simulated, Native, HasOptionalParms)
 
 void UVivoxClosureOnPrivilegeLevelChecked::ClearOnlineDelegates()
 {
@@ -343,7 +343,7 @@ void UVivoxClosureOnPrivilegeLevelChecked::ClearOnlineDelegates()
 
 
 // Function Vivox.VivoxClosureOnPrivilegeLevelChecked.RegisterOnlineDelegates
-// (Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // class UOnlineSubsystem*        OnlineSub                      (Parm)
 
@@ -364,12 +364,12 @@ void UVivoxClosureOnPrivilegeLevelChecked::STATIC_RegisterOnlineDelegates(class 
 
 
 // Function Vivox.VivoxClosureOnPrivilegeLevelChecked.InitClosure
-// (Defined, Iterator, Latent, Net, NetReliable, Simulated, Static, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, HasOptionalParms)
 // Parameters:
 // int                            ChannelJoinCount               (Parm)
 // class UVivoxOSSConnectors*     Connector                      (Parm)
 
-void UVivoxClosureOnPrivilegeLevelChecked::STATIC_InitClosure(int ChannelJoinCount, class UVivoxOSSConnectors* Connector)
+void UVivoxClosureOnPrivilegeLevelChecked::InitClosure(int ChannelJoinCount, class UVivoxOSSConnectors* Connector)
 {
 	static auto fn = UObject::FindObject<UFunction>(_xor_("Function Vivox.VivoxClosureOnPrivilegeLevelChecked.InitClosure"));
 
@@ -378,6 +378,7 @@ void UVivoxClosureOnPrivilegeLevelChecked::STATIC_InitClosure(int ChannelJoinCou
 	params.Connector = Connector;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
