@@ -210,43 +210,11 @@ namespace utils {
 			break;
 
 		case 1:
-			return FName(_xor_("L_UpperArm"));
+			return FName(_xor_("Neck"));
 			break;
 
 		case 2:
-			return FName(_xor_("L_Forearm"));
-			break;
-
-		case 3:
-			return FName(_xor_("R_UpperArm"));
-			break;
-
-		case 4:
-			return FName(_xor_("R_Forearm"));
-			break;
-
-		case 5:
-			return FName(_xor_("L_Thigh"));
-			break;
-
-		case 6:
-			return FName(_xor_("L_Calf"));
-			break;
-
-		case 7:
-			return FName(_xor_("L_Foot"));
-			break;
-
-		case 8:
-			return FName(_xor_("R_Thigh"));
-			break;
-
-		case 9:
-			return FName(_xor_("R_Calf"));
-			break;
-
-		case 10:
-			return FName(_xor_("R_Foot"));
+			return FName(_xor_("pelvis"));
 			break;
 
 		default:
@@ -491,71 +459,14 @@ void ActorLoop(UCanvas* canvas) {
 				}
 
 				// Bones
-				/*if (config_system.item.bones) {
-					int totalBones = 0;
-
-					int bones = CurrentPawn->HeadBoneNames.Num();
-					if (bones > 0) {
-						for (int i = 0; i < bones; i++)
-						{
-							printf("[%i] %s\n", i, CurrentPawn->HeadBoneNames[i].GetName().c_str());
-							totalBones++;
-						}
-
-						printf("====================Head====================\n");
-					}
-
-					bones = CurrentPawn->LArmBoneNames.Num();
-					if (bones > 0) {
-						for (int i = 0; i < bones; i++)
-						{
-							printf("[%i] %s\n", i, CurrentPawn->LArmBoneNames[i].GetName().c_str());
-							totalBones++;
-						}
-
-						printf("====================LArm====================\n");
-					}
-
-					bones = CurrentPawn->RArmBoneNames.Num();
-					if (bones > 0) {
-						for (int i = 0; i < bones; i++)
-						{
-							printf("[%i] %s\n", i, CurrentPawn->RArmBoneNames[i].GetName().c_str());
-							totalBones++;
-						}
-
-						printf("====================RArm====================\n");
-					}
-
-					bones = CurrentPawn->LLegBoneNames.Num();
-					if (bones > 0) {
-						for (int i = 0; i < bones; i++)
-						{
-							printf("[%i] %s\n", i, CurrentPawn->LLegBoneNames[i].GetName().c_str());
-							totalBones++;
-						}
-
-						printf("====================LLeg====================\n");
-					}
-
-					bones = CurrentPawn->RLegBoneNames.Num();
-					if (bones > 0) {
-						for (int i = 0; i < bones; i++)
-						{
-							printf("[%i] %s\n", i, CurrentPawn->RLegBoneNames[i].GetName().c_str());
-							totalBones++;
-						}
-
-						printf("====================RLeg====================\n");
-					}
-
-					printf("Total : %d\n\n", totalBones);
-					// TODO bonesPosition
-				}*/
-
-				FVector2D bonePos;
-				if (utils::W2S(CurrentPawn->Mesh->GetBoneLocation(CurrentPawn->BaseBoneName, (int)EBoneControlSpace::BCS_WorldSpace), bonePos))
-					utils::DrawText(canvas, FString(L"bone"), bonePos, colors::Yellow);
+				/*printf("======== Dumping bones ========\n");
+				for (int i = 0; i < 1000; i++)
+				{
+					FName boneName = CurrentPawn->Mesh->GetBoneName(i);
+					printf("(%i) %s\n", i, boneName.GetName().c_str());
+				}
+				printf("============ Done! ============\n");
+				MessageBox(0, 0, 0, 0);*/
 			}
 		}
 
@@ -683,7 +594,7 @@ void MainLoop(UCanvas* canvas) {
 			{
 				ZeroGUI::Hotkey(_xor_("Keybind"), FVector2D{ 100.0f, 25.0f }, &config_system.item.aimKey); // TODO: Hold key
 				ZeroGUI::Checkbox(_xor_("Aimbot"), &config_system.item.aimbot); ZeroGUI::SameLine();
-				ZeroGUI::Combobox("Aim bone", FVector2D{ 125.0f, 25.0f }, &config_system.item.aimBone, "Head", "Left Upperarm", "Left Forearm", "Right Upperarm", "Right Forearm", "Left Thigh", "Left Calf", "Left Foot", "Right Thigh", "Right Calf", "Right Foot", NULL);
+				ZeroGUI::Combobox("Aim bone", FVector2D{ 125.0f, 25.0f }, &config_system.item.aimBone, "Head", "Neck", "Pelvis", NULL);
 				if (config_system.item.aimbot) {
 					ZeroGUI::Checkbox(_xor_("Projectile Prediction"), &config_system.item.prediction);
 					ZeroGUI::Checkbox(_xor_("Smooth"), &config_system.item.smooth);
@@ -702,8 +613,8 @@ void MainLoop(UCanvas* canvas) {
 
 			case 1:
 			{
-				ZeroGUI::Checkbox(_xor_("Keybind"), &config_system.item.visuals);
-				ZeroGUI::Hotkey(_xor_("Visuals"), FVector2D{ 100.0f, 25.0f }, &config_system.item.visualsKey);
+				ZeroGUI::Hotkey(_xor_("Keybind"), FVector2D{ 100.0f, 25.0f }, &config_system.item.visualsKey);
+				ZeroGUI::Checkbox(_xor_("Visuals"), &config_system.item.visuals);
 				if (config_system.item.visuals) {
 					//ZeroGUI::Checkbox(_xor_("Allies"), &config_system.item.espAllies);
 					ZeroGUI::Checkbox(_xor_("Aimbot FOV"), &config_system.item.espFOV);

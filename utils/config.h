@@ -18,8 +18,8 @@ VOID ResetSettings() {
 	config_system.item.players = false;
 	config_system.item.tracers = false;
 	config_system.item.box = false;
-	config_system.item.health = true;
-	config_system.item.espFOV = false;
+	config_system.item.health = false;
+	config_system.item.espFOV = true;
 	config_system.item.bones = false;
 
 	// EXPLOITS TAB
