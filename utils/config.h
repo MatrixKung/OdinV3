@@ -32,6 +32,7 @@ VOID ResetSettings() {
 	// SETTINGS
 	config_system.item.aimBone = 0;
 	config_system.item.aimFOV = 60.0f;
+	config_system.item.gravity = false;
 	config_system.item.smoothness = 0.0055f;
 	config_system.item.tolerance = 100;
 	config_system.item.resolution = 64;

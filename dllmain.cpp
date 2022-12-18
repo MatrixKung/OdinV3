@@ -114,7 +114,7 @@ void Main() {
 	Globals::Engine = (UEngine*)(*(uintptr_t*)Globals::UEngineAddr);
 
 	Globals::xorFunc = GetCallAddress<void*>(PatternScan<void*>(_xor_("E8 ? ? ? ? 85 C0 75 0F 48 8B 03"), (uint64_t)moduleBase, SizeOfImage));
-	xorKey = (uintptr_t)GetAndAddress<void*>((void*)((DWORD64)Globals::xorFunc + 0x63));
+	xorKey = (uintptr_t)GetAndValue<void*>((void*)((DWORD64)Globals::xorFunc + 0x63));
 
 	game_rbx_jmp = gadget(NULL);
 

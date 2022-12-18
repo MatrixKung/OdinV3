@@ -32,6 +32,7 @@ public:
 		// SETTINGS
 		int aimBone;
 		float aimFOV;
+		bool gravity;
 		float smoothness;
 		int tolerance;
 		int resolution;

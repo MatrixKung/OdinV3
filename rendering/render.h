@@ -311,11 +311,13 @@ void Aimbot()
 				FVector PredictedTargetLocation = {
 					(TargetLocation.X + TargetVelocity.X * TravelTime),
 					(TargetLocation.Y + TargetVelocity.Y * TravelTime),
-					 TargetLocation.Z
+					 TargetLocation.Z + (config_system.item.gravity == true ? (TravelTime * -Globals::WorldInfo->WorldGravityZ / 5.0f) : 0)
 				};
 
 				maths::AimAtVector(PredictedTargetLocation, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
 				Globals::LocalController->Rotation = AimRotation;
+
+				
 			}
 			else {
 				if (config_system.item.smooth) {

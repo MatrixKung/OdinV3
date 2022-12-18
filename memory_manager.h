@@ -7,7 +7,6 @@ template<typename T>
 static T GetCallAddress(void* address) {
 	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 1);
 	void* absolute = (void*)((unsigned __int64)address + relative + 5);
-
 	return reinterpret_cast<T>(absolute);
 }
 
@@ -15,14 +14,18 @@ template<typename T>
 static T GetMovAddress(void* address) {
 	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 3);
 	void* absolute = (void*)((unsigned __int64)address + relative + 7);
-
 	return reinterpret_cast<T>(absolute);
 }
 
 template<typename T>
-static T GetAndAddress(void* address) {
-	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 2);
+static T GetMovValue(void* address) {
+	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 1);
+	return reinterpret_cast<T>(relative);
+}
 
+template<typename T>
+static T GetAndValue(void* address) {
+	signed __int32 relative = *(signed __int32*)((unsigned __int64)address + 2);
 	return reinterpret_cast<T>(relative);
 }
 
