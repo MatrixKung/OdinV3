@@ -549,8 +549,10 @@ void MainLoop(UCanvas* canvas) {
 	Globals::height = canvas->SizeY;
 
 	canvas->Font = Globals::Engine->MediumFont;
-	utils::DrawText(canvas, FString(_xor_(TEXT(L"Odin V4 | By Xiloe (Wooteck)"))), FVector2D(10.f, 10.f), colors::Yellow);
-	utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu (In-Game only)"))), FVector2D(10.f, 30.f), utils::GetColor(config_system.item.showSexyMenu));
+	if (config_system.item.hud) {
+		utils::DrawText(canvas, FString(_xor_(TEXT(L"Odin V4 | By Xiloe (Wooteck)"))), FVector2D(10.f, 10.f), colors::Yellow);
+		utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu (In-Game only)"))), FVector2D(10.f, 30.f), utils::GetColor(config_system.item.showSexyMenu));
+	}
 
 	if (!Globals::SetObjects()) return;
 
@@ -668,6 +670,9 @@ void MainLoop(UCanvas* canvas) {
 					discord_rpc::disable();
 					discord_rpc::shutdown();
 				}
+
+				ZeroGUI::Text(_xor_("Cheat HUD (top left corner)"));
+				ZeroGUI::Checkbox(_xor_("HUD"), &config_system.item.hud);
 
 				/*ZeroGUI::Text(_xor_("Keybinds"));
 				ZeroGUI::Hotkey(_xor_("Aimbot"), FVector2D{ 100.0f, 25.0f }, &config_system.item.aimKey); ZeroGUI::SameLine();

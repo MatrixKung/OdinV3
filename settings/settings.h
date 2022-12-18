@@ -5,6 +5,7 @@ public:
 	struct {
 		// MENU
 		bool showSexyMenu;
+		bool hud;
 
 		// AIMBOT TAB
 		bool aimbot;

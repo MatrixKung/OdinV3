@@ -5,6 +5,7 @@ VOID ResetSettings() {
 
 	// MENU
 	config_system.item.showSexyMenu = false;
+	config_system.item.hud = true;
 
 	// AIMBOT TAB
 	config_system.item.aimbot = false;
