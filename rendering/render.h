@@ -477,11 +477,20 @@ void ActorLoop(UCanvas* canvas) {
 			int EnemyTeam = CurrentPawnReplicationInfo->r_TaskForce->TeamIndex;
 
 			FVector head = CurrentPawn->Mesh->GetBoneLocation(utils::GetBoneFromId(config_system.item.aimBone), (int)EBoneControlSpace::BCS_WorldSpace);
+			if (head == FVector{ 0.00f, 0.00f, 0.00f }) {
+				CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
+				continue;
+			}
+
 			FVector2D headPos;
 
 			if (AimbotLockedPawn)
 			{
 				LockedPawnHead = AimbotLockedPawn->Mesh->GetBoneLocation(utils::GetBoneFromId(config_system.item.aimBone), (int)EBoneControlSpace::BCS_WorldSpace);
+				if (LockedPawnHead == FVector{ 0.00f, 0.00f, 0.00f }) {
+					CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
+					continue;
+				}
 
 				if (bLocked)
 				{
