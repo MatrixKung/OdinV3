@@ -12,6 +12,8 @@ VOID ResetSettings() {
 	config_system.item.prediction = false;
 	config_system.item.smooth = false;
 	config_system.item.lockWhenClose = true;
+	config_system.item.angleCheck = true;
+	config_system.item.angle = 30;
 
 	// VISUALS TAB
 	config_system.item.visuals = false;

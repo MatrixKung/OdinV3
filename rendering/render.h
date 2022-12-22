@@ -103,14 +103,18 @@ namespace maths
 		AimRot = AimAtRot;
 	}
 
-	FVector GetAngleTo(FVector TargetVec, FVector OriginVec)
+	FRotator RotationDelta(FRotator TargetRot, FRotator OriginRot)
 	{
-		FVector Diff;
-		Diff.X = TargetVec.X - OriginVec.X;
-		Diff.Y = TargetVec.Y - OriginVec.Y;
-		Diff.Z = TargetVec.Z - OriginVec.Z;
+		FRotator Diff;
+		Diff.Pitch = TargetRot.Pitch - OriginRot.Pitch;
+		Diff.Yaw = TargetRot.Yaw - OriginRot.Yaw;
+		Diff.Roll = TargetRot.Roll - OriginRot.Roll;
 
 		return Diff;
+	}
+
+	int GetAngle(FRotator TargetRot, FRotator OriginRot) {
+		return (int)(abs(RotationDelta(TargetRot, OriginRot).Yaw) * CONST_UnrRotToDeg);
 	}
 
 	float GetDistance(FVector to, FVector from) {
@@ -150,7 +154,7 @@ namespace utils {
 		if (reset)
 			once = false;
 	}
-	
+
 	const const char* addy2str(void* addr) {
 		const void* address = static_cast<const void*>(addr);
 		std::stringstream ss;
@@ -164,7 +168,7 @@ namespace utils {
 		mbstowcs(Buff, sz, 1024);
 		return Buff;
 	}
-	
+
 	bool W2S(FVector from, FVector2D& to) {
 		FVector AxisX, AxisY, AxisZ, Delta, Transformed;
 		maths::GetAxes(Globals::PlayerCamera->GetCameraRotation(), AxisX, AxisY, AxisZ);
@@ -198,7 +202,7 @@ namespace utils {
 
 		float lastRenderTime = pawn->Mesh->LastRenderTime;
 		float timeSeconds = Globals::WorldInfo->TimeSeconds;
-		
+
 		return (lastRenderTime > timeSeconds - 0.05f);
 	}
 
@@ -254,7 +258,7 @@ namespace utils {
 			return boneWorld;
 		}
 
-		return FBoneAtom{0};
+		return FBoneAtom{ 0 };
 	}
 
 	FColor GetColor(bool state) {
@@ -290,11 +294,12 @@ void Aimbot()
 		!Globals::WorldInfo ||
 		!Globals::LocalWeapon ||
 		!Globals::LocalController) {
-			return; 
+		return;
 	}
 
 	if (AimbotLockedPawn->Health > 1) {
 		FRotator AimRotation, oldRotation = FRotator{ 0, 0, 0 };
+		oldRotation = Globals::LocalController->Rotation;
 
 		bool isPawnVisible = utils::IsPawnVisible(AimbotLockedPawn);
 
@@ -315,13 +320,20 @@ void Aimbot()
 				};
 
 				maths::AimAtVector(PredictedTargetLocation, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
-				Globals::LocalController->Rotation = AimRotation;
 
-				
+				if (maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+					return;
+				}
+
+				Globals::LocalController->Rotation = AimRotation;
 			}
 			else {
 				if (config_system.item.smooth) {
 					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
+
+					if (maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+						return;
+					}
 
 					FVector difference;
 					difference.X = AimRotation.Pitch - Globals::LocalController->Rotation.Pitch;
@@ -350,7 +362,7 @@ void Aimbot()
 
 					difference.Y = (int)(dist * smoothAmount);
 					difference.X = (int)(difference.X * smoothAmount);
-					
+
 					Globals::LocalController->Rotation.Pitch += difference.X;
 					Globals::LocalController->Rotation.Yaw += difference.Y;
 				}
@@ -360,7 +372,10 @@ void Aimbot()
 
 					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
 
-					//oldRotation = Globals::LocalController->Rotation;
+					if (maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+						return;
+					}
+
 					Globals::LocalController->Rotation = AimRotation;
 
 					//controller->bPressingLeftMouseButton = true;
@@ -609,6 +624,10 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Checkbox(_xor_("Aimbot"), &config_system.item.aimbot); ZeroGUI::SameLine();
 				ZeroGUI::Combobox("Aim bone", FVector2D{ 125.0f, 25.0f }, &config_system.item.aimBone, "Head", "Neck", "Pelvis", NULL);
 				if (config_system.item.aimbot) {
+					ZeroGUI::Checkbox(_xor_("Angle Check"), &config_system.item.angleCheck);
+					if (config_system.item.angleCheck)
+						ZeroGUI::SliderInt(_xor_("Angle"), &config_system.item.angle, 0, 180);
+						
 					ZeroGUI::Checkbox(_xor_("Projectile Prediction"), &config_system.item.prediction);
 					ZeroGUI::Checkbox(_xor_("Smooth"), &config_system.item.smooth);
 					if (config_system.item.smooth)

@@ -12,6 +12,7 @@ public:
 		bool prediction;
 		bool smooth;
 		bool lockWhenClose;
+		bool angleCheck;
 
 		// VISUALS TAB
 		bool visuals;
@@ -32,6 +33,7 @@ public:
 
 		// SETTINGS
 		int aimBone;
+		int angle;
 		float aimFOV;
 		bool gravity;
 		float smoothness;
