@@ -652,7 +652,7 @@ void MainLoop(UCanvas* canvas) {
 
 	canvas->Font = Globals::Engine->MediumFont;
 	if (config_system.item.hud) {
-		utils::DrawText(canvas, FString(_xor_(TEXT(L"Odin V4 | By Xiloe (Wooteck)"))), FVector2D(10.f, 10.f), colors::Yellow);
+		utils::DrawText(canvas, FString(_xor_(TEXT(LTITLE))), FVector2D(10.f, 10.f), colors::Yellow);
 		utils::DrawText(canvas, FString(_xor_(TEXT(L"INS - Menu (In-Game only)"))), FVector2D(10.f, 30.f), utils::GetColor(config_system.item.showSexyMenu));
 	}
 
@@ -673,7 +673,7 @@ void MainLoop(UCanvas* canvas) {
 	Exploits();
 
 	static auto menuPos = FVector2D{ 150.f, 150.f };
-	if (ZeroGUI::Window(_xor_("Odin V4 | By Xiloe (Wooteck)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
+	if (ZeroGUI::Window(_xor_(TITLE), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
 		static int tab = 0;
 
 		if (ZeroGUI::ButtonTab(_xor_("Aimbot"), FVector2D{ 100.f, 25.f }, tab == 0))
@@ -866,7 +866,6 @@ void MainLoop(UCanvas* canvas) {
 			{
 				ZeroGUI::Text(_xor_("Odin V4 Made by Xiloe (Wooteck on UnknownCheats)"));
 				ZeroGUI::Text(_xor_("Will be added in the next update:"));
-				ZeroGUI::Text(_xor_("- Speedhack"));
 				ZeroGUI::Text(_xor_("- Settings (Save/Load)"));
 				ZeroGUI::Text(_xor_("- Allies Aimbot/ESP"));
 				ZeroGUI::Text(_xor_("- More customization / keybinds"));

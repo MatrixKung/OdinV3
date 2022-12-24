@@ -6,6 +6,10 @@
 #define Const_PI                  3.14159265358979323846264338327950288419716939937510582f
 #define Const_URotation180        32768
 
+// fuck it lol
+#define TITLE "Odin V4.0.3 | By Xiloe"
+#define LTITLE L"Odin V4.0.3 | By Xiloe (Wooteck on UC)"
+
 #include <windows.h>
 #include <iostream>
 #include <fstream>
