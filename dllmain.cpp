@@ -22,11 +22,13 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParam
 
 	if (FunctionName == _xor_("Function TgClient.TgGameViewportClient.PostRender"))
 		MainLoop(((UTgGameViewportClient_PostRender_Params*)(pParams))->Canvas);
+	
+	// TODO: Character DeltaTime Tick hook for SH?
 
 	return spoof_call(game_rbx_jmp, ProcessEventOriginal, pObject, pFunction, pParams, pResult);
 }
 
-// TODO: Use engine input instead since this will probably get detected
+// TODO: Use engine input instead since this will probably get detected (or not, ty hirez)
 bool HookKeyState() {
 	HMODULE API = GetModuleHandle(_xor_(TEXT("win32u.dll")));
 	if (API != NULL)
@@ -53,53 +55,8 @@ void Main() {
 	// Settings helper
 	ResetSettings();
 
-	/*mINI::INIFile file("settings.ini");
-	mINI::INIStructure ini;
-
-	if (std::filesystem::exists(_xor_("settings.ini"))) {
-		file.read(ini);
-
-		std::string& aimbot = ini[_xor_("aimbot")]["aimbot"];
-		std::string& prediction = ini["aimbot"]["prediction"];
-		std::string& smooth = ini["aimbot"]["smooth"];
-
-		std::string& visuals = ini["visuals"]["visuals"];
-		std::string& players = ini["visuals"]["players"];
-		std::string& tracers = ini["visuals"]["tracers"];
-		std::string& box = ini["visuals"]["box"];
-
-		std::string& recoil = ini["exploits"]["no_recoil"];
-		std::string& spread = ini["exploits"]["no_spread"];
-		std::string& thirdPerson = ini["exploits"]["third_person"];
-
-		istringstream(aimbot) >> config_system.item.aimbot;
-		istringstream(prediction) >> config_system.item.prediction;
-		istringstream(smooth) >> config_system.item.smooth;
-
-		istringstream(visuals) >> config_system.item.visuals;
-		istringstream(players) >> config_system.item.players;
-		istringstream(tracers) >> config_system.item.tracers;
-		istringstream(box) >> config_system.item.box;
-
-		istringstream(recoil) >> config_system.item.recoil;
-		istringstream(spread) >> config_system.item.spread;
-		istringstream(thirdPerson) >> config_system.item.thirdPerson;
-	} else {
-		std::string& aimbot = ini["aimbot"]["aimbot"] = "0";
-		std::string& prediction = ini["aimbot"]["prediction"] = "0";
-		std::string& smooth = ini["aimbot"]["smooth"] = "0";
-
-		std::string& visuals = ini["visuals"]["visuals"] = "0";
-		std::string& players = ini["visuals"]["players"] = "1";
-		std::string& tracers = ini["visuals"]["tracers"] = "1";
-		std::string& box = ini["visuals"]["box"] = "1";
-
-		std::string& recoil = ini["exploits"]["no_recoil"] = "0";
-		std::string& spread = ini["exploits"]["no_spread"] = "0";
-		std::string& thirdPerson = ini["exploits"]["third_person"] = "0";
-
-		file.generate(ini);
-	}*/
+	// TODO: Config
+	// Could use NSeven's one
 
 	moduleBase = (HMODULE)imageBase();
 	const IMAGE_DOS_HEADER* DOSHeader = reinterpret_cast<IMAGE_DOS_HEADER*>(moduleBase);

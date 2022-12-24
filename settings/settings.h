@@ -13,6 +13,7 @@ public:
 		bool smooth;
 		bool lockWhenClose;
 		bool angleCheck;
+		bool visCheck;
 
 		// VISUALS TAB
 		bool visuals;

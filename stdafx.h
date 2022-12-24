@@ -5,9 +5,6 @@
 
 #define Const_PI                  3.14159265358979323846264338327950288419716939937510582f
 #define Const_URotation180        32768
-#define Const_RadToUnrRot         10430.3783504704527
-#define Const_UnrRotToRad         0.00009587379924285
-#define Const_URotationToRadians  Const_PI / Const_URotation180 
 
 #include <windows.h>
 #include <iostream>

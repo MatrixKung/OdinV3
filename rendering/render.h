@@ -4,8 +4,8 @@ namespace maths
 	{
 		FRotator rRotation;
 
-		rRotation.Yaw = atan2(vVector.Y, vVector.X) * Const_RadToUnrRot;
-		rRotation.Pitch = atan2(vVector.Z, sqrt((vVector.X * vVector.X) + (vVector.Y * vVector.Y))) * Const_RadToUnrRot;
+		rRotation.Yaw = atan2(vVector.Y, vVector.X) * CONST_RadToUnrRot;
+		rRotation.Pitch = atan2(vVector.Z, sqrt((vVector.X * vVector.X) + (vVector.Y * vVector.Y))) * CONST_RadToUnrRot;
 		rRotation.Roll = 0;
 
 		return rRotation;
@@ -14,8 +14,8 @@ namespace maths
 	FVector RotationToVector(FRotator R)
 	{
 		FVector Vec;
-		float fYaw = R.Yaw * Const_URotationToRadians;
-		float fPitch = R.Pitch * Const_URotationToRadians;
+		float fYaw = R.Yaw * CONST_UnrRotToRad;
+		float fPitch = R.Pitch * CONST_UnrRotToRad;
 		float CosPitch = cos(fPitch);
 		Vec.X = cos(fYaw) * CosPitch;
 		Vec.Y = sin(fYaw) * CosPitch;
@@ -92,15 +92,15 @@ namespace maths
 		return temp;
 	}
 
-	void AimAtVector(FVector TargetVec, FVector PlayerLocation, FRotator& AimRot)
+	FRotator AimAtVector(FVector TargetVec, FVector PlayerLocation)
 	{
 		FVector AimVec;
 		AimVec.X = TargetVec.X - PlayerLocation.X;
 		AimVec.Y = TargetVec.Y - PlayerLocation.Y;
 		AimVec.Z = TargetVec.Z - PlayerLocation.Z;
 
-		FRotator AimAtRot = VectorToRotation(AimVec);
-		AimRot = AimAtRot;
+
+		return VectorToRotation(AimVec);
 	}
 
 	FRotator RotationDelta(FRotator TargetRot, FRotator OriginRot)
@@ -303,35 +303,91 @@ void Aimbot()
 
 		bool isPawnVisible = utils::IsPawnVisible(AimbotLockedPawn);
 
-		if (isPawnVisible) {
+		if ((config_system.item.visCheck && isPawnVisible) ||
+			(!config_system.item.visCheck)) {
 			if (config_system.item.prediction) {
-				if (Globals::LocalWeapon->m_FiredProjectiles.Num() > 0) {
-					fProjectileSpeed = Globals::LocalWeapon->m_FiredProjectiles.GetByIndex(0)->Speed;
+				if (config_system.item.smooth) {
+					AimRotation = maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location);
+
+					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+						return;
+					}
+
+					if (Globals::LocalWeapon->m_FiredProjectiles.Num() > 0) {
+						fProjectileSpeed = Globals::LocalWeapon->m_FiredProjectiles.GetByIndex(0)->Speed;
+					}
+
+					FVector TargetVelocity = AimbotLockedPawn->Velocity;
+					float TravelTime = maths::GetDistance(Globals::LocalPawn->Location, LockedPawnHead) / fProjectileSpeed;
+
+					FVector PredictedTargetLocation = {
+						(LockedPawnHead.X + TargetVelocity.X * TravelTime),
+						(LockedPawnHead.Y + TargetVelocity.Y * TravelTime),
+						 LockedPawnHead.Z + (config_system.item.gravity == true ? (TravelTime * -Globals::WorldInfo->WorldGravityZ / 5.0f) : 0)
+					};
+
+					AimRotation = maths::AimAtVector(PredictedTargetLocation, Globals::PlayerCamera->LastFrameCameraCache.POV.Location);
+
+					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+						return;
+					}
+
+					FVector difference;
+					difference.X = AimRotation.Pitch - Globals::LocalController->Rotation.Pitch;
+					difference.Y = AimRotation.Yaw - Globals::LocalController->Rotation.Yaw;
+
+					int a = maths::ClampYaw(Globals::LocalController->Rotation.Yaw);
+					int b = maths::ClampYaw(AimRotation.Yaw);
+					const int Full360 = Const_URotation180;
+
+					int dist1 = -(a - b + Full360) % Full360;
+					int dist2 = (b - a + Full360) % Full360;
+
+					int dist = dist1;
+					if (abs(dist2) < abs(dist1)) {
+						dist = dist2;
+					}
+
+					float smoothAmount = config_system.item.smoothness;
+
+					if (config_system.item.lockWhenClose && abs(dist) + abs(difference.X) < Const_URotation180 / config_system.item.tolerance) {
+						smoothAmount = 1.0f;
+					}
+
+					difference.Y = (int)(dist * smoothAmount);
+					difference.X = (int)(difference.X * smoothAmount);
+
+					Globals::LocalController->Rotation.Pitch += difference.X;
+					Globals::LocalController->Rotation.Yaw += difference.Y;
 				}
+				else {
+					if (Globals::LocalWeapon->m_FiredProjectiles.Num() > 0) {
+						fProjectileSpeed = Globals::LocalWeapon->m_FiredProjectiles.GetByIndex(0)->Speed;
+					}
 
-				FVector TargetVelocity = AimbotLockedPawn->Velocity;
-				FVector TargetLocation = AimbotLockedPawn->Location;
-				float TravelTime = maths::GetDistance(Globals::LocalPawn->Location, TargetLocation) / fProjectileSpeed;
+					FVector TargetVelocity = AimbotLockedPawn->Velocity;
+					float TravelTime = maths::GetDistance(Globals::LocalPawn->Location, LockedPawnHead) / fProjectileSpeed;
 
-				FVector PredictedTargetLocation = {
-					(TargetLocation.X + TargetVelocity.X * TravelTime),
-					(TargetLocation.Y + TargetVelocity.Y * TravelTime),
-					 TargetLocation.Z + (config_system.item.gravity == true ? (TravelTime * -Globals::WorldInfo->WorldGravityZ / 5.0f) : 0)
-				};
+					FVector PredictedTargetLocation = {
+						(LockedPawnHead.X + TargetVelocity.X * TravelTime),
+						(LockedPawnHead.Y + TargetVelocity.Y * TravelTime),
+						 LockedPawnHead.Z + (config_system.item.gravity == true ? (TravelTime * -Globals::WorldInfo->WorldGravityZ / 5.0f) : 0)
+					};
 
-				maths::AimAtVector(PredictedTargetLocation, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
+					AimRotation = maths::AimAtVector(PredictedTargetLocation, Globals::PlayerCamera->LastFrameCameraCache.POV.Location);
 
-				if (maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
-					return;
+					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+						return;
+					}
+
+					Globals::LocalController->Rotation = AimRotation;
 				}
-
-				Globals::LocalController->Rotation = AimRotation;
 			}
 			else {
 				if (config_system.item.smooth) {
-					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
+					AimRotation = maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location);
 
-					if (maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
 						return;
 					}
 
@@ -370,9 +426,11 @@ void Aimbot()
 					//ATgPlayerController* controller = (ATgPlayerController*)Globals::LocalController;
 					//controller->bPressingLeftMouseButton = false;
 
-					maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location, AimRotation);
+					AimRotation = maths::AimAtVector(LockedPawnHead, Globals::PlayerCamera->LastFrameCameraCache.POV.Location);
 
-					if (maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
+					FVector camloc = Globals::PlayerCamera->LastFrameCameraCache.POV.Location;
+
+					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
 						return;
 					}
 
@@ -477,7 +535,7 @@ void ActorLoop(UCanvas* canvas) {
 
 				// Bones
 				/*printf("======== Dumping bones ========\n");
-				for (int i = 0; i < 1000; i++)
+				for (int i = 0; i < 500; i++)
 				{
 					FName boneName = CurrentPawn->Mesh->GetBoneName(i);
 					printf("(%i) %s\n", i, boneName.GetName().c_str());
@@ -486,7 +544,7 @@ void ActorLoop(UCanvas* canvas) {
 				MessageBox(0, 0, 0, 0);*/
 			}
 		}
-
+		
 		if (config_system.item.aimbot && o_getasynckeystate((DWORD)config_system.item.aimKey)) {
 			int LocalTeam = Globals::ReplicationInfo->r_TaskForce->TeamIndex;
 			int EnemyTeam = CurrentPawnReplicationInfo->r_TaskForce->TeamIndex;
@@ -501,8 +559,17 @@ void ActorLoop(UCanvas* canvas) {
 
 			if (AimbotLockedPawn)
 			{
+				if (AimbotLockedPawn->Health < 1) {
+					AimbotLockedPawn = nullptr;
+					LockedPawnHead = FVector{ 0, 0, 0 };
+					bLocked = false;
+
+					CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
+					continue;
+				}
+				
 				LockedPawnHead = AimbotLockedPawn->Mesh->GetBoneLocation(utils::GetBoneFromId(config_system.item.aimBone), (int)EBoneControlSpace::BCS_WorldSpace);
-				if (LockedPawnHead == FVector{ 0.00f, 0.00f, 0.00f }) {
+				if (LockedPawnHead == FVector{0.00f, 0.00f, 0.00f}) {
 					CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
 					continue;
 				}
@@ -510,6 +577,17 @@ void ActorLoop(UCanvas* canvas) {
 				if (bLocked)
 				{
 					Aimbot();
+					CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
+					continue;
+				}
+			}
+			else {
+				if (bLocked)
+				{
+					AimbotLockedPawn = nullptr;
+					LockedPawnHead = FVector{ 0, 0, 0 };
+					bLocked = false;
+
 					CurrentPawn = (ATgPawn*)CurrentPawn->NextPawn;
 					continue;
 				}
@@ -624,7 +702,8 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Checkbox(_xor_("Aimbot"), &config_system.item.aimbot); ZeroGUI::SameLine();
 				ZeroGUI::Combobox("Aim bone", FVector2D{ 125.0f, 25.0f }, &config_system.item.aimBone, "Head", "Neck", "Pelvis", NULL);
 				if (config_system.item.aimbot) {
-					ZeroGUI::Checkbox(_xor_("Angle Check"), &config_system.item.angleCheck);
+					ZeroGUI::Checkbox(_xor_("Visibility Check"), &config_system.item.visCheck);
+					ZeroGUI::Checkbox(_xor_("Angle Check (buggy)"), &config_system.item.angleCheck);
 					if (config_system.item.angleCheck)
 						ZeroGUI::SliderInt(_xor_("Angle"), &config_system.item.angle, 0, 180);
 						
@@ -674,6 +753,9 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Checkbox(_xor_("Glow"), &config_system.item.glow); ZeroGUI::SameLine();
 				ZeroGUI::Checkbox(_xor_("3rd person"), &config_system.item.thirdPerson);
 				ZeroGUI::SliderFloat(_xor_("FOV Slider"), &Globals::PlayerCamera->DefaultFOV, 50.0f, 170.0f);
+				ZeroGUI::SliderInt(_xor_("Speedhack Speed"), &config_system.item.speed, 1, 10);
+				ZeroGUI::Checkbox(_xor_("Speedhack (lags the game)"), &config_system.item.speedhack);
+					
 				break;
 			}
 
