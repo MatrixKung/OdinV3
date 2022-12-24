@@ -666,6 +666,7 @@ void MainLoop(UCanvas* canvas) {
 	if (o_getasynckeystate((DWORD)config_system.item.spreadKey) == -32767) config_system.item.spread = !config_system.item.spread;
 	if (o_getasynckeystate((DWORD)config_system.item.glowKey) == -32767) config_system.item.glow = !config_system.item.glow;
 	if (o_getasynckeystate((DWORD)config_system.item.thirdPersonKey) == -32767) config_system.item.thirdPerson = !config_system.item.thirdPerson;
+	if (o_getasynckeystate((DWORD)config_system.item.speedKey) == -32767) config_system.item.speedhack = !config_system.item.speedhack;
 
 	if (config_system.item.visuals || config_system.item.aimbot)
 		ActorLoop(canvas);
@@ -753,6 +754,7 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Checkbox(_xor_("Glow"), &config_system.item.glow); ZeroGUI::SameLine();
 				ZeroGUI::Checkbox(_xor_("3rd person"), &config_system.item.thirdPerson);
 				ZeroGUI::SliderFloat(_xor_("FOV Slider"), &Globals::PlayerCamera->DefaultFOV, 50.0f, 170.0f);
+				ZeroGUI::Hotkey(_xor_("Speedhack Key"), FVector2D{ 100.0f, 25.0f }, &config_system.item.speedKey);
 				ZeroGUI::SliderInt(_xor_("Speedhack Speed"), &config_system.item.speed, 1, 10);
 				ZeroGUI::Checkbox(_xor_("Speedhack (lags the game)"), &config_system.item.speedhack);
 					
