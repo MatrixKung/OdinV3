@@ -114,7 +114,12 @@ namespace maths
 	}
 
 	int GetAngle(FRotator TargetRot, FRotator OriginRot) {
-		return (int)(abs(RotationDelta(TargetRot, OriginRot).Yaw) * CONST_UnrRotToDeg);
+		int angle = (int)(abs(RotationDelta(TargetRot, OriginRot).Yaw) * CONST_UnrRotToDeg) - 360;
+		if (angle <= -1 && angle >= -360) {
+			angle = angle + 360;
+		}
+		
+		return angle;
 	}
 
 	float GetDistance(FVector to, FVector from) {
@@ -430,6 +435,8 @@ void Aimbot()
 
 					FVector camloc = Globals::PlayerCamera->LastFrameCameraCache.POV.Location;
 
+					//printf("Angle : %i\n", maths::GetAngle(AimRotation, oldRotation));
+
 					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
 						return;
 					}
@@ -687,8 +694,8 @@ void MainLoop(UCanvas* canvas) {
 			tab = 3;
 		if (ZeroGUI::ButtonTab(_xor_("Colors"), FVector2D{ 100.f, 25.f }, tab == 4))
 			tab = 4;
-		//if (ZeroGUI::ButtonTab(_xor_("DEBUG"), FVector2D{ 100.f, 25.f }, tab == 5))
-		//	tab = 5;
+		/*if (ZeroGUI::ButtonTab(_xor_("DEBUG"), FVector2D{ 100.f, 25.f }, tab == 5))
+			tab = 5;*/
 		if (ZeroGUI::ButtonTab(_xor_("Infos"), FVector2D{ 100.f, 25.f }, tab == 6)) {
 			tab = 6;
 		}
@@ -704,7 +711,7 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Combobox("Aim bone", FVector2D{ 125.0f, 25.0f }, &config_system.item.aimBone, "Head", "Neck", "Pelvis", NULL);
 				if (config_system.item.aimbot) {
 					ZeroGUI::Checkbox(_xor_("Visibility Check"), &config_system.item.visCheck);
-					ZeroGUI::Checkbox(_xor_("Angle Check (buggy)"), &config_system.item.angleCheck);
+					ZeroGUI::Checkbox(_xor_("Angle Check (!BUGGY!)"), &config_system.item.angleCheck);
 					if (config_system.item.angleCheck)
 						ZeroGUI::SliderInt(_xor_("Angle"), &config_system.item.angle, 0, 180);
 						
@@ -754,9 +761,9 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Checkbox(_xor_("Glow"), &config_system.item.glow); ZeroGUI::SameLine();
 				ZeroGUI::Checkbox(_xor_("3rd person"), &config_system.item.thirdPerson);
 				ZeroGUI::SliderFloat(_xor_("FOV Slider"), &Globals::PlayerCamera->DefaultFOV, 50.0f, 170.0f);
+				ZeroGUI::Checkbox(_xor_("Speedhack"), &config_system.item.speedhack); ZeroGUI::SameLine();
 				ZeroGUI::Hotkey(_xor_("Speedhack Key"), FVector2D{ 100.0f, 25.0f }, &config_system.item.speedKey);
 				ZeroGUI::SliderInt(_xor_("Speedhack Speed"), &config_system.item.speed, 1, 10);
-				ZeroGUI::Checkbox(_xor_("Speedhack (lags the game)"), &config_system.item.speedhack);
 					
 				break;
 			}
@@ -842,7 +849,7 @@ void MainLoop(UCanvas* canvas) {
 				break;
 			}
 
-			/*case 5:
+			case 5:
 			{
 				ZeroGUI::Text(_xor_("DEBUG"));
 
@@ -850,6 +857,7 @@ void MainLoop(UCanvas* canvas) {
 				static bool recoil = true;
 				ZeroGUI::Checkbox(_xor_("r_bIsMounted"), &mounted);
 				ZeroGUI::Checkbox(_xor_("m_bUsesRecoil"), &recoil);
+				ZeroGUI::SliderFloat(_xor_("Dilation"), &Globals::WorldInfo->TimeDilation, 0.0f, 100.0f);
 
 				if (mounted)
 					((ATgPawn*)Globals::LocalPawn)->r_bIsMounted = true;
@@ -862,7 +870,7 @@ void MainLoop(UCanvas* canvas) {
 					((ATgPawn*)Globals::LocalPawn)->m_bUsesRecoil = false;
 
 				break;
-			}*/
+			}
 
 			case 6:
 			{
