@@ -102,12 +102,12 @@ static T PatternScan(const char* Pattern, uint64_t Start, size_t Size, bool bFin
 
 void hook(__int64 addr, __int64 func, __int64* orig)
 {
-	static auto skGetModuleHandle = skip_hook::make_skip_hook<decltype(&GetModuleHandle)>((uint64_t)GetModuleHandle);
+	//static auto skGetModuleHandle = skip_hook::make_skip_hook<decltype(&GetModuleHandle)>((uint64_t)GetModuleHandle);
 									// FUCK IT (TODO: change it cus detection will go brrrr)
-	uintptr_t moduleAdress = reinterpret_cast<uintptr_t>(SpoofCall(skGetModuleHandle, _xor_("GameOverlayRenderer64.dll")));
+	HMODULE moduleAdress = SpoofCall<HMODULE>(GetModuleHandle, _xor_("GameOverlayRenderer64.dll"));
 	static uintptr_t hook_addr;
 	if (!hook_addr)
-		hook_addr = (uintptr_t)United((HMODULE)moduleAdress, _xor_("\x48\x00\x00\x00\x00\x57\x48\x83\xEC\x30\x33\xC0"), _xor_("x????xxxxxxx"), 0);
+		hook_addr = (uintptr_t)United(moduleAdress, _xor_("\x48\x00\x00\x00\x00\x57\x48\x83\xEC\x30\x33\xC0"), _xor_("x????xxxxxxx"), 0);
 
 	auto hook = ((__int64(__fastcall*)(__int64 addr, __int64 func, __int64* orig, __int64 smthng))(hook_addr));
 	SpoofCall(hook, (__int64)addr, (__int64)func, orig, (__int64)1);

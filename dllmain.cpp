@@ -67,10 +67,14 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParam
 
 // TODO: Use engine input instead since this will probably get detected (or not, ty hirez)
 bool HookKeyState() {
-	HMODULE API = GetModuleHandle(_xor_("win32u.dll"));
+	/*static auto skGetModuleHandle = skip_hook::make_skip_hook<decltype(&GetModuleHandle)>((uint64_t)GetModuleHandle);
+	static auto skGetProcAddress = skip_hook::make_skip_hook<decltype(&GetProcAddress)>((uint64_t)GetProcAddress);*/
+	
+	HMODULE API = SpoofCall<HMODULE>(GetModuleHandle, _xor_("win32u.dll"));
+	
 	if (API != NULL)
 	{
-		o_getasynckeystate = (LPFN_MBA)GetProcAddress(API, _xor_("NtUserGetAsyncKeyState"));
+		o_getasynckeystate = SpoofCall<LPFN_MBA>(GetProcAddress, API, _xor_("NtUserGetAsyncKeyState"));
 		if (o_getasynckeystate != NULL)
 			return true;
 		else
