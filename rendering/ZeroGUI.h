@@ -657,7 +657,7 @@ namespace ZeroGUI
 			first_element_pos = pos;
 	}
 
-	void SliderFloat(const char* name, float* value, float min, float max, const char* format = "%.0f")
+	void SliderFloat(const char* name, float* value, float min, float max, const char* format = _xor_("%.0f"))
 	{
 		elements_count++;
 
@@ -956,7 +956,7 @@ namespace ZeroGUI
 			FVector2D textPos = FVector2D{ pos.X + size.X / 4, pos.Y + size.Y + 25 / 4 };
 
 			if (*key == 0x07)
-				TextLeft("Unbinded", textPos, Colors::Text);
+				TextLeft(_xor_("Unbound"), textPos, Colors::Text);
 			else
 				TextLeft((char*)VirtualKeyCodeToString(*key).c_str(), textPos, Colors::Text);
 

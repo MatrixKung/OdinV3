@@ -18,8 +18,8 @@
 #include <stdio.h>
 #include <intrin.h>
 
-#include "utils/rpc.h"
-#pragma comment(lib, "discord-rpc.lib")
+//#include "utils/rpc.h"
+//#pragma comment(lib, "discord-rpc.lib")
 
 #include <d3dx9math.h>
 #pragma comment(lib, "d3dx9.lib")
@@ -34,7 +34,7 @@ using namespace SDK;
 #include "config/ini.h"
 #include "settings/settings.h"
 //#include "spoofer/return_spoofer.h"
-#include "spoofer/spoof.h"
+//#include "spoofer/spoof.h"
 #include "utils/config.h"
 #include "globals.h"
 #include "exploits/exploits.h"

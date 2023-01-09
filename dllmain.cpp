@@ -5,16 +5,16 @@
 #include <detours/detours.h>
 #include "utils/TEB.h"
 
-#include "memory_manager.h"
+#include "SkipHook/skiphook.h"
 
-//#define DEBUG
+#include "memory_manager.h"
 
 HMODULE moduleBase;
 tProcessEvent ProcessEventOriginal = nullptr;
 
 uintptr_t TEB, xorKey;
-static const void* game_rbx_jmp;
 
+// HOOK
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParams, __int64 pResult) {
 	TEB = __readgsqword(0x58u);
 
@@ -22,15 +22,52 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, const void* pParam
 
 	if (FunctionName == _xor_("Function TgClient.TgGameViewportClient.PostRender"))
 		MainLoop(((UTgGameViewportClient_PostRender_Params*)(pParams))->Canvas);
-	
-	// TODO: Character DeltaTime Tick hook for SH?
 
-	return spoof_call(game_rbx_jmp, ProcessEventOriginal, pObject, pFunction, pParams, pResult);
+	return SpoofCall<void>((PVOID)ProcessEventOriginal, pObject, pFunction, pParams, pResult);
 }
+
+//typedef void(__fastcall* tProcessInternal)(UObject*, const void*, void*, void*);
+//tProcessInternal pProcessInternal = nullptr;
+//
+//void __fastcall hkProcessInternal(UObject* pFunction, const void* pParams, void* a1, void* pResult)
+//{
+//	//printf("Function: %s\n", pFunction->GetFullName().c_str());
+//
+//	UCanvas* canvas = ((UTgGameViewportClient_PostRender_Params*)(pParams))->Canvas;
+//	
+//	//printf("Canvas: 0x%p\n", canvas);
+//
+//	if (Globals::SetObjects())
+//	{
+//		ATgDevice* weapon = (ATgDevice*)Globals::LocalWeapon;
+//		if (weapon && o_getasynckeystate(VK_F8))
+//		{
+//			printf("Ammo count : %i\n", weapon->STATIC_GetCurrentAmmoAmount());
+//			weapon->StartFire();
+//		}
+//	}
+//
+//	/*printf("Is a canvas : %i\n", canvas->IsA(UCanvas::StaticClass()));
+//
+//	FVector2D pos = FVector2D(100, 100);
+//	FVector2D oldPos = FVector2D(canvas->CurX, canvas->CurY);
+//	FColor oldColor = canvas->DrawColor;
+//	FColor color = FColor(255.f, 255.f, 0.f, 255.f);
+//
+//	canvas->STATIC_SetPos(pos.X, pos.Y, 0.f);
+//	canvas->STATIC_SetDrawColor(color.R, color.G, color.B, color.A);
+//
+//	canvas->DrawText(_xor_(L"HELLO FROM ODIN !"), false, 1.f, 1.f, EDisplayPlane::DISPLAYPLANE_HUD, NULL);
+//
+//	canvas->STATIC_SetPos(oldPos.X, oldPos.Y, 0.f);
+//	canvas->STATIC_SetDrawColor(oldColor.R, oldColor.G, oldColor.B, oldColor.A);*/
+//
+//	return SpoofCall<void>((PVOID)pProcessInternal, pFunction, pParams, a1, pResult);
+//}
 
 // TODO: Use engine input instead since this will probably get detected (or not, ty hirez)
 bool HookKeyState() {
-	HMODULE API = GetModuleHandle(_xor_(TEXT("win32u.dll")));
+	HMODULE API = GetModuleHandle(_xor_("win32u.dll"));
 	if (API != NULL)
 	{
 		o_getasynckeystate = (LPFN_MBA)GetProcAddress(API, _xor_("NtUserGetAsyncKeyState"));
@@ -50,7 +87,7 @@ void Main() {
 #endif // DEBUG
 
 	// Discord
-	discord_rpc::init();
+	//discord_rpc::init();
 
 	// Settings helper
 	ResetSettings();
@@ -73,14 +110,22 @@ void Main() {
 	Globals::xorFunc = GetCallAddress<void*>(PatternScan<void*>(_xor_("E8 ? ? ? ? 85 C0 75 0F 48 8B 03"), (uint64_t)moduleBase, SizeOfImage));
 	xorKey = (uintptr_t)GetAndValue<void*>((void*)((DWORD64)Globals::xorFunc + 0x63));
 
-	game_rbx_jmp = gadget(NULL);
+	MessageBox(0, 0, 0, 0);
 
-	//auto tramp1 = United(moduleBase, _xor_("\x48\x83\xC4\x68\xC3"), _xor_("xxxxx"), 0);
-	//auto tramp2 = United(moduleBase, _xor_("\xFF\xE3"), _xor_("xx"), 0);
+	PBYTE tramp1 = United(moduleBase, _xor_("\x48\x83\xC4\x68\xC3"), _xor_("xxxxx"), 0);
+	PBYTE tramp2 = United(moduleBase, _xor_("\xFF\xE3"), _xor_("xx"), 0);
+
+	FC::SetSpoofStub((void*)tramp1, (void*)tramp2);
+
+	// PostRender hook
+	/*UFunction* pRenderFunc = UObject::FindObject<UFunction>(_xor_("Function TgClient.TgGameViewportClient.PostRender"));
+	pProcessInternal = (tProcessInternal)((PBYTE)pRenderFunc->Func);
+	pRenderFunc->Func = &hkProcessInternal;
+	pRenderFunc->FunctionFlags |= 0x400;*/
 
 #ifdef DEBUG
 	printf(_xor_("Module       : 0x%p\n"), moduleBase);
-	printf(_xor_("Legit Tramp  : 0x%p\n"), game_rbx_jmp);
+	//printf(_xor_("Legit Tramp  : 0x%p\n"), game_rbx_jmp);
 	printf(_xor_("GObjects     : 0x%p\n"), GObject);
 	printf(_xor_("GNames       : 0x%p\n"), GName);
 	printf(_xor_("UEngine      : 0x%p (0x%p)\n"), Globals::UEngineAddr, Globals::Engine);
@@ -90,25 +135,19 @@ void Main() {
 
 	printf(_xor_("GObjects     : %d\n"), UObject::GetGlobalObjects().Num());
 	printf(_xor_("GNames       : %d\n"), FName::GetGlobalNames().Num());
-
-	//printf(_xor_("Tramp 1      : 0x%p\n"), tramp1);
-	//printf(_xor_("Tramp 2      : 0x%p\n"), tramp2);
-
-	spoof_call(game_rbx_jmp, MessageBox, (HWND)0, (LPCSTR)0, (LPCSTR)0, (UINT)0);
 #endif // DEBUG
 
-	//FC::SetSpoofStub((void*)tramp1, (void*)tramp2);
-	//FC2::SetSpoofStub((void*)tramp1, (void*)tramp2);
-
 	if (!HookKeyState())
-		spoof_call(game_rbx_jmp, MessageBox, (HWND)0, (LPCSTR)0, (LPCSTR)0, (UINT)0);
+		printf(_xor_("KeystateHook error!\n"));
+	
+	//LoopVTable(UObject::StaticClass(), 0);
 
-	DetourTransactionBegin();
+	/*DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	DetourAttach(&(PVOID&)ProcessEventOriginal, ProcessEventHook);
-	DetourTransactionCommit();
-
-	discord_rpc::update();
+	DetourTransactionCommit();*/
+	
+	hook((__int64)ProcessEventOriginal, (__int64)ProcessEventHook, (__int64*)&ProcessEventOriginal);
 }
 
 BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {

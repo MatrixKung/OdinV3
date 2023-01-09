@@ -58,6 +58,9 @@
     <Filter Include="DiscordRPC\rapidjson\msinttypes">
       <UniqueIdentifier>{a4627af0-90f8-4388-88da-fe1e6f8b0e96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\skiphook">
+      <UniqueIdentifier>{e89a111a-f763-470c-a917-e5799dc5e8f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.h">
@@ -98,9 +101,6 @@
     </ClInclude>
     <ClInclude Include="utils\utils_importer.hpp">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="spoofer\spoof.h">
-      <Filter>Header Files\Spoofer</Filter>
     </ClInclude>
     <ClInclude Include="rendering\ZeroGUI.h">
       <Filter>Header Files\Rendering</Filter>
@@ -429,6 +429,24 @@
     <ClInclude Include="SDK\PL_XAudio2_structs.hpp">
       <Filter>Header Files\SDK</Filter>
     </ClInclude>
+    <ClInclude Include="utils\ntapi.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipHook\hde32.h">
+      <Filter>Header Files\skiphook</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipHook\hde64.h">
+      <Filter>Header Files\skiphook</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipHook\skiphook.h">
+      <Filter>Header Files\skiphook</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipHook\table32.h">
+      <Filter>Header Files\skiphook</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipHook\table64.h">
+      <Filter>Header Files\skiphook</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -521,15 +539,21 @@
     <ClCompile Include="SDK\PL_XAudio2_functions.cpp">
       <Filter>Source Files\SDK</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <MASM Include="spoofer\spoofer_stub.asm">
-      <Filter>Header Files\Spoofer</Filter>
-    </MASM>
+    <ClCompile Include="SkipHook\hde32.c">
+      <Filter>Header Files\skiphook</Filter>
+    </ClCompile>
+    <ClCompile Include="SkipHook\hde64.c">
+      <Filter>Header Files\skiphook</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="exploits\exploits.h">
       <Filter>Header Files\Exploits</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="spoofer\spoofer_stub.asm">
+      <Filter>Header Files\Spoofer</Filter>
+    </MASM>
   </ItemGroup>
 </Project>

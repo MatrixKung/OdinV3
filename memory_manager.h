@@ -100,6 +100,40 @@ static T PatternScan(const char* Pattern, uint64_t Start, size_t Size, bool bFin
 	return reinterpret_cast<T>(nullptr);
 }
 
+void hook(__int64 addr, __int64 func, __int64* orig)
+{
+	static auto skGetModuleHandle = skip_hook::make_skip_hook<decltype(&GetModuleHandle)>((uint64_t)GetModuleHandle);
+									// FUCK IT (TODO: change it cus detection will go brrrr)
+	uintptr_t moduleAdress = reinterpret_cast<uintptr_t>(SpoofCall(skGetModuleHandle, _xor_("GameOverlayRenderer64.dll")));
+	static uintptr_t hook_addr;
+	if (!hook_addr)
+		hook_addr = (uintptr_t)United((HMODULE)moduleAdress, _xor_("\x48\x00\x00\x00\x00\x57\x48\x83\xEC\x30\x33\xC0"), _xor_("x????xxxxxxx"), 0);
+
+	auto hook = ((__int64(__fastcall*)(__int64 addr, __int64 func, __int64* orig, __int64 smthng))(hook_addr));
+	SpoofCall(hook, (__int64)addr, (__int64)func, orig, (__int64)1);
+}
+
+static void LoopVTable(void* Object, int Start=0)
+{
+	int Out_Index = 0;
+
+	int FunctionCount = 0;
+
+	void** VTable = *reinterpret_cast<void***>(Object);
+
+	while (VTable[FunctionCount]) FunctionCount++;
+
+	for (int Index = Start; Index <= FunctionCount; Index++)
+	{
+		void* Function = VTable[Index];
+
+		if (Function)
+		{
+			printf(_xor_("VTable[%d] = 0x%p\n"), Index, Function);
+		}
+	}
+}
+
 static int ScanVTable(std::string Pattern, void* Object, int SkipAmount = 0) {
 
 	int Out_Index = 0;

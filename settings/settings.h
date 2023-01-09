@@ -9,6 +9,7 @@ public:
 
 		// AIMBOT TAB
 		bool aimbot;
+		bool silent;
 		bool prediction;
 		bool smooth;
 		bool lockWhenClose;
@@ -41,7 +42,7 @@ public:
 		int tolerance;
 		int resolution;
 		float FOV;
-		int speed;
+		float speed;
 
 		// KEYBINDS
 		int menuKey;

@@ -1,3 +1,4 @@
+#pragma once
 #include <type_traits>
 #include <Windows.h>
 #include <subauth.h>
@@ -121,7 +122,6 @@ namespace FC
 		PtrData ^= VKey; return (PtrType)PtrData;
 	}
 #define EPtr(Ptr) FC::EPtr(Ptr)
-
 	//GetModuleBase
 	inline __declspec(noinline) PBYTE GetModuleBase_Wrapper(const char* ModuleName) {
 		PEB_LDR_DATA Ldr = ((PPTEB)__readgsqword(FIELD_OFFSET(NT_TIB, Self)))->ProcessEnvironmentBlock->Ldr; void* ModBase = nullptr;

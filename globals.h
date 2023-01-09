@@ -1,6 +1,9 @@
 #pragma once
 #include "SDK.hpp"
 
+#define DEBUG
+//#define DEBUG_ADDRESSES
+
 typedef int (WINAPI* LPFN_MBA)(DWORD);
 static LPFN_MBA o_getasynckeystate;
 
@@ -159,6 +162,19 @@ namespace Globals {
 			return false;
 
 		if (!TickyTicky()) return false;
+
+#ifdef DEBUG_ADDRESSES
+		printf("====================\n");
+		printf("Engine          : %p\n", Engine);
+		printf("LocalPlayer     : %p\n", LocalPlayer);
+		printf("LocalController : %p\n", LocalController);
+		printf("LocalPawn       : %p\n", LocalPawn);
+		printf("ReplicationInfo : %p\n", ReplicationInfo);
+		printf("PlayerCamera    : %p\n", PlayerCamera);
+		printf("WorldInfo       : %p\n", WorldInfo);
+		printf("LocalWeapon     : %p\n", LocalWeapon);
+		printf("====================\n\n");
+#endif
 
 		// Everything went well
 		return true;

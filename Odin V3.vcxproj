@@ -74,7 +74,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>test</TargetName>
+    <TargetName>vcredist_x64</TargetName>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;C:\Users\coochie\source\repos\Odin V3\DiscordRPC;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -155,10 +155,13 @@
       </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>true</EnableUAC>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(TargetPath)" "C:\Users\coochie\source\repos\ODIN RELEASE"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="config\ini.h" />
@@ -275,10 +278,15 @@
     <ClInclude Include="SDK\PL_XAudio2_parameters.hpp" />
     <ClInclude Include="SDK\PL_XAudio2_structs.hpp" />
     <ClInclude Include="settings\settings.h" />
+    <ClInclude Include="SkipHook\hde32.h" />
+    <ClInclude Include="SkipHook\hde64.h" />
+    <ClInclude Include="SkipHook\skiphook.h" />
+    <ClInclude Include="SkipHook\table32.h" />
+    <ClInclude Include="SkipHook\table64.h" />
     <ClInclude Include="spoofer\return_spoofer.h" />
-    <ClInclude Include="spoofer\spoof.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="utils\config.h" />
+    <ClInclude Include="utils\ntapi.h" />
     <ClInclude Include="Utils\rpc.h" />
     <ClInclude Include="utils\scanner.h" />
     <ClInclude Include="utils\skcrypt.h" />
@@ -314,14 +322,16 @@
     <ClCompile Include="SDK\PL_WinDrv_functions.cpp" />
     <ClCompile Include="SDK\PL_XAudio2_functions.cpp" />
     <ClCompile Include="settings\settings.cpp" />
+    <ClCompile Include="SkipHook\hde32.c" />
+    <ClCompile Include="SkipHook\hde64.c" />
     <ClCompile Include="Utils\rpc.cpp" />
     <ClCompile Include="utils\TEB.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="spoofer\spoofer_stub.asm" />
+    <None Include="exploits\exploits.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="exploits\exploits.h" />
+    <MASM Include="spoofer\spoofer_stub.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <algorithm>
 
-inline const void* gadget(wchar_t* moduleName)
+inline const void* gadget(const wchar_t* moduleName)
 {
 	static const void* jmprbx = nullptr;
 	if (!jmprbx) {

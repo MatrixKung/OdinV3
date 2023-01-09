@@ -9,6 +9,7 @@ VOID ResetSettings() {
 
 	// AIMBOT TAB
 	config_system.item.aimbot = false;
+	config_system.item.silent = false;
 	config_system.item.prediction = false;
 	config_system.item.smooth = false;
 	config_system.item.lockWhenClose = true;
@@ -41,7 +42,7 @@ VOID ResetSettings() {
 	config_system.item.tolerance = 100;
 	config_system.item.resolution = 64;
 	config_system.item.FOV = 100.f;
-	config_system.item.speed = 1;
+	config_system.item.speed = 1.0f;
 
 	// KEYBINDS
 	config_system.item.menuKey = 0x2D;

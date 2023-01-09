@@ -1,5 +1,5 @@
 #pragma once
-#include "../spoofer/spoof.h"
+#include "../spoofer/return_spoofer.h"
 #include "../process_event.h"
 
 #ifdef _MSC_VER
@@ -95,10 +95,18 @@ public:
 		return ptr;
 	}
 
+	// HOOK
 	#define _PROCESS_EVENT_RESULT (__int64)1
-	void ProcessEvent(UFunction* pFunction, const void* pParams) {
+	void ProcessEvent(UFunction* pFunction, const void* pParams)
+	{
 		::ProcessEventOriginal(this, pFunction, pParams, _PROCESS_EVENT_RESULT);
 	}
+
+/*#define _PROCESS_EVENT_RESULT (__int64)1
+	void ProcessEvent(UFunction* pFunction, const void* pParams)
+	{
+		VCall((PVOID)this, 74, pFunction, pParams, _PROCESS_EVENT_RESULT);
+	}*/
 
 	void STATIC_ProfNodeEvent(const struct FString& EventName);
 	void STATIC_ProfNodeSetDepthThreshold(int Depth);

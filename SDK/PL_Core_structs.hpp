@@ -198,6 +198,91 @@ struct FRotator
 	int                                                Pitch;                                                    // 0x0000(0x0004) (Edit)
 	int                                                Yaw;                                                      // 0x0004(0x0004) (Edit)
 	int                                                Roll;                                                     // 0x0008(0x0004) (Edit)
+
+	inline FRotator()
+		: Pitch(0), Yaw(0), Roll(0)
+	{}
+
+	inline FRotator(int pitch, int yaw, int roll)
+		: Pitch(pitch), Yaw(yaw), Roll(roll)
+	{}
+
+	__forceinline FRotator operator-(const FRotator& R) {
+		return FRotator(Pitch - R.Pitch, Yaw - R.Yaw, Roll - R.Roll);
+	}
+
+	__forceinline FRotator operator+(const FRotator& R) {
+		return FRotator(Pitch + R.Pitch, Yaw + R.Yaw, Roll + R.Roll);
+	}
+
+	__forceinline FRotator operator*(float Scale) const {
+		return FRotator(Pitch * Scale, Yaw * Scale, Roll * Scale);
+	}
+
+	__forceinline FRotator operator/(float Scale) const {
+		const float RScale = 1.f / Scale;
+		return FRotator(Pitch * RScale, Yaw * RScale, Roll * RScale);
+	}
+
+	__forceinline FRotator operator+(int A) const {
+		return FRotator(Pitch + A, Yaw + A, Roll + A);
+	}
+
+	__forceinline FRotator operator-(int A) const {
+		return FRotator(Pitch - A, Yaw - A, Roll - A);
+	}
+
+	__forceinline FRotator operator*(const FRotator& R) const {
+		return FRotator(Pitch * R.Pitch, Yaw * R.Yaw, Roll * R.Roll);
+	}
+
+	__forceinline FRotator operator/(const FRotator& R) const {
+		return FRotator(Pitch / R.Pitch, Yaw / R.Yaw, Roll / R.Roll);
+	}
+
+	__forceinline float operator|(const FRotator& R) const {
+		return Pitch * R.Pitch + Yaw * R.Yaw + Roll * R.Roll;
+	}
+
+	__forceinline float operator^(const FRotator& R) const {
+		return Pitch * R.Yaw - Yaw * R.Pitch - Roll * R.Roll;
+	}
+
+	__forceinline FRotator& operator+=(const FRotator& R) {
+		Pitch += R.Pitch;
+		Yaw += R.Yaw;
+		Roll += R.Roll;
+		return *this;
+	}
+
+	__forceinline FRotator& operator-=(const FRotator& R) {
+		Pitch -= R.Pitch;
+		Yaw -= R.Yaw;
+		Roll -= R.Roll;
+		return *this;
+	}
+
+	__forceinline FRotator& operator*=(const FRotator& R) {
+		Pitch *= R.Pitch;
+		Yaw *= R.Yaw;
+		Roll *= R.Roll;
+		return *this;
+	}
+
+	__forceinline FRotator& operator/=(const FRotator& R) {
+		Pitch /= R.Pitch;
+		Yaw /= R.Yaw;
+		Roll /= R.Roll;
+		return *this;
+	}
+
+	__forceinline bool operator==(const FRotator& src) const {
+		return (src.Pitch == Pitch) && (src.Yaw == Yaw) && (src.Roll == Roll);
+	}
+
+	__forceinline bool operator!=(const FRotator& src) const {
+		return (src.Pitch != Pitch) || (src.Yaw != Yaw) || (src.Roll != Roll);
+	}
 };
 
 // ScriptStruct Core.Object.Vector
