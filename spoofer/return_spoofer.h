@@ -2,30 +2,51 @@
 #include <type_traits>
 #include <Windows.h>
 #include <subauth.h>
+#include <wchar.h>
 
-typedef struct _PEB_LDR_DATA {
-	BYTE Reserved1[8];
-	PVOID Reserved2[3];
+typedef struct _PEB_LDR_DATA
+{
+	ULONG Length;
+	UCHAR Initialized;
+	PVOID SsHandle;
+	LIST_ENTRY InLoadOrderModuleList;
 	LIST_ENTRY InMemoryOrderModuleList;
+	LIST_ENTRY InInitializationOrderModuleList;
+	PVOID EntryInProgress;
 } PEB_LDR_DATA, * PPEB_LDR_DATA;
 
-typedef struct _LDR_DATA_TABLE_ENTRY {
-	PVOID Reserved1[2];
+typedef struct _LDR_DATA_TABLE_ENTRY
+{
+	LIST_ENTRY InLoadOrderLinks;
 	LIST_ENTRY InMemoryOrderLinks;
-	PVOID Reserved2[2];
+	LIST_ENTRY InInitializationOrderLinks;
 	PVOID DllBase;
-	PVOID Reserved3[2];
+	PVOID EntryPoint;
+	ULONG SizeOfImage;
 	UNICODE_STRING FullDllName;
-	BYTE Reserved4[8];
-	PVOID Reserved5[3];
-#pragma warning(push)
-#pragma warning(disable: 4201) // we'll always use the Microsoft compiler
-	union {
-		ULONG CheckSum;
-		PVOID Reserved6;
-	} DUMMYUNIONNAME;
-#pragma warning(pop)
-	ULONG TimeDateStamp;
+	UNICODE_STRING BaseDllName;
+	ULONG Flags;
+	WORD LoadCount;
+	WORD TlsIndex;
+	union
+	{
+		LIST_ENTRY HashLinks;
+		struct
+		{
+			PVOID SectionPointer;
+			ULONG CheckSum;
+		};
+	};
+	union
+	{
+		ULONG TimeDateStamp;
+		PVOID LoadedImports;
+	};
+	_ACTIVATION_CONTEXT* EntryPointActivationContext;
+	PVOID PatchInformation;
+	LIST_ENTRY ForwarderLinks;
+	LIST_ENTRY ServiceTagLinks;
+	LIST_ENTRY StaticLinks;
 } LDR_DATA_TABLE_ENTRY, * PLDR_DATA_TABLE_ENTRY;
 
 typedef struct _RTL_USER_PROCESS_PARAMETERS {
@@ -35,18 +56,14 @@ typedef struct _RTL_USER_PROCESS_PARAMETERS {
 	UNICODE_STRING CommandLine;
 } RTL_USER_PROCESS_PARAMETERS, * PRTL_USER_PROCESS_PARAMETERS;
 
-typedef
-VOID
-(NTAPI* PPS_POST_PROCESS_INIT_ROUTINE) (
-	VOID
-	);
+typedef VOID (NTAPI* PPS_POST_PROCESS_INIT_ROUTINE) (VOID);
 
-typedef struct __PEB {
+typedef struct _PEB {
 	BYTE Reserved1[2];
 	BYTE BeingDebugged;
 	BYTE Reserved2[1];
 	PVOID Reserved3[2];
-	PEB_LDR_DATA Ldr;
+	PPEB_LDR_DATA Ldr;
 	PRTL_USER_PROCESS_PARAMETERS ProcessParameters;
 	PVOID Reserved4[3];
 	PVOID AtlThunkSListPtr;
@@ -63,7 +80,7 @@ typedef struct __PEB {
 	ULONG SessionId;
 } PPEB, * PPPEB;
 
-typedef struct __TEB {
+typedef struct _TEB {
 	PVOID Reserved1[12];
 	PPPEB ProcessEnvironmentBlock;
 	PVOID Reserved2[399];
@@ -75,7 +92,6 @@ typedef struct __TEB {
 	PVOID Reserved6[4];
 	PVOID TlsExpansionSlots;
 } TTEB, * PPTEB;
-
 
 namespace FC
 {
@@ -123,12 +139,12 @@ namespace FC
 	}
 #define EPtr(Ptr) FC::EPtr(Ptr)
 	//GetModuleBase
-	inline __declspec(noinline) PBYTE GetModuleBase_Wrapper(const char* ModuleName) {
-		PEB_LDR_DATA Ldr = ((PPTEB)__readgsqword(FIELD_OFFSET(NT_TIB, Self)))->ProcessEnvironmentBlock->Ldr; void* ModBase = nullptr;
-		for (PLIST_ENTRY CurEnt = Ldr.InMemoryOrderModuleList.Flink; CurEnt != &Ldr.InMemoryOrderModuleList; CurEnt = CurEnt->Flink) {
+	inline __declspec(noinline) PBYTE GetModuleBase_Wrapper(const wchar_t* ModuleName) {
+		PPEB_LDR_DATA Ldr = ((TTEB*)__readgsqword(FIELD_OFFSET(NT_TIB, Self)))->ProcessEnvironmentBlock->Ldr; void* ModBase = nullptr;
+		for (PLIST_ENTRY CurEnt = Ldr->InMemoryOrderModuleList.Flink; CurEnt != &Ldr->InMemoryOrderModuleList; CurEnt = CurEnt->Flink) {
 			LDR_DATA_TABLE_ENTRY* pEntry = CONTAINING_RECORD(CurEnt, LDR_DATA_TABLE_ENTRY, InMemoryOrderLinks);
-			PUNICODE_STRING BaseDllName = (PUNICODE_STRING)&pEntry->Reserved4[0];
-			if (!ModuleName || StrCmp(ModuleName, BaseDllName->Buffer, false))
+			PUNICODE_STRING BaseDllName = (PUNICODE_STRING)&pEntry->BaseDllName;
+			if (!ModuleName || (_wcsicmp(ModuleName, BaseDllName->Buffer) == 0))
 				return (PBYTE)pEntry->DllBase;
 		}
 
@@ -137,7 +153,7 @@ namespace FC
 #define GetModuleBase FC::GetModuleBase_Wrapper
 
 	//Signature Scan
-	inline PBYTE FindPattern_Wrapper(const char* Pattern, const char* Module = nullptr)
+	inline PBYTE FindPattern_Wrapper(const char* Pattern, const wchar_t* Module = nullptr)
 	{
 
 

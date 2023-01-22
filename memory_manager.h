@@ -102,9 +102,7 @@ static T PatternScan(const char* Pattern, uint64_t Start, size_t Size, bool bFin
 
 void hook(__int64 addr, __int64 func, __int64* orig)
 {
-	//static auto skGetModuleHandle = skip_hook::make_skip_hook<decltype(&GetModuleHandle)>((uint64_t)GetModuleHandle);
-									// FUCK IT (TODO: change it cus detection will go brrrr)
-	HMODULE moduleAdress = SpoofCall<HMODULE>(GetModuleHandle, _xor_("GameOverlayRenderer64.dll"));
+	HMODULE moduleAdress = (HMODULE)GetModuleBase(_xor_(L"GameOverlayRenderer64.dll"));
 	static uintptr_t hook_addr;
 	if (!hook_addr)
 		hook_addr = (uintptr_t)United(moduleAdress, _xor_("\x48\x00\x00\x00\x00\x57\x48\x83\xEC\x30\x33\xC0"), _xor_("x????xxxxxxx"), 0);

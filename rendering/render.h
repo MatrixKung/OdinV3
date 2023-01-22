@@ -149,21 +149,10 @@ namespace colors {
 }
 
 namespace utils {
-	void DoOnce(bool &var, bool reset = false) {
-		static bool once = false;
-		if (!once) {
-			once = true;
-			var = !var;
-		}
-
-		if (reset)
-			once = false;
-	}
-
 	const const char* addy2str(void* addr) {
 		const void* address = static_cast<const void*>(addr);
 		std::stringstream ss;
-		ss << "0x" << address;
+		ss << _xor_("0x") << address;
 
 		return ss.str().c_str();
 	}
@@ -232,7 +221,7 @@ namespace utils {
 		}
 	}
 
-	FBoneAtom GetBoneFromId(USkeletalMeshComponent* mesh, int id) {
+	/*FBoneAtom GetBoneFromId(USkeletalMeshComponent* mesh, int id) {
 		int bones = mesh->SpaceBases.Num();
 		if (bones > 0) {
 			FBoneAtom localToWorld = mesh->LocalToWorldBoneAtom;
@@ -264,7 +253,7 @@ namespace utils {
 		}
 
 		return FBoneAtom{ 0 };
-	}
+	}*/
 
 	FColor GetColor(bool state) {
 		return state ? colors::Green : colors::Red;
@@ -297,6 +286,7 @@ void Aimbot()
 	if (!AimbotLockedPawn ||
 		!AimbotLockedPawn->Mesh ||
 		!Globals::WorldInfo ||
+		!Globals::LocalPawn ||
 		!Globals::LocalWeapon ||
 		!Globals::LocalController) {
 		return;
@@ -324,10 +314,6 @@ void Aimbot()
 					FVector Prediction = LockedPawnHead + (AimbotLockedPawn->Velocity * (maths::GetDistance(LockedPawnHead, Globals::LocalPawn->Location) / fProjectileSpeed));
 
 					AimRotation = maths::AimAtVector(Prediction, Globals::PlayerCamera->LastFrameCameraCache.POV.Location);
-
-					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
-						return;
-					}
 
 					FVector difference;
 					difference.X = AimRotation.Pitch - Globals::LocalController->Rotation.Pitch;
@@ -365,10 +351,6 @@ void Aimbot()
 
 					AimRotation = maths::AimAtVector(Prediction, Globals::PlayerCamera->LastFrameCameraCache.POV.Location);
 
-					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
-						return;
-					}
-
 					Globals::LocalController->Rotation = AimRotation;
 				}
 			}
@@ -383,9 +365,6 @@ void Aimbot()
 					FVector difference;
 					difference.X = AimRotation.Pitch - Globals::LocalController->Rotation.Pitch;
 					difference.Y = AimRotation.Yaw - Globals::LocalController->Rotation.Yaw;
-
-					//Globals::LocalController->Rotation.Pitch += difference.X / config_system.item.smoothness;
-					//Globals::LocalController->Rotation.Yaw += difference.Y / config_system.item.smoothness;
 
 					int a = maths::ClampYaw(Globals::LocalController->Rotation.Yaw);
 					int b = maths::ClampYaw(AimRotation.Yaw);
@@ -416,35 +395,17 @@ void Aimbot()
 
 					FVector camloc = Globals::PlayerCamera->LastFrameCameraCache.POV.Location;
 
-					//printf("Angle : %i\n", maths::GetAngle(AimRotation, oldRotation));
-
-					if (config_system.item.angleCheck && maths::GetAngle(AimRotation, oldRotation) > config_system.item.angle) {
-						return;
-					}
-
 					ATgPlayerController* controller = (ATgPlayerController*)Globals::LocalController;
 					ATgPawn* pawn = (ATgPawn*)Globals::LocalPawn;
 					ATgDevice* weapon = (ATgDevice*)Globals::LocalWeapon;
 					
 					weapon->StopFire();
-
-					//weapon->ForceStopFire();
 					controller->bPressingLeftMouseButton = false;
-
 					Globals::LocalController->Rotation = AimRotation;
 
 					weapon->StartFire();
-
-					// potential exploit !!
-					//weapon->ProjectileFire(0);
-
-					//AProjectile* proj = weapon->ProjectileFire(0);
-					//weapon->STATIC_StopsProjectile(proj);
-
 					weapon->StopFire();
-					//weapon->ForceStopFire();
 					controller->bPressingLeftMouseButton = false;
-					
 					Globals::LocalController->Rotation = oldRotation;
 				}
 				else {
@@ -686,7 +647,7 @@ void MainLoop(UCanvas* canvas) {
 	Globals::height = canvas->SizeY;
 
 	if (config_system.item.hud) {
-		utils::DrawText(canvas, FString(_xor_(LTITLE)), FVector2D(10.f, 10.f), colors::Yellow);
+		utils::DrawText(canvas, FString(_xor_(L"Odin V4.1.0 | By Xiloe (Wooteck on UC)")), FVector2D(10.f, 10.f), colors::Yellow);
 		utils::DrawText(canvas, FString(_xor_(L"INS - Menu (In-Game only)")), FVector2D(10.f, 30.f), utils::GetColor(config_system.item.showSexyMenu));
 	}
 
@@ -701,29 +662,15 @@ void MainLoop(UCanvas* canvas) {
 	if (o_getasynckeystate((DWORD)config_system.item.glowKey) == -32767) config_system.item.glow = !config_system.item.glow;
 	if (o_getasynckeystate((DWORD)config_system.item.thirdPersonKey) == -32767) config_system.item.thirdPerson = !config_system.item.thirdPerson;
 	if (o_getasynckeystate((DWORD)config_system.item.speedKey) == -32767) config_system.item.speedhack = !config_system.item.speedhack;
-
-	/*if (o_getasynckeystate((DWORD)0x43) == -32767) {
-		ATgPawn* pawn = (ATgPawn*)Globals::LocalPawn;
-		ATgDevice* weapon = (ATgDevice*)Globals::LocalWeapon;
-		pawn->r_fReloadScale = 0.5f;
-		weapon->ClientForceReload();
-		weapon->ClientInterruptReload(true);
-	}*/
 	
 	if (config_system.item.visuals || config_system.item.aimbot)
 		ActorLoop(canvas);
 
-	Exploits();
-
-	/*printf("Profile ID     : %i (%p)\n", pawn->r_nProfileId, (uintptr_t*)&pawn->r_nProfileId);
-	printf("Skin ID        : %i (%p)\n", pawn->r_nSkinId, (uintptr_t*)&pawn->r_nSkinId);
-	printf("Head Skin ID   : %i (%p)\n", pawn->c_nHeadSkinId, (uintptr_t*)&pawn->c_nHeadSkinId);
-	printf("Weapon Skin ID : %i (%p)\n", pawn->r_nWeaponSkinId, (uintptr_t*)&pawn->r_nWeaponSkinId);
-	printf("Mount Skin ID  : %i (%p)\n", pawn->r_nMountSkinId, (uintptr_t*)&pawn->r_nMountSkinId);
-	printf("Ward Skin ID   : %i (%p)\n\n", pawn->r_nWardSkinId, (uintptr_t*)&pawn->r_nWardSkinId);*/
+	if (config_system.item.glow || config_system.item.recoil || config_system.item.spread || config_system.item.thirdPerson || config_system.item.speedhack)
+		Exploits();
 
 	static auto menuPos = FVector2D{ 150.f, 150.f };
-	if (ZeroGUI::Window(_xor_(TITLE), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
+	if (ZeroGUI::Window(_xor_("Odin V4.1.0 | By Xiloe (Wooteck on UC)"), &menuPos, FVector2D{ 550.f, 600.f }, config_system.item.showSexyMenu)) {
 		static int tab = 0;
 
 		if (ZeroGUI::ButtonTab(_xor_("Aimbot"), FVector2D{ 100.f, 25.f }, tab == 0))
@@ -736,11 +683,11 @@ void MainLoop(UCanvas* canvas) {
 			tab = 3;
 		if (ZeroGUI::ButtonTab(_xor_("Colors"), FVector2D{ 100.f, 25.f }, tab == 4))
 			tab = 4;
-		if (ZeroGUI::ButtonTab(_xor_("DEBUG"), FVector2D{ 100.f, 25.f }, tab == 5))
+		if (ZeroGUI::ButtonTab(_xor_("UwU"), FVector2D{ 100.f, 25.f }, tab == 5))
 			tab = 5;
-		/*if (ZeroGUI::ButtonTab(_xor_("Infos"), FVector2D{ 100.f, 25.f }, tab == 6)) {
+		if (ZeroGUI::ButtonTab(_xor_("Infos"), FVector2D{ 100.f, 25.f }, tab == 6)) {
 			tab = 6;
-		}*/
+		}
 
 		ZeroGUI::NextColumn(130.0f);
 
@@ -806,33 +753,13 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::SliderFloat(_xor_("FOV Slider"), &Globals::PlayerCamera->DefaultFOV, 50.0f, 170.0f);
 				ZeroGUI::Checkbox(_xor_("Speedhack"), &config_system.item.speedhack); ZeroGUI::SameLine();
 				ZeroGUI::Hotkey(_xor_("Speedhack Key"), FVector2D{ 100.0f, 25.0f }, &config_system.item.speedKey);
-				ZeroGUI::SliderFloat(_xor_("Speedhack Speed"), &config_system.item.speed, 1.0f, 5.0f, "%.0f");
+				ZeroGUI::SliderFloat(_xor_("Speedhack Speed"), &config_system.item.speed, 1.0f, 5.0f, _xor_("%.0f"));
 					
 				break;
 			}
 
 			case 3:
 			{
-				//ZeroGUI::Text(_xor_("Config (TBD)"));
-				//if (ZeroGUI::Button(_xor_("Save"), FVector2D{ 100.0f, 25.0f })) {
-				//	// ...
-				//}
-
-				//ZeroGUI::SameLine();
-				//if (ZeroGUI::Button(_xor_("Load"), FVector2D{ 100.0f, 25.0f })) {
-				//	// ...
-				//}
-
-				/*ZeroGUI::Text(_xor_("Discord Rich Presence"));
-				if (ZeroGUI::Button(_xor_("Enable Discord RPC"), FVector2D{ 205.0f, 25.0f })) {
-					discord_rpc::init();
-				}
-
-				if (ZeroGUI::Button(_xor_("Disable Discord RPC"), FVector2D{ 205.0f, 25.0f })) {
-					discord_rpc::disable();
-					discord_rpc::shutdown();
-				}*/
-
 				ZeroGUI::Text(_xor_("Cheat HUD (top left corner)"));
 				ZeroGUI::Checkbox(_xor_("HUD"), &config_system.item.hud);
 
@@ -903,22 +830,31 @@ void MainLoop(UCanvas* canvas) {
 
 				// Projectile champ
 				// fireMode->m_nFireType = EWeaponFireType::EWFT_Projectile;
-
-				ZeroGUI::SliderInt(_xor_("m_nShotsPerFire"), &fireMode->m_nShotsPerFire, 1, 10);
-				ZeroGUI::SliderInt(_xor_("m_nAmmoCostPerShot"), &fireMode->m_nAmmoCostPerShot, 0, 10);
-				ZeroGUI::SliderFloat(_xor_("m_fAmmoClipPreReloadTime"), &fireMode->m_fAmmoClipPreReloadTime, 0.0f, 2.0f, _xor_("%.2f"));
-				ZeroGUI::SliderFloat(_xor_("m_fAmmoClipPostReloadTime"), &fireMode->m_fAmmoClipPostReloadTime, 0.0f, 2.0f, _xor_("%.2f"));
-				ZeroGUI::SliderFloat(_xor_("m_fFirePreHitDelay"), &fireMode->m_fFirePreHitDelay, 0.0f, 1.0f, _xor_("%.2f"));
-				ZeroGUI::SliderFloat(_xor_("m_fFirePostHitDelay"), &fireMode->m_fFirePostHitDelay, 0.0f, 1.0f, _xor_("%.2f"));
+				if (Globals::LocalWeapon && Globals::LocalWeapon->m_FireMode.Num() > 0)
+				{
+					ZeroGUI::SliderInt(_xor_("m_nShotsPerFire"), &fireMode->m_nShotsPerFire, 1, 10);
+					ZeroGUI::SliderInt(_xor_("m_nAmmoCostPerShot"), &fireMode->m_nAmmoCostPerShot, 0, 10);
+					ZeroGUI::SliderFloat(_xor_("m_fAmmoClipPreReloadTime"), &fireMode->m_fAmmoClipPreReloadTime, 0.0f, 2.0f, _xor_("%.2f"));
+					ZeroGUI::SliderFloat(_xor_("m_fAmmoClipPostReloadTime"), &fireMode->m_fAmmoClipPostReloadTime, 0.0f, 2.0f, _xor_("%.2f"));
+					ZeroGUI::SliderFloat(_xor_("m_fFirePreHitDelay"), &fireMode->m_fFirePreHitDelay, 0.0f, 1.0f, _xor_("%.2f"));
+					ZeroGUI::SliderFloat(_xor_("m_fFirePostHitDelay"), &fireMode->m_fFirePostHitDelay, 0.0f, 1.0f, _xor_("%.2f"));
 				
-				if (ZeroGUI::Button(_xor_("Toggle pass through shield"), FVector2D{ 300.0f, 25.0f })) {
-					fireMode->m_bPassThroughShield = ~fireMode->m_bPassThroughShield;
+					if (ZeroGUI::Button(_xor_("Toggle pass through shield"), FVector2D{ 300.0f, 25.0f })) {
+						fireMode->m_bPassThroughShield = ~fireMode->m_bPassThroughShield;
+					}
+
+					if (ZeroGUI::Button(_xor_("Set Dredge"), FVector2D{ 300.0f, 25.0f })) {
+						fireMode->m_fAmmoClipPreReloadTime = 0.001f;
+						fireMode->m_fAmmoClipPostReloadTime = 0.001f;
+						fireMode->m_fFirePreHitDelay = 0.001f;
+						fireMode->m_fFirePostHitDelay = 0.001f;
+					}
 				}
 				
 				break;
 			}
 
-			/*case 6:
+			case 6:
 			{
 				ZeroGUI::Text(_xor_("Odin V4 Made by Xiloe (Wooteck on UnknownCheats)"));
 				ZeroGUI::Text(_xor_("Will be added in the next update:"));
@@ -956,7 +892,7 @@ void MainLoop(UCanvas* canvas) {
 				ZeroGUI::Text(utils::addy2str((void*)xorKey));
 
 				break;
-			}*/
+			}
 		}
 	}
 

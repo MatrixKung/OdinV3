@@ -8,6 +8,7 @@ void discord_rpc::init()
 {
 	DiscordEventHandlers handlers;
 	memset(&handlers, 0, sizeof(handlers));
+	// paladins: 528145079819436043
 	Discord_Initialize("1035073003240837160", &handlers, true, "444090");
 	update();
 	state = true;

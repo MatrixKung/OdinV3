@@ -100,6 +100,7 @@ public:
 	void ProcessEvent(UFunction* pFunction, const void* pParams)
 	{
 		::ProcessEventOriginal(this, pFunction, pParams, _PROCESS_EVENT_RESULT);
+		//return;
 	}
 
 /*#define _PROCESS_EVENT_RESULT (__int64)1

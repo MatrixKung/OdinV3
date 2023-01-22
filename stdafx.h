@@ -6,10 +6,6 @@
 #define Const_PI                  3.14159265358979323846264338327950288419716939937510582f
 #define Const_URotation180        32768
 
-// fuck it lol
-#define TITLE "Odin V4.0.3 | By Xiloe"
-#define LTITLE L"Odin V4.0.3 | By Xiloe (Wooteck on UC)"
-
 #include <windows.h>
 #include <iostream>
 #include <fstream>
@@ -18,23 +14,18 @@
 #include <stdio.h>
 #include <intrin.h>
 
-//#include "utils/rpc.h"
-//#pragma comment(lib, "discord-rpc.lib")
+//#include <d3dx9math.h>
+//#pragma comment(lib, "d3dx9.lib")
 
-#include <d3dx9math.h>
-#pragma comment(lib, "d3dx9.lib")
-
-#include "utils/utils_importer.hpp"
+//#include "utils/utils_importer.hpp"
 #include "utils/scanner.h"
 
 #include "SDK.hpp"
 using namespace std;
 using namespace SDK;
 
-#include "config/ini.h"
+//#include "config/ini.h"
 #include "settings/settings.h"
-//#include "spoofer/return_spoofer.h"
-//#include "spoofer/spoof.h"
 #include "utils/config.h"
 #include "globals.h"
 #include "exploits/exploits.h"
